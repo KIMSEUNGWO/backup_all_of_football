@@ -27,9 +27,15 @@ class _AppState extends ConsumerState<App> {
 
   int _currentIndex = 0;
 
-  onChangePage(int index) {
+  onChangePage({required int index, bool loginRequire = false}) {
     setState(() { _currentIndex = index;});
     _pageController.jumpToPage(index);
+
+    if (loginRequire) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const LoginWidget();
+      }, fullscreenDialog: true));
+    }
   }
 
   @override
@@ -63,7 +69,7 @@ class _AppState extends ConsumerState<App> {
           children: [
             BottomIcon(
               sIcon: SIcon.home,
-              callback: () => onChangePage(0),
+              callback: () => onChangePage(index: 0),
               isPressed: _currentIndex == 0,
             ),
             BottomIcon(
@@ -77,7 +83,7 @@ class _AppState extends ConsumerState<App> {
             ),
             BottomIcon(
               sIcon: SIcon.clipboard,
-              callback: () => onChangePage(1),
+              callback: () => onChangePage(index: 1),
               isPressed: _currentIndex == 1,
             ),
             BottomIcon(
@@ -85,7 +91,7 @@ class _AppState extends ConsumerState<App> {
               callback: () {
                 bool hasLogin = ref.read(loginProvider.notifier).has();
                 if (hasLogin) {
-                  onChangePage(2);
+                  onChangePage(index: 2);
                 } else {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                     return const LoginWidget();

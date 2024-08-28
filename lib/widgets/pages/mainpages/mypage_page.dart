@@ -1,5 +1,6 @@
 
 import 'package:groundjp/component/account_format.dart';
+import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/component/svg_icon.dart';
 import 'package:groundjp/domain/user/user_profile.dart';
 import 'package:groundjp/notifier/coupon_notifier.dart';
@@ -11,6 +12,7 @@ import 'package:groundjp/widgets/component/user_profile_wiget.dart';
 import 'package:groundjp/widgets/pages/poppages/cash_charge_page.dart';
 import 'package:groundjp/widgets/pages/poppages/cash_receipt_page.dart';
 import 'package:groundjp/widgets/pages/poppages/coupon_list_page.dart';
+import 'package:groundjp/widgets/pages/poppages/login_page.dart';
 import 'package:groundjp/widgets/pages/poppages/match_history_page.dart';
 import 'package:groundjp/widgets/pages/poppages/profile_edit_page.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyPageWidget extends ConsumerStatefulWidget{
 
-  final Function(int index) onChangePage;
+  final Function({required int index, bool loginRequire}) onChangePage;
   const MyPageWidget({super.key, required this.onChangePage});
 
   @override
@@ -29,14 +31,19 @@ class MyPageWidget extends ConsumerStatefulWidget{
 
 class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
 
+  bool _ensureOnceBuild = false;
+
   @override
   Widget build(BuildContext context) {
     UserProfile? profile = ref.watch(loginProvider);
     int favoriteCount = ref.watch(favoriteNotifier).length;
     int couponCount = ref.watch(couponNotifier).length;
     if (profile == null) {
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        widget.onChangePage(0);
+        if (_ensureOnceBuild) return;
+        setState(() => _ensureOnceBuild = true);
+        widget.onChangePage(index: 0, loginRequire: true);
       });
     }
     return Scaffold(
@@ -312,7 +319,13 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                       icon: Icon(Icons.logout_outlined, size: 20,),
                       title: '로그아웃',
                       onPressed: (){
-                        ref.read(loginProvider.notifier).logout(ref);
+                        Alert.of(context).confirm(
+                          message: '로그아웃 하시겠습니까?',
+                          btnMessage: '로그아웃',
+                          onPressed: () {
+                            ref.read(loginProvider.notifier).logout(ref);
+                          },
+                        );
                       },
                     ),
                   ],

@@ -18,6 +18,16 @@ class CouponNotifier extends StateNotifier<List<Coupon>> {
     return state;
   }
 
+  int length() {
+    return state.length;
+  }
+
+  void delete(Coupon? coupon) {
+    if (coupon == null) return;
+    state.removeWhere((c) => c.couponId == coupon.couponId,);
+    state = [... state];
+  }
+
 
 
 }

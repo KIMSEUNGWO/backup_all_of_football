@@ -41,8 +41,8 @@ enum MatchStatus {
     return switch (this) {
       MatchStatus.OPEN => Theme.of(context).colorScheme.onPrimary,
       MatchStatus.CLOSING_SOON => const Color(0xFFFF5D5D),
-      MatchStatus.CLOSED => Theme.of(context).colorScheme.secondary,
-      MatchStatus.FINISHED => Theme.of(context).colorScheme.secondary,
+      MatchStatus.CLOSED => Theme.of(context).colorScheme.tertiary,
+      MatchStatus.FINISHED => Theme.of(context).colorScheme.tertiary,
     };
   }
 }
