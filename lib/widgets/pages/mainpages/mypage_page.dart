@@ -12,7 +12,6 @@ import 'package:groundjp/widgets/component/user_profile_wiget.dart';
 import 'package:groundjp/widgets/pages/poppages/cash_charge_page.dart';
 import 'package:groundjp/widgets/pages/poppages/cash_receipt_page.dart';
 import 'package:groundjp/widgets/pages/poppages/coupon_list_page.dart';
-import 'package:groundjp/widgets/pages/poppages/login_page.dart';
 import 'package:groundjp/widgets/pages/poppages/match_history_page.dart';
 import 'package:groundjp/widgets/pages/poppages/profile_edit_page.dart';
 import 'package:flutter/material.dart';

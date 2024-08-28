@@ -1,12 +1,15 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groundjp/api/domain/result_code.dart';
 import 'package:groundjp/api/service/match_service.dart';
+import 'package:groundjp/api/service/order_service.dart';
 import 'package:groundjp/component/account_format.dart';
 import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/component/open_app.dart';
 import 'package:groundjp/domain/enums/match_enums.dart';
 import 'package:groundjp/domain/user/user_profile.dart';
+import 'package:groundjp/notifier/coupon_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/bottom_bar_widget.dart';
 import 'package:groundjp/widgets/component/image_detail_view.dart';
@@ -23,20 +26,21 @@ import 'package:intl/intl.dart';
 
 import 'package:skeletonizer/skeletonizer.dart';
 
-class MatchDetailWidget extends StatefulWidget {
+class MatchDetailWidget extends ConsumerStatefulWidget {
 
   final int matchId;
 
   const MatchDetailWidget({super.key, required this.matchId});
 
   @override
-  State<MatchDetailWidget> createState() => _MatchDetailWidgetState();
+  createState() => _MatchDetailWidgetState();
 }
 
-class _MatchDetailWidgetState extends State<MatchDetailWidget> {
+class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
   
   Match? match;
   bool _loading = true;
+  bool _cancelLoading = false;
 
   _fetchMatch() async {
     final response = await MatchService.getMatch(matchId: widget.matchId);
@@ -55,6 +59,46 @@ class _MatchDetailWidgetState extends State<MatchDetailWidget> {
       );
     }
   }
+
+  _cancelOrder() {
+    Alert.of(context).confirm(
+      message: '경기를 취소하시겠습니까?\n환불정책에 따라 환불액이 지급됩니다.\n쿠폰은 재사용할 수 있으나 만료된 쿠폰은 자동으로 삭제됩니다.',
+      btnMessage: '경기취소',
+      onPressed: () {
+        _cancelFetch();
+      },
+    );
+  }
+
+  _cancelFetch() async {
+    setState(() {
+      _cancelLoading = true;
+    });
+
+    final response = await OrderService.cancelOrder(matchId: widget.matchId);
+    print('response code : ${response.resultCode}');
+    if (response.resultCode == ResultCode.OK) {
+      ref.read(loginProvider.notifier).refreshCash();
+      ref.read(couponNotifier.notifier).init();
+      Alert.of(context).message(
+        message: '경기를 취소했습니다.',
+        onPressed: () => Navigator.pop(context),
+      );
+      return;
+
+    } else if (response.resultCode == ResultCode.ORDER_NOT_EXISTS) {
+      Alert.of(context).message(
+        message: '이미 환불 처리된 경기입니다.',
+        onPressed: () => Navigator.pop(context),
+      );
+      return;
+    }
+
+    setState(() {
+      _cancelLoading = false;
+    });
+
+  }
   
   @override
   void initState() {
@@ -64,175 +108,193 @@ class _MatchDetailWidgetState extends State<MatchDetailWidget> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        centerTitle: false,
-        title: Skeletonizer(
-          enabled: _loading,
-          child: _loading ? const Text('') : Text(match!.field.title),
-        ),
-      ),
-      body: Skeletonizer(
-        enabled: _loading,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ImageSlider(
-                  images: _loading ? [] : match!.field.images.map((image) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => ImageDetailView(image: image)
-                                ,fullscreenDialog: true
-                            ));
-                      },
-                      child: image,
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 19,),
-                Text(_loading ? '' :  DateFormat('M월 d일 EEEE HH:mm', 'ko_KR').format(match!.matchDate),
-                  style: TextStyle(
-                    color: const Color(0xFF686868),
-                    fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                    fontWeight: FontWeight.w600
-                  ),
-                ),
-                const SizedBox(height: 5,),
-                Text(_loading ? '' : match!.field.title,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.w600,
-                    fontSize: Theme.of(context).textTheme.displayMedium!.fontSize
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    if (!_loading) {
-                      OpenApp().openMaps(lat: match!.field.address.lat, lng: match!.field.address.lng);
-                    }
-                  },
-                  child: Text(_loading ? '' : match!.field.address.address,
-                    style: TextStyle(
-                      color: const Color(0xFF686868),
-                      fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                      fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.underline
-                    ),
-                  ),
-                ),
-
-
-                const SizedBox(height: 35,),
-                MatchDetailFormWidget(match: match),
-                const SizedBox(height: 30,),
-                FieldDetailFormWidget(field: match?.field),
-                const SizedBox(height: 30,),
-                const Skeleton.ignore(
-                  child: DetailRoleFormWidget(),
-                ),
-                const SizedBox(height: 30,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text('이 구장에서 다음 경기를 찾으시나요?',
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            scrolledUnderElevation: 0,
+            centerTitle: false,
+            title: Skeletonizer(
+              enabled: _loading,
+              child: _loading ? const Text('') : Text(match!.field.title),
+            ),
+          ),
+          body: Skeletonizer(
+            enabled: _loading,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ImageSlider(
+                        images: _loading ? [] : match!.field.images.map((image) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => ImageDetailView(image: image)
+                                      ,fullscreenDialog: true
+                                  ));
+                            },
+                            child: image,
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 19,),
+                      Text(_loading ? '' :  DateFormat('M월 d일 EEEE HH:mm', 'ko_KR').format(match!.matchDate),
                         style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.primary
+                            color: const Color(0xFF686868),
+                            fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
+                            fontWeight: FontWeight.w600
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 5,),
-                    GestureDetector(
-                      onTap: () {
-                        if (!_loading) {
-                          Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return FieldDetailWidget(fieldId: match!.field.fieldId, field: match!.field,);
-                            },)
-                          );
-                        }
-                      },
-                      child: Row(
+                      const SizedBox(height: 5,),
+                      Text(_loading ? '' : match!.field.title,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: Theme.of(context).textTheme.displayMedium!.fontSize
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if (!_loading) {
+                            OpenApp().openMaps(lat: match!.field.address.lat, lng: match!.field.address.lng);
+                          }
+                        },
+                        child: Text(_loading ? '' : match!.field.address.address,
+                          style: TextStyle(
+                              color: const Color(0xFF686868),
+                              fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.underline
+                          ),
+                        ),
+                      ),
+
+
+                      const SizedBox(height: 35,),
+                      MatchDetailFormWidget(match: match),
+                      const SizedBox(height: 30,),
+                      FieldDetailFormWidget(field: match?.field),
+                      const SizedBox(height: 30,),
+                      const Skeleton.ignore(
+                        child: DetailRoleFormWidget(),
+                      ),
+                      const SizedBox(height: 30,),
+                      Row(
                         children: [
-                          Text('더보기',
-                            style: TextStyle(
-                              fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-                              fontWeight: FontWeight.w500,
-                              color: Theme.of(context).colorScheme.secondary
+                          Expanded(
+                            child: Text('이 구장에서 다음 경기를 찾으시나요?',
+                              style: TextStyle(
+                                  fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
+                                  fontWeight: FontWeight.w700,
+                                  color: Theme.of(context).colorScheme.primary
+                              ),
                             ),
                           ),
-                          const SizedBox(width: 2,),
-                          Icon(Icons.arrow_forward_ios_rounded,
-                            color: Theme.of(context).colorScheme.secondary,
-                            size: 12,
-                          )
+                          const SizedBox(width: 5,),
+                          GestureDetector(
+                            onTap: () {
+                              if (!_loading) {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return FieldDetailWidget(fieldId: match!.field.fieldId, field: match!.field,);
+                                    },)
+                                );
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Text('더보기',
+                                  style: TextStyle(
+                                      fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+                                      fontWeight: FontWeight.w500,
+                                      color: Theme.of(context).colorScheme.secondary
+                                  ),
+                                ),
+                                const SizedBox(width: 2,),
+                                Icon(Icons.arrow_forward_ios_rounded,
+                                  color: Theme.of(context).colorScheme.secondary,
+                                  size: 12,
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 40,),
+
+
+                    ]
                 ),
-                const SizedBox(height: 40,),
-
-
-              ]
+              ),
+            ),
+          ),
+          bottomNavigationBar: Skeletonizer(
+            enabled: _loading,
+            child: CustomBottomBar(
+              height: 80,
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('신청하고 게임을 즐겨보세요',
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize
+                        ),
+                      ),
+                      const SizedBox(height: 5,),
+                      Row(
+                        children: [
+                          Text(_loading ? '' : AccountFormatter.format(match!.matchHour * match!.field.fieldData.hourPrice),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: Theme.of(context).textTheme.displaySmall!.fontSize
+                            ),
+                          ),
+                          Skeleton.ignore(
+                            child: Text(_loading ? '' : ' / ${match!.matchHour}시간',
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.secondary,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(width: 32,),
+                  if (!_loading)
+                    _OrderButtonWidget(match: match!, cancel: _cancelOrder),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      bottomNavigationBar: Skeletonizer(
-        enabled: _loading,
-        child: CustomBottomBar(
-          height: 80,
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-          child: Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('신청하고 게임을 즐겨보세요',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize
-                    ),
-                  ),
-                  const SizedBox(height: 5,),
-                  Row(
-                    children: [
-                      Text(_loading ? '' : AccountFormatter.format(match!.matchHour * match!.field.fieldData.hourPrice),
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: Theme.of(context).textTheme.displaySmall!.fontSize
-                        ),
-                      ),
-                      Skeleton.ignore(
-                        child: Text(_loading ? '' : ' / ${match!.matchHour}시간',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
-                            fontWeight: FontWeight.w600,
-                            fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
+
+        if (_cancelLoading)
+          Positioned(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: const Color(0xFF111111).withOpacity(0.2)
               ),
-              const SizedBox(width: 32,),
-              if (!_loading)
-                _OrderButtonWidget(match: match!),
-            ],
+              width: double.infinity,
+              height: double.infinity,
+              child: const Center(
+                child: CupertinoActivityIndicator(radius: 10,),
+              ),
+            ),
           ),
-        ),
-      ),
+      ]
     );
   }
 }
@@ -240,8 +302,9 @@ class _MatchDetailWidgetState extends State<MatchDetailWidget> {
 class _OrderButtonWidget extends ConsumerStatefulWidget {
 
   final Match match;
+  final VoidCallback cancel;
 
-  const _OrderButtonWidget({required this.match});
+  const _OrderButtonWidget({required this.match, required this.cancel});
 
   @override
   createState() => _OrderButtonWidgetState();
@@ -278,8 +341,12 @@ class _OrderButtonWidgetState extends ConsumerState<_OrderButtonWidget> {
               return const LoginWidget();
             }, fullscreenDialog: true));
           }
+          if (widget.match.alreadyJoin) {
+            widget.cancel();
+            return;
+          }
 
-          if (_constraint) return;
+          if (_constraint || widget.match.matchStatus == MatchStatus.FINISHED || widget.match.matchStatus == MatchStatus.CLOSED) return;
 
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return OrderWidget(matchId: widget.match.matchId);},
@@ -308,13 +375,14 @@ class _OrderButtonWidgetState extends ConsumerState<_OrderButtonWidget> {
   }
 
   Color _boxColor(BuildContext context, MatchStatus status, bool alreadyJoin) {
-    if (alreadyJoin || _constraint) return Theme.of(context).colorScheme.tertiary;
+    if (alreadyJoin) return Theme.of(context).colorScheme.error;
+    if (_constraint) return Theme.of(context).colorScheme.tertiary;
     return status.backgroundColor(context);
   }
 
   String _matchText(MatchStatus status, bool alreadyJoin) {
+    if (alreadyJoin) return '신청취소';
     if (_constraint) return '신청불가';
-    if (alreadyJoin) return '신청완료';
     return switch (status) {
       MatchStatus.OPEN => '신청하기',
       MatchStatus.CLOSING_SOON => '마감임박',

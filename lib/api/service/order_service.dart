@@ -21,4 +21,13 @@ class OrderService {
       body: jsonEncode(body)
     );
   }
+
+  static Future<ResponseResult> cancelOrder({required int matchId}) async {
+    return await ApiService.post(
+      uri: '/cancel',
+      authorization: true,
+      header: ApiService.contentTypeJson,
+      body: jsonEncode({"matchId" : matchId}),
+    );
+  }
 }

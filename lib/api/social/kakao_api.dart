@@ -52,13 +52,11 @@ class KakaoApi implements SocialAPI {
 
   @override
   Future<void> refreshToken() {
-    // TODO: implement refreshToken
     throw UnimplementedError();
   }
 
   @override
   Future<void> verifyAccessToken() {
-    // TODO: implement verifyAccessToken
     throw UnimplementedError();
   }
 

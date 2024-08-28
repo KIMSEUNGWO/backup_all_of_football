@@ -40,7 +40,7 @@ enum MatchStatus {
   Color backgroundColor(BuildContext context) {
     return switch (this) {
       MatchStatus.OPEN => Theme.of(context).colorScheme.onPrimary,
-      MatchStatus.CLOSING_SOON => const Color(0xFFFF5D5D),
+      MatchStatus.CLOSING_SOON => Theme.of(context).colorScheme.error,
       MatchStatus.CLOSED => Theme.of(context).colorScheme.tertiary,
       MatchStatus.FINISHED => Theme.of(context).colorScheme.tertiary,
     };
