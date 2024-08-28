@@ -1,4 +1,5 @@
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groundjp/component/account_format.dart';
 import 'package:groundjp/component/coupon_calculator.dart';
 import 'package:groundjp/component/open_app.dart';
@@ -9,8 +10,10 @@ import 'package:groundjp/domain/coupon/coupon_result.dart';
 import 'package:groundjp/domain/field/address.dart';
 import 'package:groundjp/domain/order/order_result.dart';
 import 'package:groundjp/domain/order/order_simp.dart';
+import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/form/detail_default_form.dart';
+import 'package:groundjp/widgets/pages/poppages/cash_charge_page.dart';
 import 'package:groundjp/widgets/pages/poppages/coupon_list_page.dart';
 import 'package:groundjp/widgets/pages/poppages/order_complete_page.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +21,17 @@ import 'package:intl/intl.dart';
 
 import 'package:skeletonizer/skeletonizer.dart';
 
-class OrderWidget extends StatefulWidget {
+class OrderWidget extends ConsumerStatefulWidget {
 
   final int matchId;
 
   const OrderWidget({super.key, required this.matchId});
 
   @override
-  State<OrderWidget> createState() => _OrderWidgetState();
+  createState() => _OrderWidgetState();
 }
 
-class _OrderWidgetState extends State<OrderWidget> {
+class _OrderWidgetState extends ConsumerState<OrderWidget> {
 
   late OrderSimp orderSimp;
   Coupon? _coupon;
@@ -68,8 +71,6 @@ class _OrderWidgetState extends State<OrderWidget> {
       totalPrice: 20000, 
       address: Address('서울 마포구 독막로 2', Region.BUNKYO, 0, 0),
       matchDate: DateTime.now(),
-      cash: 100000, 
-      couponCount: 2,
     );
     super.initState();
   }
@@ -182,7 +183,7 @@ class _OrderWidgetState extends State<OrderWidget> {
                                       },
                                       child: Row(
                                         children: [
-                                          Text(_coupon == null ? '${orderSimp.couponCount}개 보유' : _coupon!.title,
+                                          Text(_coupon == null ? '0개 보유' : _coupon!.title,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
@@ -213,20 +214,31 @@ class _OrderWidgetState extends State<OrderWidget> {
                                     ),
                                     Row(
                                       children: [
-                                        Text(AccountFormatter.format(orderSimp.cash),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                                              color: Theme.of(context).colorScheme.primary
-                                          ),
+                                        Consumer(
+                                          builder: (context, ref, child) {
+                                            return Text(AccountFormatter.format(ref.watch(loginProvider)!.cash),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                                                  color: Theme.of(context).colorScheme.primary
+                                              ),
+                                            );
+                                          },
                                         ),
                                         const SizedBox(width: 5,),
                                         Skeleton.ignore(
-                                          child: Text('충전',
-                                            style: TextStyle(
-                                              color: Theme.of(context).colorScheme.secondary,
-                                              fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-                                              fontWeight: FontWeight.w500
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                                return const CashChargeWidget();
+                                              },));
+                                            },
+                                            child: Text('충전',
+                                              style: TextStyle(
+                                                color: Theme.of(context).colorScheme.secondary,
+                                                fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+                                                fontWeight: FontWeight.w500
+                                              ),
                                             ),
                                           ),
                                         ),

@@ -2,6 +2,7 @@
 import 'package:groundjp/component/account_format.dart';
 import 'package:groundjp/component/svg_icon.dart';
 import 'package:groundjp/domain/user/user_profile.dart';
+import 'package:groundjp/notifier/coupon_notifier.dart';
 import 'package:groundjp/notifier/favorite_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
@@ -32,6 +33,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
   Widget build(BuildContext context) {
     UserProfile? profile = ref.watch(loginProvider);
     int favoriteCount = ref.watch(favoriteNotifier).length;
+    int couponCount = ref.watch(couponNotifier).length;
     if (profile == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         widget.onChangePage(0);
@@ -173,7 +175,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                                     width: containerWidth,
                                     child: Column(
                                       children: [
-                                        Text('${profile.couponCount}',
+                                        Text('$couponCount',
                                           style: TextStyle(
                                             color: Theme.of(context).colorScheme.primary,
                                             fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,

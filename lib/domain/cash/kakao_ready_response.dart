@@ -4,6 +4,7 @@ class KakaoReady {
   final String tid;
   final String next_redirect_pc_url;
   final String next_redirect_app_url;
+  final String next_redirect_mobile_url;
   final String ios_app_scheme;
   final String android_app_scheme;
   final String partner_order_id;
@@ -16,6 +17,7 @@ class KakaoReady {
     partner_user_id = json['partner_user_id'],
     android_app_scheme = json['android_app_scheme'],
     next_redirect_pc_url = json['next_redirect_pc_url'],
+    next_redirect_mobile_url = json['next_redirect_mobile_url'],
     next_redirect_app_url = json['next_redirect_app_url'];
 
   String generateParams(String url) {

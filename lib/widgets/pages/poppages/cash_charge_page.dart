@@ -1,13 +1,12 @@
 
+import 'package:flutter/scheduler.dart';
 import 'package:groundjp/api/domain/api_result.dart';
 import 'package:groundjp/api/service/payment_service.dart';
 import 'package:groundjp/component/account_format.dart';
 import 'package:groundjp/component/alert.dart';
-import 'package:groundjp/component/open_app.dart';
 import 'package:groundjp/component/svg_icon.dart';
 import 'package:groundjp/domain/cash/kakao_ready_response.dart';
 import 'package:groundjp/domain/enums/payment.dart';
-import 'package:groundjp/domain/user/social_result.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/policy_widget.dart';
@@ -27,7 +26,7 @@ class CashChargeWidget extends ConsumerStatefulWidget {
 class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
 
   final List<int> _amounts = [
-    100, 10000, 20000, 30000, 40000, 50000, 100000
+    10000, 20000, 30000, 40000, 50000, 100000
   ];
   final List<Payment> _payments = Payment.values;
 
@@ -65,9 +64,12 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
     });
   }
   _setLoading(bool data) {
-    setState(() {
-      _loading = data;
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _loading = data;
+      });
     });
+
   }
 
   _submit() async {

@@ -1,16 +1,18 @@
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groundjp/api/service/user_service.dart';
 import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/domain/coupon/coupon.dart';
 import 'package:groundjp/exception/server/server_exception.dart';
 import 'package:groundjp/exception/server/socket_exception.dart';
 import 'package:groundjp/exception/server/timeout_exception.dart';
+import 'package:groundjp/notifier/coupon_notifier.dart';
 import 'package:groundjp/widgets/component/coupon/coupon_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class CouponListWidget extends StatefulWidget {
+class CouponListWidget extends ConsumerStatefulWidget {
 
   final bool readOnly;
   final Function(Coupon?)? onPressed;
@@ -21,13 +23,12 @@ class CouponListWidget extends StatefulWidget {
   });
 
   @override
-  State<CouponListWidget> createState() => _CouponListWidgetState();
+  createState() => _CouponListWidgetState();
 }
 
-class _CouponListWidgetState extends State<CouponListWidget> {
+class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
 
   late List<Coupon> _items;
-  bool _loading = true;
 
   Coupon? _selectCoupon;
 
@@ -39,12 +40,11 @@ class _CouponListWidgetState extends State<CouponListWidget> {
   }
 
   _fetch() async {
+    setState(() {
+      _items = ref.read(couponNotifier.notifier).get();
+    });
     try {
-      List<Coupon> result = await UserService.getCoupons();
-      setState(() {
-        _loading = false;
-        _items = result;
-      });
+
     } on TimeOutException catch (e) {
       Alert.of(context).message(
         message: e.message,
@@ -101,8 +101,7 @@ class _CouponListWidgetState extends State<CouponListWidget> {
             )
         ],
       ),
-      body: _loading ? const Center(child: CupertinoActivityIndicator(radius: 13,),) :
-      Padding(
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
@@ -200,68 +199,68 @@ class _CouponListWidgetState extends State<CouponListWidget> {
                         ),
                       ),
                       secondChild: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('COUPON',
-                                      style: TextStyle(
-                                        color: Theme.of(context).colorScheme.tertiary,
-                                        fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 5
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('COUPON',
+                                        style: TextStyle(
+                                            color: Theme.of(context).colorScheme.tertiary,
+                                            fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 5
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 3,),
-                                    Text(coupon.title,
-                                      style: TextStyle(
-                                        color: Theme.of(context).colorScheme.primary,
-                                        fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                                        fontWeight: FontWeight.w500,
+                                      const SizedBox(height: 3,),
+                                      Text(coupon.title,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primary,
+                                          fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Text('${DateFormat('yyyy-MM-dd HH:mm').format(coupon.expireDate)}까지',
-                                  style: TextStyle(
-                                    color: Theme.of(context).colorScheme.secondary,
-                                    fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-                                    fontWeight: FontWeight.w500,
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                          if (!widget.readOnly)
-                            Positioned(
-                              top: 15, right: 15,
-                              child: Container(
-                                width: 20, height: 20,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                    color: Theme.of(context).colorScheme.secondary,
-                                    width: 0.3
+                                  Text('${DateFormat('yyyy-MM-dd HH:mm').format(coupon.expireDate)}까지',
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.secondary,
+                                      fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   )
-                                ),
-                                child: _selectCoupon != coupon ? null : Center(
-                                  child: Container(
-                                    width: 15, height: 15,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                      color: Theme.of(context).colorScheme.onPrimary,
-                                    ),
-                                  ),
-                                )
+                                ],
                               ),
                             ),
-                        ]
+                            if (!widget.readOnly)
+                              Positioned(
+                                top: 15, right: 15,
+                                child: Container(
+                                    width: 20, height: 20,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(100),
+                                        border: Border.all(
+                                            color: Theme.of(context).colorScheme.secondary,
+                                            width: 0.3
+                                        )
+                                    ),
+                                    child: _selectCoupon != coupon ? null : Center(
+                                      child: Container(
+                                        width: 15, height: 15,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(100),
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),
+                                      ),
+                                    )
+                                ),
+                              ),
+                          ]
                       ),
 
                     ),

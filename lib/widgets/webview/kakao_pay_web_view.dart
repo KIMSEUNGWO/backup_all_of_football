@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groundjp/api/api_service.dart';
 import 'package:groundjp/component/alert.dart';
+import 'package:groundjp/component/open_app.dart';
 import 'package:groundjp/domain/cash/kakao_ready_response.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:webview_flutter_android/webview_flutter_android.dart';
@@ -13,9 +14,9 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 class KakaoPayWebView extends ConsumerStatefulWidget {
   final KakaoReady kakao;
   final Function(bool data) loading;
-  final Function() onSuccess;
+  final VoidCallback onSuccess;
 
-  const KakaoPayWebView({required this.kakao, required this.loading, required this.onSuccess});
+  const KakaoPayWebView({super.key, required this.kakao, required this.loading, required this.onSuccess});
 
   @override
   _KakaoPayWebViewState createState() => _KakaoPayWebViewState();
@@ -48,7 +49,7 @@ class _KakaoPayWebViewState extends ConsumerState<KakaoPayWebView> {
         String url = request.url;
         print('url : $url');
         if (!url.startsWith('http')) {
-          launchUrl(Uri.parse(url));
+          OpenApp().kakaoOpenUrl(context, widget.kakao);
           return NavigationDecision.prevent;
         }
         if (url.contains('/api/charge/done')) {
@@ -75,6 +76,9 @@ class _KakaoPayWebViewState extends ConsumerState<KakaoPayWebView> {
               Navigator.pop(context);
             },
           );
+        // 요청 시간 초과
+        } else if (error.response?.statusCode == 404) {
+          Navigator.pop(context);
         }
       },
     ));

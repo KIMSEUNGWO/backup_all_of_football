@@ -10,19 +10,17 @@ class OrderSimp {
   final Address address;
   final DateTime matchDate;
 
-  final int cash;
-  final int couponCount;
-
   OrderSimp.fromJson(Map<String, dynamic> json):
     title = json['title'],
     matchHour = json['matchHour'],
     totalPrice = json['totalPrice'],
     address = Address.fromJson(json['address']),
-    matchDate = DateTime.parse(json['matchDate']),
-    cash = json['cash'],
-    couponCount = json['couponCount'];
+    matchDate = DateTime.parse(json['matchDate']);
 
-  OrderSimp({required this.title, required this.matchHour, required this.totalPrice, required this.address, required this.matchDate, required this.cash, required this.couponCount});
-
-
+  OrderSimp({
+    required this.title,
+    required this.totalPrice,
+    required this.matchHour,
+    required this.address,
+    required this.matchDate});
 }

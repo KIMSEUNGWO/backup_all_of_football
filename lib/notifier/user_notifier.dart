@@ -9,6 +9,7 @@ import 'package:groundjp/api/social/line_api.dart';
 import 'package:groundjp/domain/enums/match_enums.dart';
 import 'package:groundjp/domain/user/social_result.dart';
 import 'package:groundjp/domain/user/user_profile.dart';
+import 'package:groundjp/notifier/coupon_notifier.dart';
 import 'package:groundjp/notifier/favorite_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,6 +53,8 @@ class UserNotifier extends StateNotifier<UserProfile?> {
 
   void logout(WidgetRef ref) async {
     ref.read(favoriteNotifier.notifier).logout();
+    ref.read(couponNotifier.notifier).logout();
+
     socialAPI = socialAPI ?? getSocialType(state!.provider);
     socialAPI!.logout();
     state = null;
@@ -66,6 +69,7 @@ class UserNotifier extends StateNotifier<UserProfile?> {
     if (result) {
       state = await UserService.getProfile();
       ref.read(favoriteNotifier.notifier).init();
+      ref.read(couponNotifier.notifier).init();
     }
   }
 

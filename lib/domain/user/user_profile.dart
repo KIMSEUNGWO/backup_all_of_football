@@ -13,8 +13,6 @@ class UserProfile {
   final SexType sex;
   final DateTime birth;
 
-  int couponCount;
-
   int cash;
 
 
@@ -28,7 +26,6 @@ class UserProfile {
     nickname = json['nickname'],
     sex = SexType.valueOf(json['sex'])!,
     birth = DateTime.parse(json['birth']),
-    couponCount = json['couponCount'],
     cash = json['cash'];
 
   UserProfile.clone(UserProfile state):
@@ -38,7 +35,6 @@ class UserProfile {
     nickname = state.nickname,
     sex = state.sex,
     birth = state.birth,
-    couponCount = state.couponCount,
     cash = state.cash;
 
 
