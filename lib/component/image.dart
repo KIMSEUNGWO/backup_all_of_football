@@ -5,6 +5,9 @@ import 'package:permission_handler/permission_handler.dart';
 
 class ImageCroppers {
 
+  static const ImageCroppers instance = ImageCroppers();
+  const ImageCroppers();
+
   Future<CroppedFile?> getCropper(XFile imageFile) async {
     return await ImageCropper().cropImage(
       sourcePath: imageFile.path,
@@ -83,7 +86,7 @@ class ImagePick {
   Future<CroppedFile?> getAndCrop() async {
     final XFile? image = await get();
     if (image != null) {
-      return await ImageCroppers().getCropper(image);
+      return await ImageCroppers.instance.getCropper(image);
     }
     return null;
   }

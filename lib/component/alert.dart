@@ -9,9 +9,6 @@ class Alert {
   static _AlertBuilder of(BuildContext context) {
     return _AlertBuilder(context);
   }
-
-
-
 }
 
 class _AlertBuilder {

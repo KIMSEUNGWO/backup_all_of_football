@@ -7,7 +7,7 @@ class CouponNotifier extends StateNotifier<List<Coupon>> {
   CouponNotifier() : super([]);
 
   init() async {
-    state = await UserService.getCoupons();
+    state = await UserService.instance.getCoupons();
   }
 
   logout() {

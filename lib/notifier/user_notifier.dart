@@ -30,7 +30,7 @@ class UserNotifier extends StateNotifier<UserProfile?> {
       state = null;
       return ResponseResult(ResultCode.SOCIAL_LOGIN_FAILD, null);
     }
-    final result = await UserService.login(socialResult);
+    final result = await UserService.instance.login(socialResult);
     if (result == ResultCode.REGISTER) {
       return ResponseResult(result, socialResult);
     }
@@ -39,7 +39,7 @@ class UserNotifier extends StateNotifier<UserProfile?> {
   }
 
   Future<bool> register(WidgetRef ref, {required SexType sex, required DateTime birth, required SocialResult social}) async {
-    final response = await UserService.register(
+    final response = await UserService.instance.register(
       sex: sex,
       birth: birth,
       social: social,
@@ -65,18 +65,18 @@ class UserNotifier extends StateNotifier<UserProfile?> {
   }
 
   init(WidgetRef ref) async {
-    final result = await TokenService.readUser();
+    final result = await TokenService.instance.readUser();
     if (result) {
-      state = await UserService.getProfile();
+      state = await UserService.instance.getProfile();
       ref.read(favoriteNotifier.notifier).init();
       ref.read(couponNotifier.notifier).init();
     }
   }
 
   readUser(WidgetRef ref) async {
-    final result = await TokenService.readUser();
+    final result = await TokenService.instance.readUser();
     if (result) {
-      state = await UserService.getProfile();
+      state = await UserService.instance.getProfile();
       ref.read(favoriteNotifier.notifier).init();
     } else {
       logout(ref);
@@ -84,7 +84,7 @@ class UserNotifier extends StateNotifier<UserProfile?> {
   }
 
   refreshCash() async {
-    final result = await UserService.getCash();
+    final result = await UserService.instance.getCash();
     if (result.resultCode == ResultCode.OK) {
       state?.cash = result.data;
       state = UserProfile.clone(state!);

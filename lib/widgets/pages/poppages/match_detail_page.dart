@@ -77,7 +77,7 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
       _cancelLoading = true;
     });
 
-    final response = await OrderService.cancelOrder(matchId: widget.matchId);
+    final response = await OrderService.instance.cancelOrder(matchId: widget.matchId);
     print('response code : ${response.resultCode}');
     if (response.resultCode == ResultCode.OK) {
       ref.read(loginProvider.notifier).refreshCash();
@@ -163,7 +163,7 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
                       GestureDetector(
                         onTap: () {
                           if (!_loading) {
-                            OpenApp().openMaps(lat: match!.field.address.lat, lng: match!.field.address.lng);
+                            OpenApp.instance.openMaps(lat: match!.field.address.lat, lng: match!.field.address.lng);
                           }
                         },
                         child: Text(_loading ? '' : match!.field.address.address,

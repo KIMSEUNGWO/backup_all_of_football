@@ -36,7 +36,7 @@ class _FieldDetailWidgetState extends State<FieldDetailWidget> {
         _loading = false;
       });
     } else {
-      final response = await FieldService.getField(fieldId: widget.fieldId);
+      final response = await FieldService.instance.getField(fieldId: widget.fieldId);
       ResultCode result = response.resultCode;
       if (result == ResultCode.OK) {
         setState(() {
@@ -117,7 +117,7 @@ class _FieldDetailWidgetState extends State<FieldDetailWidget> {
                 child: GestureDetector(
                   onTap: () {
                     if (!_loading) {
-                      OpenApp().openMaps(lat: field!.address.lat, lng: field!.address.lng);
+                      OpenApp.instance.openMaps(lat: field!.address.lat, lng: field!.address.lng);
                     }
                   },
                   child: Text(_loading ? '' : field!.address.address,

@@ -81,6 +81,9 @@ class NotificationNotifier extends StateNotifier<FlutterLocalNotificationsPlugin
     required String body,
     required DateTime time,
   }) {
+    if (time.isBefore(DateTime.now())) {
+      return;
+    }
     state.zonedSchedule(
       id,
       title,

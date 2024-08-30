@@ -75,7 +75,7 @@ class _SearchWidgetState extends State<SearchWidget> {
     setState(() {
       _loading = true;
     });
-    List<FieldSimp> result = await FieldService.searchFields(word);
+    List<FieldSimp> result = await FieldService.instance.searchFields(word);
     setState(() {
       _fields = result;
       _loading = false;
@@ -100,7 +100,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   @override
   void dispose() {
     _textController.dispose();
-    LocalStorage.saveByRecentlySearchWord(_recentlySearchWord.toList());
+    LocalStorage.instance.saveByRecentlySearchWord(_recentlySearchWord.toList());
     super.dispose();
   }
 

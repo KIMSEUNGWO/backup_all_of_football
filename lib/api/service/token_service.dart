@@ -5,31 +5,36 @@ import 'package:groundjp/component/secure_strage.dart';
 
 class TokenService {
 
-  static Future<bool> _checkAccessToken() async {
-    final accessToken = await SecureStorage.readAccessToken();
+  static const TokenService instance = TokenService();
+  const TokenService();
+
+  Future<bool> _checkAccessToken() async {
+    final accessToken = await SecureStorage.instance.readAccessToken();
     if (accessToken == null) return false;
-    final response = await ApiService.get(uri: '/accessToken', authorization: true);
+    final response = await ApiService.instance.get(uri: '/accessToken', authorization: true);
     return response.resultCode == ResultCode.OK;
   }
-  static Future<bool> _refreshingAccessToken() async {
-    final refreshToken = await SecureStorage.readRefreshToken();
+
+  Future<bool> _refreshingAccessToken() async {
+    final refreshToken = await SecureStorage.instance.readRefreshToken();
     if (refreshToken == null) return false;
 
-    final response = await ApiService.post(
+    final response = await ApiService.instance.post(
       uri: '/social/token',
       authorization: true,
       header: ApiService.contentTypeJson,
     );
 
     if (response.resultCode == ResultCode.OK) {
-      await SecureStorage.saveAccessToken(response.data['accessToken']);
-      await SecureStorage.saveRefreshToken(response.data['refreshToken']);
+      await SecureStorage.instance.saveAccessToken(response.data['accessToken']);
+      await SecureStorage.instance.saveRefreshToken(response.data['refreshToken']);
       print('Refreshing AccessToken');
       return true;
     }
     return false;
   }
-  static Future<bool> readUser() async {
+
+  Future<bool> readUser() async {
     return (await _checkAccessToken() || await _refreshingAccessToken());
   }
 }

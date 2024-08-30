@@ -9,7 +9,7 @@ class FavoriteNotifier extends StateNotifier<List<FieldSimp>> {
   FavoriteNotifier() : super([]);
 
   init() async {
-    state = await UserService.getFavorites();
+    state = await UserService.instance.getFavorites();
   }
 
   logout() {
@@ -32,14 +32,14 @@ class FavoriteNotifier extends StateNotifier<List<FieldSimp>> {
   }
 
   _add(FieldSimp fieldSimp) async {
-    ResultCode resultCode = await UserService.editFavorite(fieldSimp.fieldId, true);
+    ResultCode resultCode = await UserService.instance.editFavorite(fieldSimp.fieldId, true);
     if (resultCode == ResultCode.OK) {
       Set<FieldSimp> set = {fieldSimp, ...state.toSet()};
       state = set.toList();
     }
   }
   _remove(int fieldId) async {
-    ResultCode resultCode = await UserService.editFavorite(fieldId, false);
+    ResultCode resultCode = await UserService.instance.editFavorite(fieldId, false);
     if (resultCode == ResultCode.OK) {
       state.removeWhere((field) => field.fieldId == fieldId);
       state = state.toList();

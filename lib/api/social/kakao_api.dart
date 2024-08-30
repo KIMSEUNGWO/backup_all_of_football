@@ -44,7 +44,7 @@ class KakaoApi implements SocialAPI {
   Future<void> logout() async {
     try {
       await UserApi.instance.logout();
-      SecureStorage.removeAllByToken();
+      SecureStorage.instance.removeAllByToken();
     } on PlatformException catch (e) {
       print(e.message);
     }

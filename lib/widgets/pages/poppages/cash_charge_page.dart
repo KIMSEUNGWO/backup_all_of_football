@@ -84,7 +84,7 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
     Payment payment = _payments[_selectPaymentIndex ?? 0];
     print('payment : $payment, amount : $amount');
 
-    ResponseResult result = await PaymentService.readyPayment(amount: amount, payment: payment);
+    ResponseResult result = await PaymentService.instance.readyPayment(amount: amount, payment: payment);
     KakaoReady kakao = KakaoReady.fromJson(result.data);
 
     Navigator.push(context,

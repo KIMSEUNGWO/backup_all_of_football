@@ -22,7 +22,7 @@ class UserProfile {
     provider = SocialProvider.fromJson(json['provider'])!,
     image = json['image'] == null
         ? null
-        : ImageHelper.parseImage(imagePath: ImagePath.THUMBNAIL, imageType: ImageType.PROFILE, imageName: json['image'], fit: BoxFit.fill),
+        : ImageHelper.instance.parseImage(imagePath: ImagePath.THUMBNAIL, imageType: ImageType.PROFILE, imageName: json['image'], fit: BoxFit.fill),
     nickname = json['nickname'],
     sex = SexType.valueOf(json['sex'])!,
     birth = DateTime.parse(json['birth']),

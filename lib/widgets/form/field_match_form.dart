@@ -27,7 +27,7 @@ class _FieldMatchFormWidgetState extends State<FieldMatchFormWidget> {
   late final List<MatchSimp> matchList;
 
   Future<List<MatchSimp>> _fetch(Pageable pageable) async {
-    return await FieldService.getSchedule(widget.fieldId, pageable);
+    return await FieldService.instance.getSchedule(widget.fieldId, pageable);
   }
 
   @override

@@ -21,7 +21,7 @@ class Field {
     address = Address.fromJson(json['address']),
     fieldData = FieldData.fromJson(json['fieldData']),
     images = json['images'] != null
-      ? List<Image>.from(json['images'].map((image) => ImageHelper.parseImage(imagePath: ImagePath.ORIGINAL, imageType: ImageType.FIELD, imageName: image, fit: BoxFit.fitWidth)))
+      ? List<Image>.from(json['images'].map((image) => ImageHelper.instance.parseImage(imagePath: ImagePath.ORIGINAL, imageType: ImageType.FIELD, imageName: image, fit: BoxFit.fitWidth)))
       : [];
 
   Field(this.fieldId, this.title, this.address, this.fieldData,

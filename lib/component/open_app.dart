@@ -9,8 +9,8 @@ import 'package:url_launcher/url_launcher.dart';
 class OpenApp {
 
   // 테스트용
-  static const String homeLat = "35.757721";
-  static const String homeLng = "139.527805";
+  static const OpenApp instance = OpenApp();
+  const OpenApp();
 
   openMaps({required double lat, required double lng}) async {
 

@@ -2,11 +2,14 @@
 
 class CouponCalculator {
 
-  static int discount(int price, double per) {
+  static const CouponCalculator instance = CouponCalculator();
+  const CouponCalculator();
+
+  int discount(int price, double per) {
     return (price * per).ceil();
   }
 
-  static int total(int price, double per) {
+  int total(int price, double per) {
     return price - discount(price, per);
   }
 }

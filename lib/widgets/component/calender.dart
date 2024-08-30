@@ -178,7 +178,7 @@ class _CalendarState extends State<_Calendar> with AutomaticKeepAliveClientMixin
   bool _existLoad = true;
 
   _fetchExistsHistory() async {
-    _exists = await UserService.getHistory(widget.currentMonth);
+    _exists = await UserService.instance.getHistory(widget.currentMonth);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (mounted) {
         setState(() {

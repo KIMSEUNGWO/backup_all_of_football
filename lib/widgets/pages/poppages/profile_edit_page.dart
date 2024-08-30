@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:groundjp/api/api_service.dart';
-import 'package:groundjp/api/domain/api_result.dart';
 import 'package:groundjp/api/domain/method_type.dart';
 import 'package:groundjp/api/domain/result_code.dart';
 import 'package:groundjp/api/service/user_service.dart';
@@ -59,7 +58,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
       data.addAll({'nickname' : nickname});
     }
 
-    final result = await ApiService.multipart('/user/edit', method: MethodType.POST, multipartFilePath: editProfileImagePath, data: data);
+    final result = await ApiService.instance.multipart('/user/edit', method: MethodType.POST, multipartFilePath: editProfileImagePath, data: data);
     if (result.resultCode == ResultCode.OK) {
       ref.read(loginProvider.notifier).readUser(ref);
       Alert.of(context).message(
@@ -97,7 +96,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
     FocusManager.instance.primaryFocus?.unfocus();
     bool valid = _valid();
     if (!valid) return;
-    bool distinct = await UserService.distinctNickname(_textNicknameController.text);
+    bool distinct = await UserService.instance.distinctNickname(_textNicknameController.text);
     if (distinct) {
       _setError('이미 사용중인 닉네임 입니다.');
     } else {

@@ -17,7 +17,7 @@ class MatchService {
     if (condition.sexType != null) {
       queryParam += '&sex=${condition.sexType!.name}';
     }
-    final response = await ApiService.get(
+    final response = await ApiService.instance.get(
       uri: '/search$queryParam',
       authorization: false,
     );
@@ -30,14 +30,14 @@ class MatchService {
   }
 
   static Future<ResponseResult> getMatch({required int matchId}) async {
-    return await ApiService.get(
+    return await ApiService.instance.get(
       uri: '/match/$matchId',
       authorization: true
     );
   }
 
   static Future<List<MatchView>> getMatchesSoon() async {
-    final response = await ApiService.get(
+    final response = await ApiService.instance.get(
         uri: '/user/matches',
         authorization: true
     );

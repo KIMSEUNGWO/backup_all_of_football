@@ -35,7 +35,7 @@ class _CashReceiptWidgetState extends ConsumerState<CashReceiptWidget> {
   }
 
   _fetchReceipt() async {
-    _items = await UserService.getReceipt();
+    _items = await UserService.instance.getReceipt();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         _showItems = _items;

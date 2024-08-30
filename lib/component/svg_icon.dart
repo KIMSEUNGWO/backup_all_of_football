@@ -7,7 +7,7 @@ class SvgIcon extends StatelessWidget {
 
   final Skeleton svgPicture;
 
-  SvgIcon.privateConstructor(SvgPicture svgPicture):
+  SvgIcon.privateConstructor(SvgPicture svgPicture, {super.key}):
     svgPicture = Skeleton.shade(child: svgPicture);
 
   static SvgIcon asset({required SIcon sIcon, SvgIconStyle? style,}) {
@@ -36,41 +36,41 @@ class SvgIconStyle {
 class SIcon {
 
   final String picture;
-  SIcon({required this.picture});
+  const SIcon({required this.picture});
 
-  static SIcon pen = SIcon(picture: 'assets/icons/pen.svg');
+  static const SIcon pen = SIcon(picture: 'assets/icons/pen.svg');
 
-  static SIcon bell = SIcon(picture: 'assets/icons/bell.svg');
-  static SIcon bookmark = SIcon(picture: 'assets/icons/bookmark.svg');
-  static SIcon bookmarkFill = SIcon(picture: 'assets/icons/bookmarkFill.svg');
-  static SIcon car = SIcon(picture: 'assets/icons/car.svg');
-  static SIcon check = SIcon(picture: 'assets/icons/check.svg');
-  static SIcon clipboard = SIcon(picture: 'assets/icons/clipboard.svg');
-  static SIcon coupon = SIcon(picture: 'assets/icons/coupon.svg');
-  static SIcon gender = SIcon(picture: 'assets/icons/gender.svg');
-  static SIcon home = SIcon(picture: 'assets/icons/home.svg');
+  static const SIcon bell = SIcon(picture: 'assets/icons/bell.svg');
+  static const SIcon bookmark = SIcon(picture: 'assets/icons/bookmark.svg');
+  static const SIcon bookmarkFill = SIcon(picture: 'assets/icons/bookmarkFill.svg');
+  static const SIcon car = SIcon(picture: 'assets/icons/car.svg');
+  static const SIcon check = SIcon(picture: 'assets/icons/check.svg');
+  static const SIcon clipboard = SIcon(picture: 'assets/icons/clipboard.svg');
+  static const SIcon coupon = SIcon(picture: 'assets/icons/coupon.svg');
+  static const SIcon gender = SIcon(picture: 'assets/icons/gender.svg');
+  static const SIcon home = SIcon(picture: 'assets/icons/home.svg');
 
-  static SIcon manager = SIcon(picture: 'assets/icons/manager.svg');
-  static SIcon megaphone = SIcon(picture: 'assets/icons/megaphone.svg');
-  static SIcon person = SIcon(picture: 'assets/icons/person.svg');
-  static SIcon personFill = SIcon(picture: 'assets/icons/person_fill.svg');
-  static SIcon search = SIcon(picture: 'assets/icons/search.svg');
-  static SIcon settings = SIcon(picture: 'assets/icons/settings.svg');
-  static SIcon shower = SIcon(picture: 'assets/icons/shower.svg');
-  static SIcon soccer = SIcon(picture: 'assets/icons/soccer.svg');
-  static SIcon star = SIcon(picture: 'assets/icons/star.svg');
-  static SIcon success = SIcon(picture: 'assets/icons/success.svg');
-  static SIcon toilet = SIcon(picture: 'assets/icons/toilet.svg');
-  static SIcon more = SIcon(picture: 'assets/icons/more.svg');
-  static SIcon moreClose = SIcon(picture: 'assets/icons/moreClose.svg');
+  static const SIcon manager = SIcon(picture: 'assets/icons/manager.svg');
+  static const SIcon megaphone = SIcon(picture: 'assets/icons/megaphone.svg');
+  static const SIcon person = SIcon(picture: 'assets/icons/person.svg');
+  static const SIcon personFill = SIcon(picture: 'assets/icons/person_fill.svg');
+  static const SIcon search = SIcon(picture: 'assets/icons/search.svg');
+  static const SIcon settings = SIcon(picture: 'assets/icons/settings.svg');
+  static const SIcon shower = SIcon(picture: 'assets/icons/shower.svg');
+  static const SIcon soccer = SIcon(picture: 'assets/icons/soccer.svg');
+  static const SIcon star = SIcon(picture: 'assets/icons/star.svg');
+  static const SIcon success = SIcon(picture: 'assets/icons/success.svg');
+  static const SIcon toilet = SIcon(picture: 'assets/icons/toilet.svg');
+  static const SIcon more = SIcon(picture: 'assets/icons/more.svg');
+  static const SIcon moreClose = SIcon(picture: 'assets/icons/moreClose.svg');
 
-  static SIcon logo = SIcon(picture: 'assets/icons/logo.svg');
-  static SIcon lineLogo = SIcon(picture: 'assets/icons/line_logo.svg');
-  static SIcon kakaoLogo = SIcon(picture: 'assets/icons/kakao_logo.svg');
+  static const SIcon logo = SIcon(picture: 'assets/icons/logo.svg');
+  static const SIcon lineLogo = SIcon(picture: 'assets/icons/line_logo.svg');
+  static const SIcon kakaoLogo = SIcon(picture: 'assets/icons/kakao_logo.svg');
 
-  static SIcon kakaoPay = SIcon(picture: 'assets/icons/kakao_pay.svg');
-  static SIcon linePay = SIcon(picture: 'assets/icons/line_pay.svg');
-  static SIcon applePay = SIcon(picture: 'assets/icons/apple_pay.svg');
+  static const SIcon kakaoPay = SIcon(picture: 'assets/icons/kakao_pay.svg');
+  static const SIcon linePay = SIcon(picture: 'assets/icons/line_pay.svg');
+  static const SIcon applePay = SIcon(picture: 'assets/icons/apple_pay.svg');
 
 
 }

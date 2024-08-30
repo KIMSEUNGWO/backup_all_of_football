@@ -103,7 +103,7 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
                 ),
                 GestureDetector(
                   onTap: () {
-                    UserService.test();
+                    UserService.instance.test();
                   },
                   child: Text('테스트 데이터 로드',
                     style: TextStyle(

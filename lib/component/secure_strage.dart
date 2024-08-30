@@ -8,10 +8,14 @@ abstract class Constant {
 
 class SecureStorage {
 
-  static const FlutterSecureStorage storage = FlutterSecureStorage();
+  final FlutterSecureStorage storage;
+  static const SecureStorage instance = SecureStorage();
+
+  const SecureStorage():
+    storage = const FlutterSecureStorage();
 
   // 리프레시 토큰 저장
-  static Future<void> saveRefreshToken(String refreshToken) async {
+  Future<void> saveRefreshToken(String refreshToken) async {
     try {
       print('[SECURE_STORAGE] saveRefreshToken : $refreshToken');
       await storage.write(key: Constant.REFRESH_TOKEN, value: refreshToken);
@@ -21,7 +25,7 @@ class SecureStorage {
   }
 
   // 리프레시 토큰 블러오기
-  static Future<String?> readRefreshToken() async {
+  Future<String?> readRefreshToken() async {
     try {
       final refreshToken = await storage.read(key: Constant.REFRESH_TOKEN);
       print('[SECURE_STORAGE] readRefreshToken: $refreshToken');
@@ -32,14 +36,14 @@ class SecureStorage {
     }
   }
 
-  static void removeAllByToken() {
+  void removeAllByToken() {
     storage.delete(key: Constant.ACCESS_TOKEN);
     storage.delete(key: Constant.REFRESH_TOKEN);
     print('[SECURE_STORAGE] deleteAllByToken !!');
   }
 
   // 에세스 토큰 저장
-  static Future<void> saveAccessToken(String accessToken) async {
+  Future<void> saveAccessToken(String accessToken) async {
     try {
       print('[SECURE_STORAGE] saveAccessToken: $accessToken');
       await storage.write(key: Constant.ACCESS_TOKEN, value: accessToken);
@@ -49,7 +53,7 @@ class SecureStorage {
   }
 
   // 에세스 토큰 불러오기
-  static Future<String?> readAccessToken() async {
+  Future<String?> readAccessToken() async {
     try {
       final accessToken = await storage.read(key: Constant.ACCESS_TOKEN);
       print('[SECURE_STORAGE] readAccessToken: $accessToken');

@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 
 class CustomSnackBar {
 
-  static message(BuildContext context, String message) {
+  static const CustomSnackBar instance = CustomSnackBar();
+  const CustomSnackBar();
+
+  message(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message,

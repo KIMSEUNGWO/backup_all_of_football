@@ -58,11 +58,11 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
   }
   void _setCoupon(Coupon? coupon) {
     print('쿠폰 선택함 : ${coupon?.title}');
-    CustomSnackBar.message(context, '쿠폰이 적용되었습니다.');
+    CustomSnackBar.instance.message(context, '쿠폰이 적용되었습니다.');
     setState(() {
       _coupon = coupon;
       if (_coupon != null) {
-        _totalPrice = CouponCalculator.total(orderSimp.totalPrice, (_coupon!.per / 100));
+        _totalPrice = CouponCalculator.instance.total(orderSimp.totalPrice, (_coupon!.per / 100));
       } else {
         _totalPrice = orderSimp.totalPrice;
       }
@@ -93,7 +93,7 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
 
   }
   _pay() async {
-    final response = await OrderService.postOrder(matchId: widget.matchId, couponId: _coupon?.couponId);
+    final response = await OrderService.instance.postOrder(matchId: widget.matchId, couponId: _coupon?.couponId);
     ResultCode resultCode = response.resultCode;
     if (resultCode == ResultCode.OK) {
       ref.read(couponNotifier.notifier).delete(_coupon);
@@ -115,7 +115,7 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
   _initFetch() async {
     ref.read(loginProvider.notifier).refreshCash();
     ref.read(couponNotifier.notifier).init();
-    final response = await OrderService.getOrderSimp(matchId: widget.matchId);
+    final response = await OrderService.instance.getOrderSimp(matchId: widget.matchId);
     final result = response.resultCode;
     if (result == ResultCode.OK) {
       setState(() {
@@ -545,7 +545,7 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
                             const SizedBox(height: 2,),
                             GestureDetector(
                               onTap: () {
-                                OpenApp().openMaps(lat: orderSimp.address.lat, lng: orderSimp.address.lng);
+                                OpenApp.instance.openMaps(lat: orderSimp.address.lat, lng: orderSimp.address.lng);
                               },
                               child: Text(orderSimp.address.address,
                                 style: const TextStyle(
@@ -872,7 +872,7 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
                                           color: Theme.of(context).colorScheme.primary
                                       ),
                                     ),
-                                    Text(AccountFormatter.format(-1 * CouponCalculator.discount(orderSimp.totalPrice, (_coupon!.per / 100))),
+                                    Text(AccountFormatter.format(-1 * CouponCalculator.instance.discount(orderSimp.totalPrice, (_coupon!.per / 100))),
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,

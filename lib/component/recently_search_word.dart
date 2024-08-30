@@ -6,7 +6,7 @@ class RecentlySearchWord {
   Set<String> _words = {};
 
   init() async {
-    Set<String> words = Set.of(await LocalStorage.getRecentlySearchWords());
+    Set<String> words = Set.of(await LocalStorage.instance.getRecentlySearchWords());
     _words.addAll(words);
   }
 

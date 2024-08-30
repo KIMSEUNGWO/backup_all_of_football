@@ -17,8 +17,11 @@ import 'package:intl/intl.dart';
 
 class UserService {
 
-  static Future<ResultCode> login(SocialResult result) async {
-    final response = await ApiService.post(
+  static const UserService instance = UserService();
+  const UserService();
+
+  Future<ResultCode> login(SocialResult result) async {
+    final response = await ApiService.instance.post(
       uri: '/social/login',
       authorization: false,
       header: ApiService.contentTypeJson,
@@ -30,16 +33,16 @@ class UserService {
     );
 
     if (response.resultCode == ResultCode.OK) {
-      await SecureStorage.saveAccessToken(response.data['accessToken']);
-      await SecureStorage.saveRefreshToken(response.data['refreshToken']);
+      await SecureStorage.instance.saveAccessToken(response.data['accessToken']);
+      await SecureStorage.instance.saveRefreshToken(response.data['refreshToken']);
       print('LINE LOGIN SUCCESS !!!');
     }
     return response.resultCode;
   }
 
-  static Future<UserProfile?> getProfile() async {
+  Future<UserProfile?> getProfile() async {
 
-    final response = await ApiService.get(
+    final response = await ApiService.instance.get(
       uri: '/user/profile',
       authorization: true,
     );
@@ -50,9 +53,9 @@ class UserService {
     return null;
   }
 
-  static Future<ResultCode> register({required SexType sex, required DateTime birth, required SocialResult social}) async {
+  Future<ResultCode> register({required SexType sex, required DateTime birth, required SocialResult social}) async {
 
-    final response = await ApiService.post(
+    final response = await ApiService.instance.post(
         uri: '/register',
         authorization: false,
         header: ApiService.contentTypeJson,
@@ -66,22 +69,22 @@ class UserService {
     );
 
     if (response.resultCode == ResultCode.OK) {
-      await SecureStorage.saveAccessToken(response.data['accessToken']);
-      await SecureStorage.saveRefreshToken(response.data['refreshToken']);
+      await SecureStorage.instance.saveAccessToken(response.data['accessToken']);
+      await SecureStorage.instance.saveRefreshToken(response.data['refreshToken']);
       print('REGISTER SUCCESS !!!');
     }
     return response.resultCode;
   }
 
-  static Future<ResponseResult> getCash() async {
-    return await ApiService.get(
+  Future<ResponseResult> getCash() async {
+    return await ApiService.instance.get(
       uri: '/user/cash',
       authorization: true,
     );
   }
 
-  static Future<List<Receipt>> getReceipt() async {
-    final response = await ApiService.get(
+  Future<List<Receipt>> getReceipt() async {
+    final response = await ApiService.instance.get(
       uri: '/user/receipt',
       authorization: true,
     );
@@ -92,10 +95,10 @@ class UserService {
     }
   }
 
-  static Future<Map<int, List<MatchView>>> getHistory(DateTime date) async {
+  Future<Map<int, List<MatchView>>> getHistory(DateTime date) async {
     final String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(date);
 
-    final response = await ApiService.get(
+    final response = await ApiService.instance.get(
       uri: '/user/history?date=$formattedDate',
       authorization: true,
     );
@@ -116,8 +119,8 @@ class UserService {
     }
   }
 
-  static Future<List<FieldSimp>> getFavorites() async {
-    final response = await ApiService.get(
+  Future<List<FieldSimp>> getFavorites() async {
+    final response = await ApiService.instance.get(
       uri: '/user/favorite',
       authorization: true,
     );
@@ -128,15 +131,15 @@ class UserService {
     }
   }
 
-  static void test() async {
-    final response = await ApiService.get(
+  void test() async {
+    final response = await ApiService.instance.get(
       uri: '/test',
       authorization: true,
     );
   }
 
-  static editFavorite(int fieldId, bool toggle) async {
-    final response = await ApiService.post(
+  editFavorite(int fieldId, bool toggle) async {
+    final response = await ApiService.instance.post(
         uri: '/user/favorite',
         authorization: true,
         header: ApiService.contentTypeJson,
@@ -148,8 +151,8 @@ class UserService {
     return response.resultCode;
   }
 
-  static Future<List<Coupon>> getCoupons() async {
-    final response = await ApiService.get(
+  Future<List<Coupon>> getCoupons() async {
+    final response = await ApiService.instance.get(
       uri: '/user/coupon',
       authorization: true,
     );
@@ -160,9 +163,9 @@ class UserService {
     }
   }
 
-  static Future<bool> distinctNickname(String nickname) async {
+  Future<bool> distinctNickname(String nickname) async {
     String encodedNickname = Uri.encodeComponent(nickname);
-    final response = await ApiService.get(
+    final response = await ApiService.instance.get(
       uri: '/user/distinct/nickname?nickname=$encodedNickname',
       authorization: true,
     );

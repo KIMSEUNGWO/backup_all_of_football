@@ -15,6 +15,9 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
 
+  static const ApiService instance = ApiService();
+  const ApiService();
+
   static const String server = "http://$domain";
   static const String domain = 'localhost:8080';
   static const Duration _delay = Duration(seconds: 20);
@@ -22,16 +25,16 @@ class ApiService {
     "Content-Type" : "application/json; charset=utf-8",
   };
 
-  static ResponseResult _decode(http.Response response) {
+  ResponseResult _decode(http.Response response) {
     final json = jsonDecode(utf8.decode(response.bodyBytes));
     return ResponseResult.fromJson(json);
   }
 
-  static getHeaders(Map<String, String> requestHeader, bool authorization, Map<String, String>? header) async {
-    await HeaderHelper.getHeaders(requestHeader, authorization, header);
+  getHeaders(Map<String, String> requestHeader, bool authorization, Map<String, String>? header) async {
+    await HeaderHelper.instance.getHeaders(requestHeader, authorization, header);
   }
 
-  static Future<ResponseResult> post({required String uri, required bool authorization, Map<String, String>? header, Object? body,}) async {
+  Future<ResponseResult> post({required String uri, required bool authorization, Map<String, String>? header, Object? body,}) async {
 
     Map<String, String> requestHeader = {};
     await getHeaders(requestHeader, authorization, header);
@@ -40,7 +43,7 @@ class ApiService {
     return _decode(response);
   }
 
-  static Future<ResponseResult> get({required String uri, required bool authorization, Map<String, String>? header}) async {
+  Future<ResponseResult> get({required String uri, required bool authorization, Map<String, String>? header}) async {
     Map<String, String> requestHeader = {"Content-Type" : "application/json; charset=utf-8",};
     await getHeaders(requestHeader, authorization, header);
 
@@ -48,7 +51,7 @@ class ApiService {
     return _decode(response);
   }
 
-  static Future<ResponseResult> multipart(String uri, {required MethodType method, required String? multipartFilePath, required Map<String, dynamic> data}) async {
+  Future<ResponseResult> multipart(String uri, {required MethodType method, required String? multipartFilePath, required Map<String, dynamic> data}) async {
     var request = http.MultipartRequest(method.name, Uri.parse('$server$uri'));
     request.headers.addAll({"Content-Type": "application/json; charset=UTF-8"});
     await getHeaders(request.headers, true, null);

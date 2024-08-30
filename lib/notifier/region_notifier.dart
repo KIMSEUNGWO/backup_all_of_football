@@ -10,7 +10,7 @@ class RegionNotifier extends StateNotifier<Region> {
   RegionNotifier() : super(Region.ALL);
 
   init() async {
-    state = await LocalStorage.findByRegion();
+    state = await LocalStorage.instance.findByRegion();
   }
 
   get() async {
@@ -20,8 +20,8 @@ class RegionNotifier extends StateNotifier<Region> {
   void setRegion(BuildContext context, Region newRegion) async {
     if (state == newRegion) return;
     state = newRegion;
-    LocalStorage.saveByRegion(newRegion);
-    CustomSnackBar.message(context, '지역을 변경했습니다.');
+    LocalStorage.instance.saveByRegion(newRegion);
+    CustomSnackBar.instance.message(context, '지역을 변경했습니다.');
   }
 
   String getLocalName(Locale locale) {
