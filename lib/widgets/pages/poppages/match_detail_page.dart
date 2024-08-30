@@ -8,8 +8,10 @@ import 'package:groundjp/component/account_format.dart';
 import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/component/open_app.dart';
 import 'package:groundjp/domain/enums/match_enums.dart';
+import 'package:groundjp/domain/refund/refund.dart';
 import 'package:groundjp/domain/user/user_profile.dart';
 import 'package:groundjp/notifier/coupon_notifier.dart';
+import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/bottom_bar_widget.dart';
 import 'package:groundjp/widgets/component/image_detail_view.dart';
@@ -80,6 +82,8 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
     if (response.resultCode == ResultCode.OK) {
       ref.read(loginProvider.notifier).refreshCash();
       ref.read(couponNotifier.notifier).init();
+      Refund refund = Refund.fromJson(response.data);
+      ref.read(notificationNotifier.notifier).matchCancel(matchId: widget.matchId, refund: refund);
       Alert.of(context).message(
         message: '경기를 취소했습니다.',
         onPressed: () => Navigator.pop(context),

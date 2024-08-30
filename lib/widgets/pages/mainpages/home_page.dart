@@ -1,7 +1,9 @@
 
 import 'package:groundjp/api/service/user_service.dart';
 import 'package:groundjp/component/svg_icon.dart';
+import 'package:groundjp/domain/refund/refund.dart';
 import 'package:groundjp/domain/user/social_result.dart';
+import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_scroll_refresh.dart';
 import 'package:groundjp/widgets/form/field_image_preview.dart';
@@ -104,6 +106,42 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
                     UserService.test();
                   },
                   child: Text('테스트 데이터 로드',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    ref.read(notificationNotifier.notifier).show(id: 1, title: '타이틀', body: '내용');
+                  },
+                  child: Text('알림 테스트',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    ref.read(notificationNotifier.notifier).scheduleMatchDate(
+                      matchId: 1,
+                      matchDate: DateTime.now().add(const Duration(seconds: 35)),
+                    );
+                  },
+                  child: Text('스케줄 알림 테스트',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    ref.read(notificationNotifier.notifier).matchCancel(matchId: 1, refund: Refund(10000, 2000));
+                  },
+                  child: Text('스케줄 취소 테스트',
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.black

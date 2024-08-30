@@ -1,6 +1,4 @@
 
-
-import 'package:groundjp/api/domain/result_code.dart';
 import 'package:groundjp/api/service/user_service.dart';
 import 'package:groundjp/component/account_format.dart';
 import 'package:groundjp/component/action_sheet.dart';
@@ -25,14 +23,6 @@ class _CashReceiptWidgetState extends ConsumerState<CashReceiptWidget> {
   ReceiptType? _receiptType;
 
   late final List<Receipt> _items;
-
-  // late List<Receipt> _items = [
-  //   Receipt(title: '카카오페이', type: ReceiptType.CHARGE, date: DateTime.now(), useCash: 20000, remainCash: 20000),
-  //   Receipt(title: '매치참여', type: ReceiptType.USE, date: DateTime.now(), useCash: -10000, remainCash: 10000),
-  //   Receipt(title: '[30%] 매치 3일전 취소', type: ReceiptType.CANCEL, date: DateTime.now(), useCash: 3000, remainCash: 13000),
-  //   Receipt(title: '[100%] 기상악화로 인한 환불', type: ReceiptType.REFUND, date: DateTime.now(), useCash: 10000, remainCash: 23000),
-  //   Receipt(title: '라인페이', type: ReceiptType.CHARGE, date: DateTime.now(), useCash: 30000, remainCash: 53000),
-  // ];
 
   List<Receipt> _showItems = [];
 

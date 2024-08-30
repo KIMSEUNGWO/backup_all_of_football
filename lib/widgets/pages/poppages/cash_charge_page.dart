@@ -7,6 +7,7 @@ import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/component/svg_icon.dart';
 import 'package:groundjp/domain/cash/kakao_ready_response.dart';
 import 'package:groundjp/domain/enums/payment.dart';
+import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/policy_widget.dart';
@@ -44,6 +45,10 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
 
   _chargeCompleted() async {
     await ref.read(loginProvider.notifier).refreshCash();
+    ref.read(notificationNotifier.notifier).show(
+      id: 0, title: '캐시 충전',
+      body: '충전이 완료되었습니다.\n충전수단: ${_payments[_selectPaymentIndex!].ko}\n충전금액: ${AccountFormatter.format(_amounts[_selectAmountIndex!])}',
+    );
     Alert.of(context).message(
       message: '결제가 완료되었습니다.',
       onPressed: () {

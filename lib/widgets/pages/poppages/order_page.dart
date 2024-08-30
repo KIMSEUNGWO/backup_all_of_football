@@ -12,6 +12,7 @@ import 'package:groundjp/domain/coupon/coupon_result.dart';
 import 'package:groundjp/domain/order/order_result.dart';
 import 'package:groundjp/domain/order/order_simp.dart';
 import 'package:groundjp/notifier/coupon_notifier.dart';
+import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/form/detail_default_form.dart';
@@ -96,6 +97,7 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
     ResultCode resultCode = response.resultCode;
     if (resultCode == ResultCode.OK) {
       ref.read(couponNotifier.notifier).delete(_coupon);
+      ref.read(notificationNotifier.notifier).scheduleMatchDate(matchId: widget.matchId, matchDate: orderSimp.matchDate);
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
         return OrderCompleteWidget(orderResult: OrderResult.fromJson(response.data));
       }, fullscreenDialog: true));
