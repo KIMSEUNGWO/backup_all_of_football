@@ -14,12 +14,16 @@ class LoginWidget extends ConsumerWidget {
   _onTryLogin(BuildContext context, WidgetRef ref, SocialProvider provider) async {
     final result = await ref.read(loginProvider.notifier).login(context, ref, provider);
     print('result : ${result.resultCode}');
-    Navigator.pop(context);
+    if (context.mounted) {
+      Navigator.pop(context);
+    }
     if (result.resultCode == ResultCode.OK) {
       print('로그인 성공');
     } else  if (result.resultCode == ResultCode.REGISTER) {
       print('회원가입 시도');
-      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterWidget(social: result.data,)));
+      if (context.mounted) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterWidget(social: result.data,)));
+      }
     }
   }
 

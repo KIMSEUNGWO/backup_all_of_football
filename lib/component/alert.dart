@@ -4,18 +4,8 @@ import 'package:flutter/material.dart';
 
 class Alert {
 
-  Alert.privateConstructor();
-
-  static _AlertBuilder of(BuildContext context) {
-    return _AlertBuilder(context);
-  }
-}
-
-class _AlertBuilder {
-
   final BuildContext context;
-
-  _AlertBuilder(this.context);
+  Alert.of(this.context);
 
   void confirm({required String message, required String btnMessage, required Function() onPressed, Function()? onCanceled}) {
     showDialog(
@@ -66,16 +56,16 @@ class _AlertBuilder {
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border(
-                                    top: alertBorderSide,
-                                    right: alertBorderSide
+                                      top: alertBorderSide,
+                                      right: alertBorderSide
                                   ),
                                 ),
                                 child: Center(
                                   child: Text('취소',
                                     style: TextStyle(
-                                      color: Theme.of(context).colorScheme.primary,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize
+                                        color: Theme.of(context).colorScheme.primary,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize
                                     ),
                                   ),
                                 ),
@@ -93,15 +83,15 @@ class _AlertBuilder {
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border(
-                                    top: alertBorderSide
+                                      top: alertBorderSide
                                   ),
                                 ),
                                 child: Center(
                                   child: Text(btnMessage,
                                     style: TextStyle(
-                                      color: Theme.of(context).colorScheme.onPrimary,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize
+                                        color: Theme.of(context).colorScheme.onPrimary,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize
                                     ),
                                   ),
                                 ),

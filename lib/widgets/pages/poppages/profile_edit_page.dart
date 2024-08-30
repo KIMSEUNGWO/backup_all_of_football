@@ -61,12 +61,14 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
     final result = await ApiService.instance.multipart('/user/edit', method: MethodType.POST, multipartFilePath: editProfileImagePath, data: data);
     if (result.resultCode == ResultCode.OK) {
       ref.read(loginProvider.notifier).readUser(ref);
-      Alert.of(context).message(
-        message: '프로필이 수정되었습니다.',
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
+      if (mounted) {
+        Alert.of(context).message(
+          message: '프로필이 수정되었습니다.',
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        );
+      }
     } else if (result.resultCode == ResultCode.INVALID_DATA) {
       _bindingError(InvalidData.fromJson(result.data));
     }

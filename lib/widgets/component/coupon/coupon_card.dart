@@ -7,7 +7,7 @@ class CouponCard extends StatelessWidget {
   /// Creates a vertical coupon card widget that takes two children
   /// with the properties that defines the shape of the card.
   const CouponCard({
-    Key? key,
+    super.key,
     required this.firstChild,
     required this.secondChild,
     this.width,
@@ -21,7 +21,7 @@ class CouponCard extends StatelessWidget {
     this.decoration,
     this.shadow,
     this.border,
-  }) : super(key: key);
+  });
 
   /// The small child or first.
   final Widget firstChild;

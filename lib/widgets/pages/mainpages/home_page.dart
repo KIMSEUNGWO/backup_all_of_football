@@ -6,6 +6,7 @@ import 'package:groundjp/domain/user/social_result.dart';
 import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_scroll_refresh.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/form/field_image_preview.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/favorite_field_display.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/match_soon_display.dart';
@@ -61,16 +62,17 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
               key: _refreshMatchSoon,
             ),
           ),
-          SliverToBoxAdapter(
-            child: FavoriteFieldDisplay(),
+          const SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FavoriteFieldDisplay(),
+                RecentlyVisitMatchDisplay(),
+                RegionMatchDisplay(),
+                SpaceHeight(36),
+              ],
+            ),
           ),
-          SliverToBoxAdapter(
-            child: RecentlyVisitMatchDisplay(),
-          ),
-          SliverToBoxAdapter(
-            child: RegionMatchDisplay(),
-          ),
-          SliverToBoxAdapter(child: const SizedBox(height: 36,),),
 
           SliverToBoxAdapter(
             child: Column(
@@ -78,13 +80,13 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
                 GestureDetector(
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return LoginWidget();
+                      return const LoginWidget();
                     }, fullscreenDialog: true));
                   },
-                  child: Text('로그인 페이지 이동',
+                  child: const Text('로그인 페이지 이동',
                     style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
+                      fontSize: 20,
+                      color: Colors.black,
                     ),
                   ),
                 ),

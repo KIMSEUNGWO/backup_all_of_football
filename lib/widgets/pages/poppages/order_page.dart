@@ -98,17 +98,22 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
     if (resultCode == ResultCode.OK) {
       ref.read(couponNotifier.notifier).delete(_coupon);
       ref.read(notificationNotifier.notifier).scheduleMatchDate(matchId: widget.matchId, matchDate: orderSimp.matchDate);
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return OrderCompleteWidget(orderResult: OrderResult.fromJson(response.data));
-      }, fullscreenDialog: true));
+
+      if (mounted) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return OrderCompleteWidget(orderResult: OrderResult.fromJson(response.data));
+        }, fullscreenDialog: true));
+      }
 
     } else if (resultCode.hasOrderError()) {
-      Alert.of(context).message(
-        message: resultCode.orderErrorMessage(),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
+      if (mounted) {
+        Alert.of(context).message(
+          message: resultCode.orderErrorMessage(),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        );
+      }
     }
   }
 
@@ -124,12 +129,14 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
         _loading = false;
       });
     } else if (result == ResultCode.MATCH_NOT_EXISTS) {
-      Alert.of(context).message(
-        message: '존재하지 않는 경기입니다.',
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
+      if (mounted) {
+        Alert.of(context).message(
+          message: '존재하지 않는 경기입니다.',
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        );
+      }
     }
   }
   

@@ -33,15 +33,9 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
 
   int? _selectAmountIndex;
   int? _selectPaymentIndex;
+  bool _selectPolicy = false;
   bool _canSubmit = false;
   bool _loading = false;
-
-  _notNullCheck(bool policy) {
-    bool result = policy && _selectAmountIndex != null && _selectPaymentIndex != null;
-    setState(() {
-      _canSubmit = result;
-    });
-  }
 
   _chargeCompleted() async {
     await ref.read(loginProvider.notifier).refreshCash();
@@ -49,23 +43,32 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
       id: 0, title: '캐시 충전',
       body: '충전이 완료되었습니다.\n충전수단: ${_payments[_selectPaymentIndex!].ko}\n충전금액: ${AccountFormatter.format(_amounts[_selectAmountIndex!])}',
     );
-    Alert.of(context).message(
-      message: '결제가 완료되었습니다.',
-      onPressed: () {
-        Navigator.pop(context);
-        Navigator.pop(context);
-      },
-    );
+    if (mounted) {
+      Alert.of(context).message(
+        message: '결제가 완료되었습니다.',
+        onPressed: () {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
+      );
+    }
   }
 
   _setAmount(int index) {
-    setState(() {
-      _selectAmountIndex = index;
-    });
+    setState(() =>_selectAmountIndex = index);
+    _canSubmitCheck();
   }
   _setPayment(int index) {
+    setState(() =>_selectPaymentIndex = index);
+    _canSubmitCheck();
+  }
+  _checkPolicy(bool policy) {
+    setState(() =>_selectPolicy = policy);
+    _canSubmitCheck();
+  }
+  _canSubmitCheck() {
     setState(() {
-      _selectPaymentIndex = index;
+      _canSubmit = _selectPolicy && _selectAmountIndex != null && _selectPaymentIndex != null;
     });
   }
   _setLoading(bool data) {
@@ -79,7 +82,9 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
 
   _submit() async {
     if (_loading) return;
-    _setLoading(true);
+    setState(() {
+      _loading = true;
+    });
     int amount = _amounts[_selectAmountIndex ?? 0];
     Payment payment = _payments[_selectPaymentIndex ?? 0];
     print('payment : $payment, amount : $amount');
@@ -87,8 +92,11 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
     ResponseResult result = await PaymentService.instance.readyPayment(amount: amount, payment: payment);
     KakaoReady kakao = KakaoReady.fromJson(result.data);
 
-    Navigator.push(context,
-      MaterialPageRoute(builder: (context) => KakaoPayWebView(kakao: kakao, loading: _setLoading, onSuccess: _chargeCompleted), fullscreenDialog: true));
+    if (mounted) {
+      Navigator.push(context,
+        MaterialPageRoute(builder: (context) => KakaoPayWebView(kakao: kakao, loading: _setLoading, onSuccess: _chargeCompleted), fullscreenDialog: true)
+      );
+    }
   }
 
   @override
@@ -201,7 +209,7 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
                     ),
                   ),
                   PolicyWidget(
-                    canSubmit: _notNullCheck,
+                    canSubmit: _checkPolicy,
                   ),
                   const SizedBox(height: 45,),
                   GestureDetector(

@@ -85,7 +85,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return ProfileEditPage();
+                                  return const ProfileEditPage();
                                 }, fullscreenDialog: true));
                               },
                               child: Stack(
@@ -238,7 +238,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return CashChargeWidget();
+                                  return const CashChargeWidget();
                                 },));
                               },
                               child: Text('충전',
@@ -251,7 +251,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return CashReceiptWidget();
+                                  return const CashReceiptWidget();
                                 },));
                               },
                               child: Text('내역',
@@ -299,7 +299,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                       title: '경기내역',
                       onPressed: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return MatchHistoryWidget();
+                          return const MatchHistoryWidget();
                         },));
                       },
                     ),
@@ -309,13 +309,13 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                       title: '쿠폰',
                       onPressed: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return CouponListWidget();
+                          return const CouponListWidget();
                         },));
                       },
                     ),
                     const SpaceHeight(10,),
                     _Menu(
-                      icon: Icon(Icons.logout_outlined, size: 20,),
+                      icon: const Icon(Icons.logout_outlined, size: 20,),
                       title: '로그아웃',
                       onPressed: (){
                         Alert.of(context).confirm(

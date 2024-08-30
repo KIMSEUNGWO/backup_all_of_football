@@ -1,6 +1,5 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:groundjp/api/service/user_service.dart';
 import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/domain/coupon/coupon.dart';
 import 'package:groundjp/exception/server/server_exception.dart';

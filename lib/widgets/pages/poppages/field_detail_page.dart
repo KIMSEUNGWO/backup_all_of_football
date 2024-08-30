@@ -44,12 +44,14 @@ class _FieldDetailWidgetState extends State<FieldDetailWidget> {
           _loading = false;
         });
       } else if (result == ResultCode.FIELD_NOT_EXISTS) {
-        Alert.of(context).message(
-          message: '존재하지 않는 구장입니다..',
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        );
+        if (mounted) {
+          Alert.of(context).message(
+            message: '존재하지 않는 구장입니다..',
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          );
+        }
       }
     }
   }
@@ -96,7 +98,8 @@ class _FieldDetailWidgetState extends State<FieldDetailWidget> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => ImageDetailView(image: image)
                                 ,fullscreenDialog: true
-                            ));
+                            )
+                        );
                       },
                       child: image,
                     );

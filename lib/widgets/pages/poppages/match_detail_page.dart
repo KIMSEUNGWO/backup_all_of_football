@@ -53,12 +53,14 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
         _loading = false;
       });
     } else if (result == ResultCode.MATCH_NOT_EXISTS) {
-      Alert.of(context).message(
-        message: '존재하지 않는 경기입니다..',
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
+      if (mounted) {
+        Alert.of(context).message(
+          message: '존재하지 않는 경기입니다..',
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        );
+      }
     }
   }
 
@@ -82,19 +84,23 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
     if (response.resultCode == ResultCode.OK) {
       ref.read(loginProvider.notifier).refreshCash();
       ref.read(couponNotifier.notifier).init();
-      Refund refund = Refund.fromJson(response.data);
-      ref.read(notificationNotifier.notifier).matchCancel(matchId: widget.matchId, refund: refund);
-      Alert.of(context).message(
-        message: '경기를 취소했습니다.',
-        onPressed: () => Navigator.pop(context),
-      );
+      ref.read(notificationNotifier.notifier).matchCancel(matchId: widget.matchId, refund: Refund.fromJson(response.data));
+
+      if (mounted) {
+        Alert.of(context).message(
+          message: '경기를 취소했습니다.',
+          onPressed: () => Navigator.pop(context),
+        );
+      }
       return;
 
     } else if (response.resultCode == ResultCode.ORDER_NOT_EXISTS) {
-      Alert.of(context).message(
-        message: '이미 환불 처리된 경기입니다.',
-        onPressed: () => Navigator.pop(context),
-      );
+      if (mounted) {
+        Alert.of(context).message(
+          message: '이미 환불 처리된 경기입니다.',
+          onPressed: () => Navigator.pop(context),
+        );
+      }
       return;
     }
 
