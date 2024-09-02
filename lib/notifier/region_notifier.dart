@@ -9,8 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class RegionNotifier extends StateNotifier<Region> {
   RegionNotifier() : super(Region.ALL);
 
-  init() async {
-    state = await LocalStorage.instance.findByRegion();
+  init() {
+    state = LocalStorage.instance.findByRegion();
   }
 
   get() async {

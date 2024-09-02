@@ -3,30 +3,47 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
 
-  static const LocalStorage instance = LocalStorage();
-  const LocalStorage();
+  final SharedPreferences _storage;
 
-  Future<Region> findByRegion() async {
-    final storage = await SharedPreferences.getInstance();
-    String? regionName = storage.getString(LocalStorageKey.REGION.name);
+  static late LocalStorage instance;
+  LocalStorage._(this._storage);
+
+  static Future<LocalStorage> initInstance() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    instance = LocalStorage._(sharedPreferences);
+    return instance;
+  }
+
+  Region findByRegion() {
+    String? regionName = _storage.getString(LocalStorageKey.REGION.name);
     return Region.findByName(regionName);
   }
 
-  saveByRegion(Region region) async {
-    final storage = await SharedPreferences.getInstance();
-    storage.setString(LocalStorageKey.REGION.name, region.name);
+  saveByRegion(Region region) {
+    _storage.setString(LocalStorageKey.REGION.name, region.name);
   }
 
-  Future<List<String>> getRecentlySearchWords() async{
-    final storage = await SharedPreferences.getInstance();
-    List<String>? words = storage.getStringList(LocalStorageKey.RECENTLY_SEARCH_WORD.name);
+  List<String> getRecentlySearchWords() {
+    List<String>? words = _storage.getStringList(LocalStorageKey.RECENTLY_SEARCH_WORD.name);
     return (words == null) ? [] : words;
   }
 
-  saveByRecentlySearchWord(List<String> words) async {
-    final storage = await SharedPreferences.getInstance();
+  saveByRecentlySearchWord(List<String> words) {
     if (words.length > 6) words = words.sublist(0, 6);
-    storage.setStringList(LocalStorageKey.RECENTLY_SEARCH_WORD.name, words);
+    _storage.setStringList(LocalStorageKey.RECENTLY_SEARCH_WORD.name, words);
+  }
+
+  bool getMatchNotification() {
+    bool? isOn = _storage.getBool(LocalStorageKey.MATCH_NOTIFICATION.name);
+    if (isOn == null) {
+      saveMatchNotification(true);
+      return true;
+    }
+    return isOn;
+  }
+
+  saveMatchNotification(bool isOn) {
+    _storage.setBool(LocalStorageKey.MATCH_NOTIFICATION.name, isOn);
   }
 
 
@@ -36,5 +53,6 @@ enum LocalStorageKey {
 
   REGION,
   RECENTLY_SEARCH_WORD,
+  MATCH_NOTIFICATION
 
 }

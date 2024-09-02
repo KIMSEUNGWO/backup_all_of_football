@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 class ToggleButton extends StatefulWidget {
 
   final ToggleDecoration decoration;
+  final bool Function() callback;
+  final void Function(bool) onChanged;
 
-  ToggleButton({super.key, ToggleDecoration? decoration}):
+  ToggleButton({super.key, required this.callback, required this.onChanged, ToggleDecoration? decoration}):
       decoration = decoration ?? ToggleDecoration();
 
 
@@ -15,7 +17,21 @@ class ToggleButton extends StatefulWidget {
 }
 
 class _ToggleButtonState extends State<ToggleButton> {
-  bool isToggled = false;
+
+  late bool isToggled;
+
+  _onChanged() {
+    setState(() {
+      isToggled = !isToggled;
+    });
+    widget.onChanged(isToggled);
+  }
+
+  @override
+  void initState() {
+    isToggled = widget.callback();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +40,7 @@ class _ToggleButtonState extends State<ToggleButton> {
     double ballSize = widget.decoration.height - 6;
 
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          isToggled = !isToggled;
-        });
-      },
+      onTap: _onChanged,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         width: widget.decoration.width,

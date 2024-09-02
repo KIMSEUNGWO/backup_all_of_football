@@ -128,7 +128,7 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
                   onTap: () {
                     ref.read(notificationNotifier.notifier).scheduleMatchDate(
                       matchId: 1,
-                      matchDate: DateTime.now().add(const Duration(seconds: 35)),
+                      matchDate: DateTime.now().add(const Duration(seconds: 40)),
                     );
                   },
                   child: Text('스케줄 알림 테스트',

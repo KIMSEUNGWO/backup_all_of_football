@@ -1,19 +1,22 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:groundjp/component/local_storage.dart';
+import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/component/toogle_button.dart';
 import 'package:groundjp/widgets/form/settings_menu_form.dart';
 import 'package:groundjp/widgets/pages/poppages/settings/settings_help_page.dart';
 import 'package:groundjp/widgets/pages/poppages/settings/settings_notice_page.dart';
 
-class SettingsWidget extends StatefulWidget {
+class SettingsWidget extends ConsumerStatefulWidget {
   const SettingsWidget({super.key});
 
   @override
-  State<SettingsWidget> createState() => _SettingsWidgetState();
+  createState() => _SettingsWidgetState();
 }
 
-class _SettingsWidgetState extends State<SettingsWidget> {
+class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,11 +37,26 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     menus: [
                       SettingsMenuWidget(
                         menuTitle: '경기 시작 전 알림',
-                        action: ToggleButton(),
+                        action: ToggleButton(
+                          callback: LocalStorage.instance.getMatchNotification,
+                          onChanged: (isOn) {
+                            LocalStorage.instance.saveMatchNotification(isOn);
+                            if (!isOn) {
+                              ref.read(notificationNotifier.notifier).scheduleCancel(NotificationType.MATCH);
+                            }
+                          },
+                        ),
                       ),
                       SettingsMenuWidget(
                         menuTitle: '뭔가의 알림',
-                        action: ToggleButton(),
+                        action: ToggleButton(
+                          callback: () {
+                            return false;
+                          },
+                          onChanged: (p0) {
+
+                          },
+                        ),
                       ),
                     ],
                   ),
