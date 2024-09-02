@@ -16,12 +16,10 @@ class MatchHistoryWidget extends StatefulWidget {
 
 class _MatchHistoryWidgetState extends State<MatchHistoryWidget> {
 
+  // TODO 경기 취소할 때 같이 반영시켜도 좋을것 같음
   List<MatchView> _items = [];
 
   void _selectDate(DateTime selectDate, List<MatchView> matches) {
-    setState(() {
-      _items = [];
-    });
     print('날짜 변경감지 : $selectDate');
     setState(() {
       _items = matches;

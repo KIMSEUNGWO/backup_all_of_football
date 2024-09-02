@@ -24,7 +24,7 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
 
   final _dateRange = 30;
   int _currentDateIndex = 0;
-  bool _loading = false;
+  bool _loading = true;
   
   late List<MatchView> _items = [];
   int _pageNumber = 0;
@@ -34,9 +34,9 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
 
   late SearchCondition _condition;
 
-  _selectRegion(Region region) async {
+  _selectRegion(Region region) {
     ref.read(regionProvider.notifier).setRegion(context, region);
-    Region newRegion = await ref.read(regionProvider.notifier).get();
+    Region? newRegion = ref.read(regionProvider.notifier).get();
     if (_condition.region == newRegion) return;
     _search(
       SearchCondition(
@@ -52,13 +52,29 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
     List<MatchView> response = await MatchService.instance.search(_condition);
     setState(() {
       _items = response;
+      _loading = false;
     });
   }
-  
+
+  _externalRegionChangeEvent(Region region) async {
+    _condition = SearchCondition(
+        date: _condition.date,
+        sexType: _condition.sexType,
+        region: region
+    );
+    List<MatchView> response = await MatchService.instance.search(_condition);
+    setState(() {
+      _items = response;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    Region region = ref.watch(regionProvider) ?? Region.ALL;
+    if (!_loading && region != _condition.region) {
+      _externalRegionChangeEvent(region);
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -73,7 +89,7 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(ref.watch(regionProvider).getLocaleName(const Locale('ko', 'KR')),
+              Text(region.getLocaleName(const Locale('ko', 'KR')),
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               const Icon(Icons.keyboard_arrow_down_rounded)
@@ -88,40 +104,37 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
           SearchData(search: _search, dateRange: _dateRange, selectedDateIndex: _currentDateIndex),
 
           Expanded(
-            child: Skeletonizer(
-              enabled: _loading,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: _items.isEmpty
-                ? Center(
-                 child: Text('매치가 없어요',
-                   style: TextStyle(
-                     fontSize: Theme.of(context).textTheme.displayMedium!.fontSize
-                   ),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: _items.isEmpty
+              ? Center(
+               child: Text('매치가 없어요',
+                 style: TextStyle(
+                   fontSize: Theme.of(context).textTheme.displayMedium!.fontSize
                  ),
-                )
-                : CustomScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(
-                      parent: BouncingScrollPhysics(),
-                    ),
-                    slivers: [
-                      CustomScrollRefresh(onRefresh: () {
-                      },),
-
-                      const SliverPadding(padding: EdgeInsets.only(top: 32)),
-
-                      SliverList.separated(
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(height: 16,);
-                        },
-                        itemCount: _items.length,
-                        itemBuilder: (context, index) {
-                          return MatchListWidget(match: _items[index]);
-                        },
-                      ),
-                    ],
+               ),
+              )
+              : CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
                   ),
-              ),
+                  slivers: [
+                    CustomScrollRefresh(onRefresh: () {
+                    },),
+
+                    const SliverPadding(padding: EdgeInsets.only(top: 32)),
+
+                    SliverList.separated(
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 16,);
+                      },
+                      itemCount: _items.length,
+                      itemBuilder: (context, index) {
+                        return MatchListWidget(match: _items[index]);
+                      },
+                    ),
+                  ],
+                ),
             ),
           ),
         ],

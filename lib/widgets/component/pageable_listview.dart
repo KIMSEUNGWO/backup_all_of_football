@@ -39,6 +39,7 @@ class _PageableListViewState<T> extends State<PageableListView<T>> {
     List<T> data = await widget.future(_pageable);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!mounted) return;
       setState(() {
         _pageable.hasMore = _pageable.size <= data.length;
         _items.addAll(data);

@@ -81,10 +81,7 @@ class NotificationNotifier extends StateNotifier<FlutterLocalNotificationsPlugin
     show(id: notificationId + 1, title: '개인사유로 인한 환불', body: '결제금액 : ${AccountFormatter.format(refund.payAmount)}\n환불금액 : ${AccountFormatter.format(refund.refundAmount)}');
 
     List<PendingNotificationRequest> data = await state.pendingNotificationRequests();
-    for (var o in data) {
-      print('Pending Notification => id : ${o.id}, title : ${o.title}, body : ${o.body}');
-      print('is Match Notification : ${NotificationType.MATCH.isDetailPayloadData(matchId, o.payload)}');
-    }
+
     List<int> cancelNotificationList = data.where((e) => NotificationType.MATCH.isDetailPayloadData(matchId, e.payload)).map((e) => e.id).toList();
     for (int index in cancelNotificationList) {
       state.cancel(index);

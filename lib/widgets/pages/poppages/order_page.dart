@@ -96,6 +96,7 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
     final response = await OrderService.instance.postOrder(matchId: widget.matchId, couponId: _coupon?.couponId);
     ResultCode resultCode = response.resultCode;
     if (resultCode == ResultCode.OK) {
+      ref.read(loginProvider.notifier).refreshCash();
       ref.read(couponNotifier.notifier).delete(_coupon);
       ref.read(notificationNotifier.notifier).scheduleMatchDate(matchId: widget.matchId, matchDate: orderSimp.matchDate);
 

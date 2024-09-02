@@ -28,10 +28,14 @@ class _RegionSettingsWidgetState extends ConsumerState<RegionSelectWidget> {
     });
   }
 
-  initRegion() async {
-    Region myRegion = await ref.read(regionProvider.notifier).get();
+  initRegion() {
+    Region? myRegion = ref.read(regionProvider.notifier).get();
     setState(() {
+      if (myRegion == null) {
+        _find = [Region.ALL];
+      } else {
       _find = {Region.ALL, myRegion}.toList();
+      }
     });
   }
 

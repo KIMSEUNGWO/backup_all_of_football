@@ -1,8 +1,10 @@
 
+import 'package:groundjp/api/service/match_service.dart';
 import 'package:groundjp/component/region_data.dart';
-import 'package:groundjp/domain/enums/match_enums.dart';
 import 'package:groundjp/domain/match/match_search_view.dart';
+import 'package:groundjp/domain/search_condition.dart';
 import 'package:groundjp/notifier/region_notifier.dart';
+import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/match_list.dart';
 import 'package:groundjp/widgets/pages/poppages/region_select_page.dart';
 import 'package:flutter/material.dart';
@@ -18,20 +20,40 @@ class RegionMatchDisplay extends ConsumerStatefulWidget {
 
 class _RegionMatchDisplayState extends ConsumerState<RegionMatchDisplay> {
 
-  List<MatchView> result = [
-    MatchView(1, MatchStatus.OPEN, '안양대학교 SKY 풋살파크 C구장', DateTime.now(), MatchData(null, Region.BUNKYO, 5, 3)),
-    MatchView(2, MatchStatus.CLOSING_SOON, '안양대학교 SKY 풋살파크 C구장', DateTime.now(), MatchData(SexType.MALE, Region.BUNKYO, 5, 2)),
-    MatchView(3, MatchStatus.CLOSED, '안양대학교 SKY 풋살파크 C구장안양대학교 SKY 풋살파크 C구장안양대학교 SKY 풋살파크 C구장', DateTime.now(), MatchData(SexType.FEMALE, Region.BUNKYO, 6, 3)),
-    MatchView(4, MatchStatus.FINISHED, '어딘가의 구장', DateTime(2024, 01, 1, 1,1), MatchData(null, Region.BUNKYO, 6, 2)),
-  ];
+  late Region? _region;
+  bool _loading = false;
+  List<MatchView> result = [];
 
   void _changeRegion(Region region) {
     ref.read(regionProvider.notifier).setRegion(context, region);
   }
+  void _fetch(Region region) async {
+    if (_loading) return;
+    print('_RegionMatchDisplayState._fetch');
+    List<MatchView> data = await MatchService.instance.search(SearchCondition(date: DateTime.now(), sexType: null, region: region));
+    setState(() {
+      result = data;
+      _loading = false;
+      _region = region;
+    });
+  }
+
+  @override
+  void initState() {
+    _region = ref.read(regionProvider.notifier).get();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    Region? region = ref.watch(regionProvider);
+    print('_RegionMatchDisplayState.build');
+    if (region == null) {
+      return const SizedBox();
+    } else if (region != _region) {
+      _fetch(region);
+      return const SizedBox();
+    }
 
-    Region region = ref.watch(regionProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -76,7 +98,14 @@ class _RegionMatchDisplayState extends ConsumerState<RegionMatchDisplay> {
 
           const SizedBox(height: 10,),
 
-          ListView.separated(
+          (result.isEmpty)
+          ? const CustomContainer(
+            height: 75,
+            child: Center(
+              child: Text('오늘은 더 이상 경기가 없어요.'),
+            ),
+          )
+          : ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             separatorBuilder: (context, index) => const SizedBox(height: 12,),
