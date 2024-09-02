@@ -61,9 +61,7 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
-        centerTitle: true,
         title: GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {

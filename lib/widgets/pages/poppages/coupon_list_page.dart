@@ -74,9 +74,7 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text('쿠폰함'),
-        scrolledUnderElevation: 0,
+        title: const Text('쿠폰함'),
         actions: widget.readOnly
           ? null
           : [

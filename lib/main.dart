@@ -43,6 +43,8 @@ themeData() {
     fontFamily: 'Pretendard',
     scaffoldBackgroundColor: const Color(0xFFF1F3F5),
     appBarTheme: const AppBarTheme(
+      centerTitle: true,
+      scrolledUnderElevation: 0,
       backgroundColor: Color(0xFFF1F3F5),
       titleTextStyle: TextStyle(
         color: Color(0xFF292929),

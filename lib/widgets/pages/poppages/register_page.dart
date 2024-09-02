@@ -86,9 +86,7 @@ class _RegisterWidgetState extends ConsumerState<RegisterWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 21),
         child: SingleChildScrollView(

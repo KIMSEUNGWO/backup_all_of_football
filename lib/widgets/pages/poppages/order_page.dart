@@ -150,9 +150,7 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
         title: const Text('경기신청'),
-        centerTitle: true,
       ),
       body: _loading
           ? Skeletonizer(

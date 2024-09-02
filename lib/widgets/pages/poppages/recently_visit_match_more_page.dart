@@ -14,9 +14,7 @@ class RecentlyVisitMatchMoreWidget extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('최근 본 매치'),
-        centerTitle: true,
-        scrolledUnderElevation: 0,
+        title: const Text('최근 본 매치'),
         actions: [
 
           if (items.isNotEmpty)

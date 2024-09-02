@@ -66,7 +66,6 @@ class _FieldDetailWidgetState extends State<FieldDetailWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
         centerTitle: false,
         title: Skeletonizer(
           enabled: _loading,

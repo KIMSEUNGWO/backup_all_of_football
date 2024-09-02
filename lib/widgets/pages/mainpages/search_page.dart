@@ -111,7 +111,6 @@ class _SearchWidgetState extends State<SearchWidget> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        scrolledUnderElevation: 0,
         title: Padding(
           padding: const EdgeInsets.only(right: 20),
           child: Row(

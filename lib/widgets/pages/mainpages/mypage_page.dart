@@ -48,7 +48,6 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
     }
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
         actions: [
           GestureDetector(
             onTap: () {

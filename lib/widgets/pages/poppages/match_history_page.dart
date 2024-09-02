@@ -32,9 +32,7 @@ class _MatchHistoryWidgetState extends State<MatchHistoryWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
         title: const Text('경기내역'),
-        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -53,9 +53,7 @@ class _CashReceiptWidgetState extends ConsumerState<CashReceiptWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
-        centerTitle: true,
-        title: Text('캐시 내역'),
+        title: const Text('캐시 내역'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

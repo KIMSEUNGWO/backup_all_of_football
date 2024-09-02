@@ -191,9 +191,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        centerTitle: true,
-        title: Text('프로필 수정',),
-        scrolledUnderElevation: 0,
+        title: const Text('프로필 수정',),
         actions: [
           GestureDetector(
             onTap: editProfile,

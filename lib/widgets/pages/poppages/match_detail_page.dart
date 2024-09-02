@@ -122,7 +122,6 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
       children: [
         Scaffold(
           appBar: AppBar(
-            scrolledUnderElevation: 0,
             centerTitle: false,
             title: Skeletonizer(
               enabled: _loading,

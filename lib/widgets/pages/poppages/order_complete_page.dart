@@ -54,8 +54,7 @@ class _OrderCompleteWidgetState extends State<OrderCompleteWidget> with SingleTi
       canPop: true,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('결제완료'),
-          centerTitle: true,
+          title: const Text('결제완료'),
           // automaticallyImplyLeading: false, // 뒤로가기 숨김
         ),
         body: Padding(

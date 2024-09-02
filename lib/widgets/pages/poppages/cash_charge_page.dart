@@ -106,7 +106,6 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
         Scaffold(
           appBar: AppBar(
             title: const Text('충전'),
-            scrolledUnderElevation: 0,
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

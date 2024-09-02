@@ -33,10 +33,8 @@ class LoginWidget extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white
-        ),
+      backgroundColor: Colors.white,
+      body: Padding(
         padding: EdgeInsets.only(left: 20, right: 20, top: 170, bottom: MediaQuery.of(context).padding.bottom),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

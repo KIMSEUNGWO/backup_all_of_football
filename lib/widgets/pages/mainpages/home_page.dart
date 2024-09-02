@@ -40,7 +40,6 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
         actions: [
           GestureDetector(
             onTap: () {
