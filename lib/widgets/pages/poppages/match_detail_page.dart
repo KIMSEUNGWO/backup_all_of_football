@@ -45,7 +45,7 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
   bool _cancelLoading = false;
 
   _fetchMatch() async {
-    final response = await MatchService.getMatch(matchId: widget.matchId);
+    final response = await MatchService.instance.getMatch(matchId: widget.matchId);
     ResultCode result = response.resultCode;
     if (result == ResultCode.OK) {
       setState(() {

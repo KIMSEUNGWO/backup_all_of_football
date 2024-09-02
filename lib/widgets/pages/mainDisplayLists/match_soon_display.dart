@@ -26,7 +26,7 @@ class _MatchSoonDisplayState extends ConsumerState<MatchSoonDisplay> {
 
   _fetch() async {
     try {
-      List<MatchView> data = await MatchService.getMatchesSoon();
+      List<MatchView> data = await MatchService.instance.getMatchesSoon();
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         if (mounted) {
           setState(() {
@@ -35,13 +35,17 @@ class _MatchSoonDisplayState extends ConsumerState<MatchSoonDisplay> {
         }
       },);
     } on TimeOutException catch (e) {
-      Alert.of(context).message(
-        message: e.message,
-      );
+      if (mounted) {
+        Alert.of(context).message(
+          message: e.message,
+        );
+      }
     } on InternalSocketException catch (e) {
-      Alert.of(context).message(
-        message: e.message,
-      );
+      if (mounted) {
+        Alert.of(context).message(
+          message: e.message,
+        );
+      }
     } on ServerException catch (e) {
       print('Server Exception : ${e.message}');
     }

@@ -1,7 +1,6 @@
 
 import 'package:groundjp/api/service/match_service.dart';
 import 'package:groundjp/component/region_data.dart';
-import 'package:groundjp/domain/enums/match_enums.dart';
 import 'package:groundjp/domain/match/match_search_view.dart';
 import 'package:groundjp/domain/search_condition.dart';
 import 'package:groundjp/notifier/region_notifier.dart';
@@ -50,7 +49,7 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
 
   _search(SearchCondition condition) async {
     _condition = condition;
-    List<MatchView> response = await MatchService.search(_condition);
+    List<MatchView> response = await MatchService.instance.search(_condition);
     setState(() {
       _items = response;
     });

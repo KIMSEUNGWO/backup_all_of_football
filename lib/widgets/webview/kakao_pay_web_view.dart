@@ -49,7 +49,7 @@ class _KakaoPayWebViewState extends ConsumerState<KakaoPayWebView> {
         String url = request.url;
         print('url : $url');
         if (!url.startsWith('http')) {
-          OpenApp().kakaoOpenUrl(context, widget.kakao);
+          OpenApp.instance.kakaoOpenUrl(context, widget.kakao);
           return NavigationDecision.prevent;
         }
         if (url.contains('/api/charge/done')) {

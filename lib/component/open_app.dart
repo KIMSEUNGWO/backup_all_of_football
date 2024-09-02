@@ -38,9 +38,11 @@ class OpenApp {
       await launchUrl(Uri.parse(kakao.ios_app_scheme));
       return;
     } else {
-      Alert.of(context).message(
-        message: '카카오톡이 설치되어있지 않습니다.'
-      );
+      if (context.mounted) {
+        Alert.of(context).message(
+          message: '카카오톡이 설치되어있지 않습니다.'
+        );
+      }
     }
   }
 

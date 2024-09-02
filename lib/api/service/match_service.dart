@@ -8,7 +8,11 @@ import 'package:groundjp/domain/search_condition.dart';
 import 'package:intl/intl.dart';
 
 class MatchService {
-  static Future<List<MatchView>> search(SearchCondition condition) async {
+
+  static const MatchService instance = MatchService();
+  const MatchService();
+
+  Future<List<MatchView>> search(SearchCondition condition) async {
 
     String queryParam = '?date=${DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(condition.date)}';
     if (condition.region != null && condition.region != Region.ALL) {
@@ -21,7 +25,6 @@ class MatchService {
       uri: '/search$queryParam',
       authorization: false,
     );
-    print(response.data);
     if (response.resultCode == ResultCode.OK) {
       return List<MatchView>.from(response.data.map( (x) => MatchView.fromJson(x)));
     } else {
@@ -29,14 +32,14 @@ class MatchService {
     }
   }
 
-  static Future<ResponseResult> getMatch({required int matchId}) async {
+  Future<ResponseResult> getMatch({required int matchId}) async {
     return await ApiService.instance.get(
       uri: '/match/$matchId',
       authorization: true
     );
   }
 
-  static Future<List<MatchView>> getMatchesSoon() async {
+  Future<List<MatchView>> getMatchesSoon() async {
     final response = await ApiService.instance.get(
         uri: '/user/matches',
         authorization: true

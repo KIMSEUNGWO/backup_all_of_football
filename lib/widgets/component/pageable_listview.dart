@@ -1,23 +1,23 @@
 
 
+import 'package:flutter/rendering.dart';
 import 'package:groundjp/component/pageable.dart';
-import 'package:groundjp/domain/match/match_simp.dart';
 import 'package:flutter/cupertino.dart';
 
 class PageableListView<T> extends StatefulWidget {
 
-  final int size;
+  final int pageableSize;
   final IndexedWidgetBuilder separatorBuilder;
   final PageFutureCallback<T> future;
   final PageableViewWidget<T> builder;
 
-  const PageableListView({super.key, required this.size, required this.separatorBuilder, required this.future, required this.builder});
+  const PageableListView({super.key, required this.pageableSize, required this.separatorBuilder, required this.future, required this.builder});
 
   @override
   State<PageableListView<T>> createState() => _PageableListViewState<T>();
 
-  static _PageableSliverListView<T> sliver<T>({required int size, required IndexedWidgetBuilder separatorBuilder, required PageFutureCallback<T> future, required PageableViewWidget<T> builder}) {
-    return _PageableSliverListView(size: size, separatorBuilder: separatorBuilder, future: future, builder: builder);
+  static _PageableSliverListView<T> sliver<T>({required int pageableSize, required IndexedWidgetBuilder separatorBuilder, required PageFutureCallback<T> future, required PageableViewWidget<T> builder}) {
+    return _PageableSliverListView(pageableSize: pageableSize, separatorBuilder: separatorBuilder, future: future, builder: builder);
   }
 }
 
@@ -49,7 +49,7 @@ class _PageableListViewState<T> extends State<PageableListView<T>> {
 
   _initPageable() {
     _pageable = Pageable(
-      size: widget.size,
+      size: widget.pageableSize,
     );
   }
 
@@ -61,14 +61,14 @@ class _PageableListViewState<T> extends State<PageableListView<T>> {
   }
   @override
   Widget build(BuildContext context) {
-    if (_loading) return const Center(child: CupertinoActivityIndicator(),);
+    if (_loading) return const LoadingIndicator();
     return ListView.separated(
       separatorBuilder: widget.separatorBuilder,
       itemCount: _items.length + (_pageable.hasMore ? 1 : 0),
       itemBuilder: (context, index) {
         if (_items.isNotEmpty && index == _items.length && !_loading && _pageable.hasMore) {
           _fetch();
-          return const Center(child: CupertinoActivityIndicator(),);
+          return const LoadingIndicator();
         }
         return widget.builder(_items[index]);
       },
@@ -78,12 +78,12 @@ class _PageableListViewState<T> extends State<PageableListView<T>> {
 
 class _PageableSliverListView<T> extends StatefulWidget {
 
-  final int size;
+  final int pageableSize;
   final IndexedWidgetBuilder separatorBuilder;
   final PageFutureCallback<T> future;
   final PageableViewWidget<T> builder;
 
-  const _PageableSliverListView({super.key, required this.size, required this.separatorBuilder, required this.future, required this.builder});
+  const _PageableSliverListView({super.key, required this.pageableSize, required this.separatorBuilder, required this.future, required this.builder});
 
   @override
   State<_PageableSliverListView<T>> createState() => _PageableSliverListViewState<T>();
@@ -105,7 +105,6 @@ class _PageableSliverListViewState<T> extends State<_PageableSliverListView<T>> 
   }
   _initData() async {
     List<T> data = await widget.future(_pageable);
-
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         _pageable.hasMore = _pageable.size <= data.length;
@@ -117,7 +116,7 @@ class _PageableSliverListViewState<T> extends State<_PageableSliverListView<T>> 
 
   _initPageable() {
     _pageable = Pageable(
-      size: widget.size,
+      size: widget.pageableSize,
     );
   }
 
@@ -130,18 +129,32 @@ class _PageableSliverListViewState<T> extends State<_PageableSliverListView<T>> 
 
   @override
   Widget build(BuildContext context) {
-    if (_loading) return const SliverToBoxAdapter(child: Center(child: CupertinoActivityIndicator(),));
+    if (_loading) return const LoadingIndicator.sliver();
     return SliverList.separated(
       separatorBuilder: widget.separatorBuilder,
       itemCount: _items.length + (_pageable.hasMore ? 1 : 0),
       itemBuilder: (context, index) {
         if (_items.isNotEmpty && index == _items.length && !_loading && _pageable.hasMore) {
           _fetch();
-          return const Center(child: CupertinoActivityIndicator(),);
+          return const LoadingIndicator.sliver();
         }
         return widget.builder(_items[index]);
       },
     );
+  }
+}
+
+
+class LoadingIndicator extends StatelessWidget {
+
+  final Widget _indicator;
+
+  const LoadingIndicator({super.key}): _indicator = const Center(child: CupertinoActivityIndicator(),);
+  const LoadingIndicator.sliver({super.key}): _indicator = const SliverToBoxAdapter(child: Center(child: CupertinoActivityIndicator(),),);
+
+  @override
+  Widget build(BuildContext context) {
+    return _indicator;
   }
 }
 

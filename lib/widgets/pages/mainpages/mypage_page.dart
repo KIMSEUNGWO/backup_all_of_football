@@ -15,6 +15,7 @@ import 'package:groundjp/widgets/pages/poppages/coupon_list_page.dart';
 import 'package:groundjp/widgets/pages/poppages/match_history_page.dart';
 import 'package:groundjp/widgets/pages/poppages/profile_edit_page.dart';
 import 'package:flutter/material.dart';
+import 'package:groundjp/widgets/pages/poppages/settings/settings_page.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,11 +50,18 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: SvgIcon.asset(sIcon: SIcon.settings, style: SvgIconStyle(
-              width: 25, height: 25
-            )),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const SettingsWidget();
+              },));
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: SvgIcon.asset(sIcon: SIcon.settings, style: SvgIconStyle(
+                width: 25, height: 25
+              )),
+            ),
           ),
         ],
       ),
