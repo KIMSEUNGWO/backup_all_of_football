@@ -12,6 +12,7 @@ import 'package:groundjp/widgets/component/favorite_field_list.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:groundjp/widgets/form/settings_menu_form.dart';
 
 class SearchWidget extends StatefulWidget {
   const SearchWidget({super.key});
@@ -155,34 +156,33 @@ class _SearchWidgetState extends State<SearchWidget> {
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
         },
-        child: Container(
-          // 키보드 만큼의 padding을 줘야함
-          padding: EdgeInsets.only(
-            left: 20, right: 20,
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: Column(
-            children: [
-              const SpaceHeight(30),
-              if (!recentlySearchIsDisable && _recentlySearchWord.isNotEmpty())
-                RecentlySearchWordWidget(
-                  words : _recentlySearchWord.toList(),
-                  addWord : addWord,
-                  deleteWord : deleteWord,
-                  deleteAllWord : deleteAllWord,
-                  onTap : onTapRecentlyWord,
+        child: SingleChildScrollView(
+          child: Padding(
+            // 키보드 만큼의 padding을 줘야함
+            padding: EdgeInsets.only(
+              left: 20, right: 20, bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Column(
+              children: [
+                const SpaceHeight(30),
+                if (!recentlySearchIsDisable && _recentlySearchWord.isNotEmpty())
+                  RecentlySearchWordWidget(
+                    words : _recentlySearchWord.toList(),
+                    addWord : addWord,
+                    deleteWord : deleteWord,
+                    deleteAllWord : deleteAllWord,
+                    onTap : onTapRecentlyWord,
+                  ),
+                _loading ? const Center(child: CupertinoActivityIndicator(),) :
+                Column(
+                  children: ListSeparatorBuilder(
+                    items: _fields.map((fieldSimp) => FavoriteFieldListWidget(fieldSimp: fieldSimp)).toList(),
+                    separator: const SpaceHeight(16),
+                  ).build(),
                 ),
-              _loading ? const Center(child: CupertinoActivityIndicator(),) :
-              ListView.separated(
-                shrinkWrap: true,
-                separatorBuilder: (context, index) => const SpaceHeight(16),
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _fields.length,
-                itemBuilder: (context, index) {
-                  return FavoriteFieldListWidget(fieldSimp: _fields[index]);
-                },
-              ),
-            ],
+                const SpaceHeight(30),
+              ],
+            ),
           ),
         ),
       ),
@@ -260,9 +260,9 @@ class _RecentlySearchWordWidgetState extends State<RecentlySearchWordWidget> {
                         child: Text(widget.words[index],
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w500
+                            fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -272,9 +272,7 @@ class _RecentlySearchWordWidgetState extends State<RecentlySearchWordWidget> {
                       onTap: () {
                         widget.deleteWord(widget.words[index]);
                       },
-                      child: Icon(Icons.close,
-                        size: 13,
-                      ),
+                      child: const Icon(Icons.close, size: 13,),
                     ),
                   ],
                 );

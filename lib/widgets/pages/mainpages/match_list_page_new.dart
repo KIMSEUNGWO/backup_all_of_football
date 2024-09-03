@@ -4,7 +4,6 @@ import 'package:groundjp/component/region_data.dart';
 import 'package:groundjp/domain/match/match_search_view.dart';
 import 'package:groundjp/domain/search_condition.dart';
 import 'package:groundjp/notifier/region_notifier.dart';
-import 'package:groundjp/widgets/component/custom_scroll_refresh.dart';
 import 'package:groundjp/widgets/component/match_list.dart';
 import 'package:groundjp/widgets/component/search_data.dart';
 import 'package:groundjp/widgets/pages/poppages/region_select_page.dart';
@@ -104,8 +103,8 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
           SearchData(search: _search, dateRange: _dateRange, selectedDateIndex: _currentDateIndex),
 
           Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: _items.isEmpty
               ? Center(
                child: Text('매치가 없어요',
@@ -114,27 +113,24 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
                  ),
                ),
               )
-              : CustomScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(
-                    parent: BouncingScrollPhysics(),
-                  ),
-                  slivers: [
-                    CustomScrollRefresh(onRefresh: () {
-                    },),
-
-                    const SliverPadding(padding: EdgeInsets.only(top: 32)),
-
-                    SliverList.separated(
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(height: 16,);
-                      },
-                      itemCount: _items.length,
-                      itemBuilder: (context, index) {
-                        return MatchListWidget(match: _items[index]);
-                      },
-                    ),
-                  ],
-                ),
+              : ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(height: 16,),
+                  itemCount: _items.length,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 32),
+                        child: MatchListWidget(match: _items[index]),
+                      );
+                    } else if (index == _items.length - 1) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 32),
+                        child: MatchListWidget(match: _items[index]),
+                      );
+                    }
+                    return MatchListWidget(match: _items[index]);
+                  },
+              ),
             ),
           ),
         ],

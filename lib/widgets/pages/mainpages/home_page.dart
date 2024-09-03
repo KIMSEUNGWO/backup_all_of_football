@@ -12,7 +12,9 @@ import 'package:groundjp/widgets/pages/mainDisplayLists/favorite_field_display.d
 import 'package:groundjp/widgets/pages/mainDisplayLists/match_soon_display.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/recently_visit_match_display.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/region_match_display.dart';
+import 'package:groundjp/widgets/pages/mainpages/search_page.dart';
 import 'package:groundjp/widgets/pages/poppages/login_page.dart';
+import 'package:groundjp/widgets/pages/poppages/notification_page.dart';
 import 'package:groundjp/widgets/pages/poppages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,7 +45,22 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
         actions: [
           GestureDetector(
             onTap: () {
-
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const SearchWidget();
+              },));
+            },
+            child: SvgIcon.asset(sIcon: SIcon.search,
+              style: SvgIconStyle(
+                color: Theme.of(context).colorScheme.primary
+              )
+            ),
+          ),
+          const SpaceWidth(30),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const NotificationWidget();
+              },));
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 20),

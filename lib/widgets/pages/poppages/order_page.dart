@@ -138,6 +138,15 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
           },
         );
       }
+    } else if (result == ResultCode.ACCESS_TOKEN_REQUIRE) {
+      if (mounted) {
+        Alert.of(context).message(
+          message: '로그인이 필요합니다.',
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        );
+      }
     }
   }
   

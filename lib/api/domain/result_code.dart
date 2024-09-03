@@ -8,6 +8,8 @@ enum ResultCode {
 
   INVALID_DATA,
   UNKOWN, SOCIAL_LOGIN_FAILD, REGISTER,
+  ACCESS_TOKEN_REQUIRE, // 로그인하지 않은 회원이나 토근이 유효하지 않은경우
+
 
   // 주문 예외
   ALREADY_JOIN, // 이미 신청한 매치에 다시 신청요청이 올 경우

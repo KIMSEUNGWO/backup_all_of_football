@@ -9,8 +9,9 @@ class FavoriteIconButtonWidget extends ConsumerWidget {
   final FieldSimp fieldSimp;
   final double? size;
   final bool disabled;
+  final bool readOnly;
 
-  const FavoriteIconButtonWidget({super.key, required this.fieldSimp, this.size, this.disabled = false});
+  const FavoriteIconButtonWidget({super.key, required this.fieldSimp, this.size, this.disabled = false, this.readOnly = false});
 
   bool _has(List<FieldSimp> state, int fieldId) {
     for (var fieldSimp in state) {
@@ -30,7 +31,9 @@ class FavoriteIconButtonWidget extends ConsumerWidget {
       ? const SizedBox()
       : GestureDetector(
           onTap: () async {
-            await ref.read(favoriteNotifier.notifier).toggle(fieldSimp);
+            if (!readOnly) {
+              await ref.read(favoriteNotifier.notifier).toggle(fieldSimp);
+            }
           },
           child: SvgIcon.asset(
             sIcon: isOn ? SIcon.bookmarkFill : SIcon.bookmark,

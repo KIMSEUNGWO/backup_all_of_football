@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 class FavoriteFieldListWidget extends StatelessWidget {
 
   final FieldSimp _fieldSimp;
+  final bool readOnly;
 
-  const FavoriteFieldListWidget({super.key, required FieldSimp fieldSimp}): _fieldSimp = fieldSimp;
+  const FavoriteFieldListWidget({super.key, required FieldSimp fieldSimp, this.readOnly = false}): _fieldSimp = fieldSimp;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class FavoriteFieldListWidget extends StatelessWidget {
                   fieldSimp: _fieldSimp,
                   size: 15,
                   disabled: true,
+                  readOnly: readOnly,
                 ),
               ],
             ),

@@ -78,7 +78,7 @@ class NotificationNotifier extends StateNotifier<FlutterLocalNotificationsPlugin
     int notificationId = type.idGenerator();
 
     show(id: notificationId, title: '매치 취소', body: '매치가 취소되었습니다.');
-    show(id: notificationId + 1, title: '개인사유로 인한 환불', body: '결제금액 : ${AccountFormatter.format(refund.payAmount)}\n환불금액 : ${AccountFormatter.format(refund.refundAmount)}');
+    show(id: notificationId + 1, title: '환불', body: '결제금액 : ${AccountFormatter.format(refund.payAmount)}\n환불금액 : ${AccountFormatter.format(refund.refundAmount)}');
 
     List<PendingNotificationRequest> data = await state.pendingNotificationRequests();
 

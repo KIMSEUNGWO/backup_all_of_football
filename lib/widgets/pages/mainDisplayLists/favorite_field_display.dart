@@ -31,7 +31,7 @@ class _FavoriteFieldDisplayState extends ConsumerState<FavoriteFieldDisplay> {
           child: Row(
             children: [
               const SizedBox(width: 20,),
-              ... favorites.map((x) => FavoriteFieldListWidget(fieldSimp: x)),
+              ... favorites.map((x) => FavoriteFieldListWidget(fieldSimp: x, readOnly: true,)),
               const SizedBox(width: 10,),
             ],
           ),

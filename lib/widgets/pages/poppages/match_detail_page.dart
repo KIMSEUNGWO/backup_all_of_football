@@ -349,14 +349,17 @@ class _OrderButtonWidgetState extends ConsumerState<_OrderButtonWidget> {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return const LoginWidget();
             }, fullscreenDialog: true));
+            return;
           }
           if (widget.match.alreadyJoin) {
             widget.cancel();
             return;
           }
-
-          if (_constraint || widget.match.matchStatus == MatchStatus.FINISHED || widget.match.matchStatus == MatchStatus.CLOSED) return;
-
+          if (_constraint ||
+              widget.match.matchStatus == MatchStatus.FINISHED ||
+              widget.match.matchStatus == MatchStatus.CLOSED) {
+            return;
+          }
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return OrderWidget(matchId: widget.match.matchId);},
           ));
