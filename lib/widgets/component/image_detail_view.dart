@@ -17,16 +17,15 @@ class ImageDetailView extends StatelessWidget {
           children: [
             Center(
               child: InteractiveViewer(
-                child: Image(image: image.image, fit: BoxFit.contain,),
                 panEnabled: true, // 패닝 가능 여부
                 scaleEnabled: true, // 확대/축소 가능 여부
                 minScale: 1.0,
-                maxScale: 4.0, // 최대 확대 비율
+                maxScale: 4.0,
+                child: Image(image: image.image, fit: BoxFit.contain,), // 최대 확대 비율
               ),
             ),
             Positioned(
-              top: 20,
-              right: 20,
+              top: 20, right: 20,
               child: GestureDetector(
                 onTap: () => Navigator.pop(context),
                 child: const Icon(Icons.close, size: 30,),

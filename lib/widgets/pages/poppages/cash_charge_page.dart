@@ -11,6 +11,7 @@ import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/policy_widget.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/form/detail_default_form.dart';
 import 'package:groundjp/widgets/webview/kakao_pay_web_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -112,7 +113,7 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: 36,),
+                  const SpaceHeight(36),
                   CustomContainer(
                     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                     child: Column(
@@ -125,7 +126,7 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
                               fontWeight: FontWeight.w500
                           ),
                         ),
-                        const SizedBox(height: 20,),
+                        const SpaceHeight(20),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(AccountFormatter.format(ref.read(loginProvider.notifier).getCash()),
@@ -140,7 +141,7 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 45,),
+                  const SpaceHeight(45),
                   DetailDefaultFormWidget(
                     title: '충전할 금액',
                     child: GridView.builder(
@@ -175,16 +176,17 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
                       },
                     ),
                   ),
+                  const SpaceHeight(26),
                   DetailDefaultFormWidget(
                     title: '결제방식',
                     child: GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 2
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 2,
                       ),
                       itemCount: _payments.length,
                       itemBuilder: (context, index) {
@@ -195,47 +197,50 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
                           },
                           child: CustomContainer(
                             backgroundColor: payment.backgroundColor,
-                            border: _selectPaymentIndex == index ? Border.all(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                                width: 4
-                            ) : null,
+                            border: _selectPaymentIndex == index
+                              ? Border.all(color: Theme.of(context).colorScheme.onPrimary, width: 4,)
+                              : null,
                             child: Center(
-                              child: SvgIcon.asset(sIcon: payment.getLogo()),
+                              child: SvgIcon.asset(sIcon: payment.getLogo(),
+                                style: SvgIconStyle(
+                                  width: 60
+                                )
+                              ),
                             ),
                           ),
                         );
                       },
                     ),
                   ),
-                  PolicyWidget(
-                    canSubmit: _checkPolicy,
-                  ),
-                  const SizedBox(height: 45,),
-                  GestureDetector(
-                    onTap: () {
-                      if (!_canSubmit) return;
-                      _submit();
-                    },
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: _canSubmit
-                            ? Theme.of(context).colorScheme.onPrimary
-                            : const Color(0xFFD9D9D9),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Center(
-                        child: Text('충전',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                              fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ),
+                  const SpaceHeight(26),
+                  PolicyWidget(canSubmit: _checkPolicy,),
+                ],
+              ),
+            ),
+          ),
+          bottomNavigationBar: SafeArea(
+            child: GestureDetector(
+              onTap: () {
+                if (_canSubmit) _submit();
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                height: 50,
+                decoration: BoxDecoration(
+                  color: _canSubmit
+                    ? Theme.of(context).colorScheme.onPrimary
+                    : const Color(0xFFD9D9D9),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Center(
+                  child: Text('충전',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),

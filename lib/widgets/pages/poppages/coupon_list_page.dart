@@ -7,8 +7,8 @@ import 'package:groundjp/exception/server/socket_exception.dart';
 import 'package:groundjp/exception/server/timeout_exception.dart';
 import 'package:groundjp/notifier/coupon_notifier.dart';
 import 'package:groundjp/widgets/component/coupon/coupon_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:intl/intl.dart';
 
 class CouponListWidget extends ConsumerStatefulWidget {
@@ -75,8 +75,7 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('쿠폰함'),
-        actions: widget.readOnly
-          ? null
+        actions: widget.readOnly ? null
           : [
             Padding(
               padding: const EdgeInsets.only(right: 20),
@@ -91,7 +90,7 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                    fontWeight: FontWeight.w500
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -103,7 +102,7 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 39,),
+              const SpaceHeight(39),
               if (!widget.readOnly)
                 Padding(
                   padding: const EdgeInsets.only(right: 15, bottom: 15),
@@ -117,35 +116,35 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      const SizedBox(width: 5,),
+                      const SpaceWidth(5),
                       GestureDetector(
                         onTap: () {
                           _select(null);
                         },
                         child: Container(
-                            width: 20, height: 20,
-                            decoration: BoxDecoration(
+                          width: 20, height: 20,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.secondary,
+                                width: 0.3,
+                              )
+                          ),
+                          child: _selectCoupon != null ? null : Center(
+                            child: Container(
+                              width: 15, height: 15,
+                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                border: Border.all(
-                                    color: Theme.of(context).colorScheme.secondary,
-                                    width: 0.3
-                                )
-                            ),
-                            child: _selectCoupon != null ? null : Center(
-                              child: Container(
-                                width: 15, height: 15,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  color: Theme.of(context).colorScheme.onPrimary,
-                                ),
+                                color: Theme.of(context).colorScheme.onPrimary,
                               ),
-                            )
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              _items.isEmpty ? Center(child: Text('쿠폰이 없습니다.')) :
+              _items.isEmpty ? const Center(child: Text('쿠폰이 없습니다.')) :
               ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

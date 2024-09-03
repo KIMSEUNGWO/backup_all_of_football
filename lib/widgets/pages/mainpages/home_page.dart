@@ -72,7 +72,7 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
       body: CustomScrollView(
         slivers: [
           CustomScrollRefresh(onRefresh: _refresh),
-          const SliverToBoxAdapter(child: _Banners(),),
+          SliverToBoxAdapter(child: _Banners(),),
           SliverToBoxAdapter(
             child: MatchSoonDisplay(
               key: _refreshMatchSoon,
@@ -179,14 +179,18 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
 }
 
 class _Banners extends StatelessWidget {
-  const _Banners();
+  _Banners();
+
+  final List<Image> _banners = [
+    Image.asset('assets/banners/1.png', fit: BoxFit.cover,),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 16, bottom: 24),
       child: ImageSlider(
-        images: [Image.asset('assets/banners/1.png', fit: BoxFit.cover,)],
+        images: _banners,
         option: ImageSliderOption(
           height: 100,
           borderRadius: BorderRadius.circular(16),

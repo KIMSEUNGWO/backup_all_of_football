@@ -4,29 +4,19 @@ import 'dart:math';
 import 'package:groundjp/domain/match/match_search_view.dart';
 import 'package:groundjp/notifier/recently_match_notifier.dart';
 import 'package:groundjp/widgets/component/match_list.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
+import 'package:groundjp/widgets/form/settings_menu_form.dart';
 import 'package:groundjp/widgets/pages/poppages/recently_visit_match_more_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RecentlyVisitMatchDisplay extends ConsumerStatefulWidget {
+class RecentlyVisitMatchDisplay extends ConsumerWidget {
   const RecentlyVisitMatchDisplay({super.key});
-
-  @override
-  ConsumerState<RecentlyVisitMatchDisplay> createState() => _RecentlyVisitMatchDisplayState();
-}
-
-class _RecentlyVisitMatchDisplayState extends ConsumerState<RecentlyVisitMatchDisplay> {
-
   final int maxLine = 3;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     List<MatchView> items = ref.watch(recentlyMatchNotifier);
     if (items.isEmpty) return const SizedBox();
     return Padding(
@@ -73,22 +63,16 @@ class _RecentlyVisitMatchDisplayState extends ConsumerState<RecentlyVisitMatchDi
               ],
             ),
           ),
-
-          const SizedBox(height: 10,),
-
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) => const SizedBox(height: 16,),
-            itemCount: min(items.length, maxLine),
-            itemBuilder: (context, index) {
-              MatchView data = items[index];
-              return MatchListWidget(
-                match: data,
-                formatType: DateFormatType.DATETIME,
-              );
-            },
-          )
+          const SpaceHeight(10),
+          Column(
+            children: ListSeparatorBuilder(
+              items: items
+                .sublist(0, min(items.length, maxLine))
+                .map((match) => MatchListWidget(match: match, formatType: DateFormatType.DATETIME,))
+                .toList(),
+              separator: const SpaceHeight(16),
+            ).build(),
+          ),
         ],
       ),
     );

@@ -31,9 +31,8 @@ class FavoriteIconButtonWidget extends ConsumerWidget {
       ? const SizedBox()
       : GestureDetector(
           onTap: () async {
-            if (!readOnly) {
-              await ref.read(favoriteNotifier.notifier).toggle(fieldSimp);
-            }
+            if (readOnly) return;
+            await ref.read(favoriteNotifier.notifier).toggle(fieldSimp);
           },
           child: SvgIcon.asset(
             sIcon: isOn ? SIcon.bookmarkFill : SIcon.bookmark,

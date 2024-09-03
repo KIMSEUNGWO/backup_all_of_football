@@ -6,6 +6,7 @@ import 'package:groundjp/domain/search_condition.dart';
 import 'package:groundjp/notifier/region_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/match_list.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/pages/poppages/region_select_page.dart';
 import 'package:flutter/material.dart';
 
@@ -95,7 +96,7 @@ class _RegionMatchDisplayState extends ConsumerState<RegionMatchDisplay> {
             ),
           ),
 
-          const SizedBox(height: 10,),
+          const SpaceHeight(10),
 
           (result.isEmpty)
           ? const CustomContainer(
