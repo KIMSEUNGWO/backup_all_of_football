@@ -39,7 +39,12 @@ class LoginWidget extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Center(child: SvgIcon.asset(sIcon: SIcon.logo)),
+            Center(child: SvgIcon.asset(
+              sIcon: SIcon.logo,
+              style: SvgIconStyle(
+                width: 300
+              )
+            )),
 
             Column(
               children: [

@@ -46,7 +46,6 @@ class _RegionMatchDisplayState extends ConsumerState<RegionMatchDisplay> {
   @override
   Widget build(BuildContext context) {
     Region? region = ref.watch(regionProvider);
-    print('_RegionMatchDisplayState.build');
     if (region == null) {
       return const SizedBox();
     } else if (region != _region) {

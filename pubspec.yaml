@@ -29,6 +29,7 @@ dependencies:
   permission_handler: ^11.3.1 # 권한 요청
   webview_flutter: ^4.9.0 # WebView
   flutter_local_notifications: ^17.2.2 # 알림
+  flutter_native_splash: ^2.4.1 # 스플래쉬 시작화면
 
 dev_dependencies:
   flutter_test:
