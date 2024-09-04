@@ -15,12 +15,6 @@ class FindRegion {
         .where((region) => region != Region.ALL && region.isStartWith(langType, word))
         .forEach((region) => result.add(region));
 
-    if (result.isEmpty) {
-      RegionParent.values
-          .where((regionParent) => regionParent != RegionParent.ALL && regionParent.isStartWith(langType, word))
-          .forEach((regionParent) => result.addAll(regionParent.getRegionChildList()));
-    }
-
     result.sort((a, b) => a.compareTo(b, langType));
 
     return result;

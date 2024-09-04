@@ -125,7 +125,6 @@ class _FindResultRegionWidgetState extends ConsumerState<_FindResultRegionWidget
   @override
   Widget build(BuildContext context) {
     String name = widget.region.getLocaleName(widget.locale);
-    String fullName = widget.region.getFullName(widget.locale);
     return GestureDetector(
       onTap: () {
         widget.setRegion(widget.region);
@@ -133,18 +132,12 @@ class _FindResultRegionWidgetState extends ConsumerState<_FindResultRegionWidget
       },
       child: Container(
         decoration: const BoxDecoration(),
-        child: Row(
-          children: [
-            Text(name,
-              style: TextStyle(
-                fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).colorScheme.primary
-              ),
-            ),
-            const SizedBox(width: 10,),
-            Text(fullName,),
-          ],
+        child: Text(name,
+          style: TextStyle(
+            fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.primary
+          ),
         ),
       ),
     );

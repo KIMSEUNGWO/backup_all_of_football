@@ -60,6 +60,7 @@ class SIcon {
   static const SIcon soccer = SIcon(picture: 'assets/icons/soccer.svg');
   static const SIcon star = SIcon(picture: 'assets/icons/star.svg');
   static const SIcon success = SIcon(picture: 'assets/icons/success.svg');
+  static const SIcon speechBubble = SIcon(picture: 'assets/icons/speech_bubble.svg');
   static const SIcon toilet = SIcon(picture: 'assets/icons/toilet.svg');
   static const SIcon more = SIcon(picture: 'assets/icons/more.svg');
   static const SIcon moreClose = SIcon(picture: 'assets/icons/moreClose.svg');
