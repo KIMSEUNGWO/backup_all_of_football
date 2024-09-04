@@ -6,10 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groundjp/component/svg_icon.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/bottom_bar_widget.dart';
+import 'package:groundjp/widgets/pages/mainpages/community_page.dart';
 import 'package:groundjp/widgets/pages/mainpages/home_page.dart';
-import 'package:groundjp/widgets/pages/mainpages/match_list_page_new.dart';
+import 'package:groundjp/widgets/pages/mainpages/match_list_page.dart';
 import 'package:groundjp/widgets/pages/mainpages/mypage_page.dart';
-import 'package:groundjp/widgets/pages/mainpages/search_page.dart';
+import 'package:groundjp/widgets/pages/poppages/search_page.dart';
 import 'package:groundjp/widgets/pages/poppages/login_page.dart';
 
 
@@ -58,6 +59,7 @@ class _AppState extends ConsumerState<App> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           const HomeWidget(),
+          const CommunityWidget(),
           const MatchListPageWidget(),
           MyPageWidget(onChangePage: onChangePage),
         ],
@@ -73,32 +75,28 @@ class _AppState extends ConsumerState<App> {
               isPressed: _currentIndex == 0,
             ),
             BottomIcon(
-              sIcon: SIcon.search,
-              callback: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                  return SearchWidget();
-                },));
-              },
-              isPressed: false,
+              sIcon: SIcon.speechBubble,
+              callback: () => onChangePage(index: 1),
+              isPressed: _currentIndex == 1,
             ),
             BottomIcon(
               sIcon: SIcon.clipboard,
-              callback: () => onChangePage(index: 1),
-              isPressed: _currentIndex == 1,
+              callback: () => onChangePage(index: 2),
+              isPressed: _currentIndex == 2,
             ),
             BottomIcon(
               sIcon: SIcon.person,
               callback: () {
                 bool hasLogin = ref.read(loginProvider.notifier).has();
                 if (hasLogin) {
-                  onChangePage(index: 2);
+                  onChangePage(index: 3);
                 } else {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                     return const LoginWidget();
                   },fullscreenDialog: true));
                 }
               },
-              isPressed: _currentIndex == 2,
+              isPressed: _currentIndex == 3,
             ),
           ],
         ),
