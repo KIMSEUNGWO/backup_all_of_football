@@ -66,7 +66,7 @@ class _PageableListViewState<T> extends State<PageableListView<T>> {
       itemBuilder: (context, index) {
         if (_items.isNotEmpty && index == _items.length && !_loading && _pageable.hasMore) {
           _fetch();
-          return widget.isSliver ? const LoadingIndicator.sliver() : const LoadingIndicator();
+          return const LoadingIndicator();
         }
         return widget.builder(_items[index]);
       },

@@ -82,10 +82,7 @@ class _BoardDetailWidgetState extends State<BoardDetailWidget> {
                         const SpaceWidth(10),
                         Text(DateTimeFormatter.formatDate(_board.createDate),),
                         if (_board.isEdit)
-                          const Padding(
-                            padding: EdgeInsets.only(left: 4),
-                            child: Text('(수정됨)'),
-                          ),
+                          const Text(' (수정됨)'),
                       ],
                     ),
                     const SpaceHeight(26),

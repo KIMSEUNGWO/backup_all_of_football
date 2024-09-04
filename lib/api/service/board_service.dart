@@ -3,7 +3,6 @@ import 'package:groundjp/api/domain/api_result.dart';
 import 'package:groundjp/api/domain/result_code.dart';
 import 'package:groundjp/component/pageable.dart';
 import 'package:groundjp/component/region_data.dart';
-import 'package:groundjp/domain/board/board.dart';
 import 'package:groundjp/domain/board/board_simp.dart';
 import 'package:groundjp/domain/user/user_simp.dart';
 
@@ -18,91 +17,12 @@ class BoardService {
         boardId: 1,
         title: '테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트',
         createDate: DateTime.now().subtract(const Duration(minutes: 1)),
+        region: Region.TOKYO,
         user: UserSimp(
           userId: 1,
           nickname: '닉네임',
           profile: null
         )
-      ),
-      BoardSimp(
-        boardId: 1,
-        title: '테스트',
-        createDate: DateTime.now().subtract(const Duration(minutes: 1)),
-        user: UserSimp(
-          userId: 1,
-          nickname: '닉네임',
-          profile: null
-        )
-      ),
-      BoardSimp(
-          boardId: 1,
-          title: '테스트',
-          createDate: DateTime.now().subtract(const Duration(minutes: 1)),
-          user: UserSimp(
-              userId: 1,
-              nickname: '닉네임',
-              profile: null
-          )
-      ),
-      BoardSimp(
-          boardId: 1,
-          title: '테스트',
-          createDate: DateTime.now().subtract(const Duration(minutes: 1)),
-          user: UserSimp(
-              userId: 1,
-              nickname: '닉네임',
-              profile: null
-          )
-      ),
-      BoardSimp(
-          boardId: 1,
-          title: '테스트',
-          createDate: DateTime.now().subtract(const Duration(minutes: 1)),
-          user: UserSimp(
-              userId: 1,
-              nickname: '닉네임',
-              profile: null
-          )
-      ),
-      BoardSimp(
-          boardId: 1,
-          title: '테스트',
-          createDate: DateTime.now().subtract(const Duration(minutes: 1)),
-          user: UserSimp(
-              userId: 1,
-              nickname: '닉네임',
-              profile: null
-          )
-      ),
-      BoardSimp(
-          boardId: 1,
-          title: '테스트',
-          createDate: DateTime.now().subtract(const Duration(minutes: 1)),
-          user: UserSimp(
-              userId: 1,
-              nickname: '닉네임',
-              profile: null
-          )
-      ),
-      BoardSimp(
-          boardId: 1,
-          title: '테스트',
-          createDate: DateTime.now().subtract(const Duration(minutes: 1)),
-          user: UserSimp(
-              userId: 1,
-              nickname: '닉네임',
-              profile: null
-          )
-      ),
-      BoardSimp(
-          boardId: 1,
-          title: '테스트',
-          createDate: DateTime.now().subtract(const Duration(minutes: 1)),
-          user: UserSimp(
-              userId: 1,
-              nickname: '닉네임',
-              profile: null
-          )
       ),
     ];
     return testData;
@@ -113,7 +33,7 @@ class BoardService {
       ResultCode.OK,
       {
         'boardId': boardId,
-        'title': '제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목',
+        'title': '⚽️フットサル、サッカー好きな人！⚽️🌟フットサル仲間募集',
         'content': """
 🍀⚽️フットサル仲間募集⚽️🍀 
 

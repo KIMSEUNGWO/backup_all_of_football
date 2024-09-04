@@ -49,12 +49,7 @@ class BoardWidget extends StatelessWidget {
               ),
             ),
             const SpaceHeight(5),
-            Text(DateTimeFormatter.formatDate(DateTime.now().subtract(const Duration(seconds: 10))),
-              style: TextStyle(
-                fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-            ),
+            Text('${boardSimp.region.ko} · ${DateTimeFormatter.formatDate(boardSimp.createDate)}'),
           ],
         ),
       ),

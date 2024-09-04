@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:groundjp/domain/match/match_search_view.dart';
+import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/match_extra_data.dart';
 import 'package:groundjp/widgets/component/match_status_box.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
@@ -19,19 +20,8 @@ class BoardMatchViewWidget extends StatelessWidget {
           return MatchDetailWidget(matchId: match.matchId);
         },));
       },
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: Theme.of(context).colorScheme.onTertiary,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.04),
-                offset: const Offset(0, 2),
-                blurRadius: 4,
-              )
-            ]
-        ),
+      child: CustomContainer(
+        backgroundColor: Theme.of(context).colorScheme.onTertiary,
         child: Column(
           children: [
             Row(
@@ -58,7 +48,7 @@ class BoardMatchViewWidget extends StatelessWidget {
             MatchExtraDataWidget(matchData: match.matchData),
           ],
         ),
-      ),
+      )
     );
   }
 }
