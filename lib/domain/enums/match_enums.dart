@@ -50,12 +50,14 @@ enum MatchStatus {
 
 enum SexType {
 
-  MALE(Icon(Icons.male, color: Color(0xFF5278FF), size: 16,)),
-  FEMALE(Icon(Icons.female, color: Color(0xFFFF6666), size: 16,));
+  MALE(Icon(Icons.male, color: Color(0xFF5278FF), size: 16,), '남자', Colors.blue),
+  FEMALE(Icon(Icons.female, color: Color(0xFFFF6666), size: 16,), '여자', Color(0xFFFF5D5D));
 
   final Icon icon;
+  final String ko;
+  final Color color;
 
-  const SexType(this.icon);
+  const SexType(this.icon, this.ko, this.color);
 
   static SexType? valueOf(String? data) {
     List<SexType> values = SexType.values;

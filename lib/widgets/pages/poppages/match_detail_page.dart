@@ -14,13 +14,16 @@ import 'package:groundjp/notifier/coupon_notifier.dart';
 import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/bottom_bar_widget.dart';
+import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/image_detail_view.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/form/detail_default_form.dart';
 import 'package:groundjp/widgets/form/detail_field_form.dart';
 import 'package:groundjp/widgets/form/detail_match_form.dart';
 import 'package:groundjp/widgets/form/detail_role_form.dart';
 import 'package:groundjp/widgets/form/field_image_preview.dart';
-import 'package:groundjp/widgets/pages/poppages/charts_example.dart';
+import 'package:groundjp/widgets/component/chart_donut_painter_widget.dart';
+import 'package:groundjp/widgets/form/match_statisics_form.dart';
 import 'package:groundjp/widgets/pages/poppages/field_detail_page.dart';
 import 'package:groundjp/widgets/pages/poppages/login_page.dart';
 import 'package:groundjp/widgets/pages/poppages/order_page.dart';
@@ -183,18 +186,7 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
                         ),
                       ),
                       const SizedBox(height: 35,),
-                      DetailDefaultFormWidget(
-                        title: '매치데이터',
-                        child: ChartsExample(
-                          diameter: 150,
-                          data: [
-                            ChartData(title: '남자', value: 17, color: Colors.blue),
-                            ChartData(title: '여자', value: 1, color: Colors.red),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 30,),
+                      MatchStatisticsFormWidget(statistics: match?.statistics),
                       MatchDetailFormWidget(match: match),
                       const SizedBox(height: 30,),
                       FieldDetailFormWidget(field: match?.field),
@@ -265,9 +257,9 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
                     children: [
                       Text('신청하고 게임을 즐겨보세요',
                         style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.w600,
-                            fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
                         ),
                       ),
                       const SizedBox(height: 5,),

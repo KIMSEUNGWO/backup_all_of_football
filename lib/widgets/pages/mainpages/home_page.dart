@@ -12,7 +12,7 @@ import 'package:groundjp/widgets/pages/mainDisplayLists/favorite_field_display.d
 import 'package:groundjp/widgets/pages/mainDisplayLists/match_soon_display.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/recently_visit_match_display.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/region_match_display.dart';
-import 'package:groundjp/widgets/pages/poppages/charts_example.dart';
+import 'package:groundjp/widgets/component/chart_donut_painter_widget.dart';
 import 'package:groundjp/widgets/pages/poppages/search_page.dart';
 import 'package:groundjp/widgets/pages/poppages/login_page.dart';
 import 'package:groundjp/widgets/pages/poppages/notification_page.dart';
