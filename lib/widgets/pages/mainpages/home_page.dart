@@ -169,9 +169,15 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return const ChartsExample();
-                    },));
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    //   return ChartsExample(
+                    //     diameter: 100,
+                    //     data: [
+                    //       ChartData(title: '남자', value: 17, color: Colors.blue),
+                    //       ChartData(title: '여자', value: 1, color: Colors.red),
+                    //     ],
+                    //   );
+                    // },));
                   },
                   child: Text('차트 예제',
                     style: TextStyle(
