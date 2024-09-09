@@ -6,8 +6,9 @@ class DetailDefaultFormWidget extends StatelessWidget {
   final String title;
   final EdgeInsets? titlePadding;
   final Widget child;
+  final TextStyle? textStyle;
 
-  const DetailDefaultFormWidget({super.key, required this.title, required this.child, this.titlePadding});
+  const DetailDefaultFormWidget({super.key, required this.title, required this.child, this.titlePadding, this.textStyle});
 
 
   @override
@@ -18,7 +19,7 @@ class DetailDefaultFormWidget extends StatelessWidget {
         Padding(
           padding: titlePadding ?? const EdgeInsets.only(left: 5),
           child: Text(title,
-            style: TextStyle(
+            style: textStyle ?? TextStyle(
               fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
               fontWeight: FontWeight.w600,
               color: Theme.of(context).colorScheme.primary

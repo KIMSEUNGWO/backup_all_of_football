@@ -81,7 +81,7 @@ class _BoardDetailWidgetState extends State<BoardDetailWidget> {
                         BoardUserProfileWidget(user: _board.user),
                         const SpaceWidth(10),
                         Text(DateTimeFormatter.formatDate(_board.createDate),),
-                        if (_board.isEdit)
+                        if (_board.isUpdated)
                           const Text(' (수정됨)'),
                       ],
                     ),

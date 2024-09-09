@@ -21,7 +21,6 @@ class MatchListPageWidget extends ConsumerStatefulWidget {
 
 class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with AutomaticKeepAliveClientMixin {
 
-  final _dateRange = 30;
   int _currentDateIndex = 0;
   bool _loading = true;
   
@@ -100,7 +99,10 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
 
       body: Column(
         children: [
-          SearchData(search: _search, dateRange: _dateRange, selectedDateIndex: _currentDateIndex),
+          SearchData(
+            search: _search,
+            selectedDateIndex: _currentDateIndex,
+          ),
 
           Expanded(
             child: Padding(

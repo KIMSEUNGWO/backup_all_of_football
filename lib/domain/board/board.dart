@@ -9,7 +9,7 @@ class Board {
   final String title;
   final String content;
   final DateTime createDate;
-  final bool isEdit;
+  final bool isUpdated;
 
   final UserSimp user;
   final MatchView? match;
@@ -20,8 +20,8 @@ class Board {
     content = json['content'],
     createDate = DateTime.parse(json['createDate']),
     user = UserSimp.fromJson(json['user']),
-    isEdit = json['isEdit'],
+    isUpdated = json['updated'],
     match = json['match'] == null ? null : MatchView.fromJson(json['match']);
 
-  Board({required this.boardId, required this.title, required this.content, required this.createDate, required this.isEdit, this.match, required this.user});
+  Board({required this.boardId, required this.title, required this.content, required this.createDate, required this.isUpdated, this.match, required this.user});
 }

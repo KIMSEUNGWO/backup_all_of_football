@@ -1,4 +1,6 @@
 
+import 'package:groundjp/component/constant.dart';
+import 'package:groundjp/component/region_data.dart';
 import 'package:groundjp/component/svg_icon.dart';
 import 'package:groundjp/domain/enums/match_enums.dart';
 import 'package:groundjp/domain/search_condition.dart';
@@ -11,10 +13,11 @@ import 'package:intl/intl.dart';
 
 class SearchData extends ConsumerStatefulWidget {
   final Function(SearchCondition condition) search;
-  final int dateRange;
+  final BorderRadius? borderRadius;
   final int selectedDateIndex;
+  final Region? region;
 
-  const SearchData({super.key, required this.search, required this.dateRange, required this.selectedDateIndex});
+  const SearchData({super.key, required this.search, required this.selectedDateIndex, this.borderRadius, this.region});
 
   @override
   ConsumerState<SearchData> createState() => _SearchDataState();
@@ -36,7 +39,7 @@ class _SearchDataState extends ConsumerState<SearchData> {
     SearchCondition condition = SearchCondition(
       date: dateList[_selectedDateIndex],
       sexType: _selectedSexType,
-      region: await ref.read(regionProvider.notifier).get(),
+      region: widget.region ?? ref.read(regionProvider.notifier).get(),
     );
     widget.search(condition);
   }
@@ -65,8 +68,8 @@ class _SearchDataState extends ConsumerState<SearchData> {
     // 오늘 기준은 현재 시간까지 고려
     DateTime today = DateTime(now.year, now.month, now.day, now.hour, now.minute);
     // 다음날부터는 시간 고려 없이 0시 0분 기준
-    DateTime notToday = DateTime(now.year, now.month, now.day, 0,0,0);
-    dateList = List.generate(widget.dateRange, (index) {
+    DateTime notToday = DateTime(now.year, now.month, now.day);
+    dateList = List.generate(Constant.MAX_DATE_LENGTH, (index) {
       if (index == 0) return today;
       return notToday.add(Duration(days: index));
     });
@@ -85,7 +88,7 @@ class _SearchDataState extends ConsumerState<SearchData> {
       height: _containerHeight,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
+        borderRadius: widget.borderRadius ?? const BorderRadius.only(
           bottomLeft: Radius.circular(32),
           bottomRight: Radius.circular(32),
         ),

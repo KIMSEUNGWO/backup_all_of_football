@@ -22,7 +22,7 @@ class MatchService {
       queryParam += '&sex=${condition.sexType!.name}';
     }
     final response = await ApiService.instance.get(
-      uri: '/search$queryParam',
+      uri: '/search/match$queryParam',
       authorization: false,
     );
     if (response.resultCode == ResultCode.OK) {

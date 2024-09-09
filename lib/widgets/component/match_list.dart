@@ -15,7 +15,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class MatchListWidget extends ConsumerStatefulWidget {
   final MatchView match;
   final DateFormatType formatType;
-  const MatchListWidget({super.key, required this.match, this.formatType = DateFormatType.TIME});
+  final Function(MatchView)? onPressed;
+  final Color? backgroundColor;
+  const MatchListWidget({super.key, required this.match, this.formatType = DateFormatType.TIME, this.onPressed, this.backgroundColor});
 
   @override
   ConsumerState<MatchListWidget> createState() => _MatchListWidgetState();
@@ -27,13 +29,17 @@ class _MatchListWidgetState extends ConsumerState<MatchListWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-
-        ref.read(recentlyMatchNotifier.notifier).add(widget.match);
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return MatchDetailWidget(matchId: widget.match.matchId);
-        },));
+        if (widget.onPressed != null) {
+          widget.onPressed!(widget.match);
+        } else {
+          ref.read(recentlyMatchNotifier.notifier).add(widget.match);
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return MatchDetailWidget(matchId: widget.match.matchId);
+          },));
+        }
       },
       child: CustomContainer(
+        backgroundColor: widget.backgroundColor,
         child: Column(
           children: [
             Row(

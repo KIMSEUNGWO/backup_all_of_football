@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+
+import 'package:groundjp/api/api_service.dart';
 import 'package:groundjp/api/domain/api_result.dart';
 import 'package:groundjp/api/domain/result_code.dart';
 import 'package:groundjp/component/pageable.dart';
@@ -12,23 +15,23 @@ class BoardService {
   const BoardService();
 
   Future<List<BoardSimp>> getBoardList({required Region region, required Pageable pageable }) async {
-    List<BoardSimp> testData = [
-      BoardSimp(
-        boardId: 1,
-        title: '테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트',
-        createDate: DateTime.now().subtract(const Duration(minutes: 1)),
-        region: Region.TOKYO,
-        user: UserSimp(
-          userId: 1,
-          nickname: '닉네임',
-          profile: null
-        )
-      ),
-    ];
-    return testData;
+    String uri = '/search/board?&page=${pageable.page}&size=${pageable.size}';
+    if (region != Region.ALL) uri += '&region=${region.name}';
+    final response = await ApiService.instance.get(
+      uri: uri,
+      authorization: false,
+    );
+    if (response.resultCode == ResultCode.OK) {
+      return List.from(response.data.map( (x) => BoardSimp.fromJson(x)));
+    }
+    return [];
   }
 
   Future<ResponseResult> getBoardDetail({required int boardId}) async {
+    return await ApiService.instance.get(
+      uri: '/board/$boardId',
+      authorization: false,
+    );
     return ResponseResult(
       ResultCode.OK,
       {
@@ -80,6 +83,25 @@ class BoardService {
           },
         },
       },
+    );
+  }
+
+  Future<ResponseResult> postBoard({required String title, required String content, int? matchId, Region? region}) async {
+    final body = {
+      'title' : title,
+      'content' : content
+    };
+    if (matchId != null) {
+      body.addAll({'matchId' : '$matchId'});
+    }
+    if (region != null && region != Region.ALL) {
+      body.addAll({'region' : region.name});
+    }
+    return await ApiService.instance.post(
+      uri: '/board/method',
+      authorization: true,
+      header: ApiService.contentTypeJson,
+      body: jsonEncode(body)
     );
   }
 }

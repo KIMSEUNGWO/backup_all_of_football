@@ -274,24 +274,15 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                           errorText: _nickname,
                           errorStyle: _nicknameStyle,
                           errorBorder: _nicknameBorder,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
-                          ),
+                          enabledBorder: _inputBorder,
+                          focusedErrorBorder: _inputBorder,
+                          focusedBorder: _inputBorder,
                           hintText: profile.nickname,
                           hintStyle: TextStyle(
                             color: Theme.of(context).colorScheme.secondary,
                             fontWeight: FontWeight.w400,
                             fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                          )
+                          ),
                         ),
 
                       ),
@@ -407,6 +398,11 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
       ),
     );
   }
+
+  final OutlineInputBorder _inputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+    borderSide: const BorderSide(color: Color(0xFFD9D9D9)),
+  );
 
   BoxDecoration _inputDecoration() {
     return BoxDecoration(

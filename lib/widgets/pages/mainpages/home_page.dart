@@ -43,6 +43,13 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
     super.build(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(32),
+            bottomRight: Radius.circular(32),
+          ),
+        ),
         actions: [
           GestureDetector(
             onTap: () {
