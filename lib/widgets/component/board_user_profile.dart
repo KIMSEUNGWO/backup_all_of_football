@@ -18,7 +18,7 @@ class BoardUserProfileWidget extends StatelessWidget {
           diameter: 25,
           image: user.profile,
         ),
-        const SpaceWidth(4),
+        const SpaceWidth(6),
         Text(user.nickname,)
       ],
     );

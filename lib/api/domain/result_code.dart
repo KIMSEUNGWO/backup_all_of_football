@@ -2,6 +2,8 @@
 enum ResultCode {
   OK,
 
+  NOT_AUTHENTICATION, // 권한 없음
+
   MATCH_NOT_EXISTS,
   FIELD_NOT_EXISTS,
   ORDER_NOT_EXISTS,

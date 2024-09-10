@@ -43,6 +43,24 @@ class ApiService {
     return _decode(response);
   }
 
+  Future<ResponseResult> patch({required String uri, required bool authorization, Map<String, String>? header, Object? body,}) async {
+
+    Map<String, String> requestHeader = {};
+    await getHeaders(requestHeader, authorization, header);
+
+    final response = await _execute(http.patch(Uri.parse('$server$uri'), headers: requestHeader, body: body));
+    return _decode(response);
+  }
+
+  Future<ResponseResult> delete({required String uri, required bool authorization, Map<String, String>? header, Object? body,}) async {
+
+    Map<String, String> requestHeader = {};
+    await getHeaders(requestHeader, authorization, header);
+
+    final response = await _execute(http.delete(Uri.parse('$server$uri'), headers: requestHeader, body: body));
+    return _decode(response);
+  }
+
   Future<ResponseResult> get({required String uri, required bool authorization, Map<String, String>? header}) async {
     Map<String, String> requestHeader = {"Content-Type" : "application/json; charset=utf-8",};
     await getHeaders(requestHeader, authorization, header);

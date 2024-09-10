@@ -26,8 +26,9 @@ class CommunityWidget extends ConsumerStatefulWidget {
 
 class _CommunityWidgetState extends ConsumerState<CommunityWidget> with AutomaticKeepAliveClientMixin {
 
+  // 게시글 생성 시, 삭제된 게시글이 존재할 경우 refresh를 위한 globalKey 관리
+  GlobalKey<PageableListViewState> _globalKey = GlobalKey<PageableListViewState>();
   late Region _region;
-  int _refreshKey = 0;
 
   _selectRegion(Region region) {
     if (_region == region) return;
@@ -35,15 +36,20 @@ class _CommunityWidgetState extends ConsumerState<CommunityWidget> with Automati
     _refresh();
   }
 
+  _getNotExistsBoardId(int boardId) {
+    _globalKey.currentState?.removeItem((board) {
+        return (board as BoardSimp).boardId == boardId;
+    },);
+  }
+
   Future<List<BoardSimp>> _fetch(Pageable pageable) async {
-    print('_CommunityWidgetState._fetch : page : ${pageable.page}');
     return await BoardService.instance.getBoardList(region: _region, pageable: pageable);
   }
 
   _refresh() {
     setState(() {
       // Increment the refresh key to trigger a full rebuild of PageableListView
-      _refreshKey++;
+      _globalKey = GlobalKey<PageableListViewState>();
     });
   }
 
@@ -94,11 +100,15 @@ class _CommunityWidgetState extends ConsumerState<CommunityWidget> with Automati
                     SliverPadding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       sliver: PageableListView.sliver(
-                        key: ValueKey(_refreshKey),  // Use the refreshKey to force a rebuild
+                        // key: ValueKey(_refreshKey),  // Use the refreshKey to force a rebuild
+                        key: _globalKey,
                         pageableSize: 20,
                         separatorBuilder: (context, index) => const SpaceHeight(16),
                         future: _fetch,
-                        builder: (boardSimp) => BoardWidget(boardSimp: boardSimp),
+                        builder: (boardSimp) => BoardWidget(
+                          boardSimp: boardSimp,
+                          notExistsEvent: _getNotExistsBoardId
+                        ),
                       ),
                     ),
                   ],

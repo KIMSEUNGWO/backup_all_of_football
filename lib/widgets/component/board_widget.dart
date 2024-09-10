@@ -10,14 +10,18 @@ import 'package:groundjp/widgets/pages/poppages/board_detail_page.dart';
 class BoardWidget extends StatelessWidget {
 
   final BoardSimp boardSimp;
-  const BoardWidget({super.key, required this.boardSimp});
+  final Function(int boardId)? notExistsEvent;
+  const BoardWidget({super.key, required this.boardSimp, required this.notExistsEvent});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return BoardDetailWidget(boardId: boardSimp.boardId);
+          return BoardDetailWidget(
+            boardId: boardSimp.boardId,
+            notExistsEvent: notExistsEvent,
+          );
         },));
       },
       child: CustomContainer(

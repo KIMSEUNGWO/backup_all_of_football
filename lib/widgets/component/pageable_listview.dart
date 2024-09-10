@@ -14,15 +14,25 @@ class PageableListView<T> extends StatefulWidget {
   const PageableListView.sliver({super.key, required this.pageableSize, required this.separatorBuilder, required this.future, required this.builder, this.isSliver = true});
 
   @override
-  State<PageableListView<T>> createState() => _PageableListViewState<T>();
+  State<PageableListView<T>> createState() => PageableListViewState<T>();
 
 }
 
-class _PageableListViewState<T> extends State<PageableListView<T>> {
+class PageableListViewState<T> extends State<PageableListView<T>> {
 
   final List<T> _items = [];
   late Pageable _pageable;
   bool _loading = true;
+
+  removeItem(bool Function(T) onRemove) {
+    for (var o in _items) {
+      if (onRemove(o)) {
+        _items.remove(o);
+        break;
+      }
+    }
+    setState(() {});
+  }
 
   _fetch() async {
     List<T> moreData = await widget.future(_pageable.nextPage());

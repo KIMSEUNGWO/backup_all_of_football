@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,9 +8,9 @@ import 'package:groundjp/api/service/board_service.dart';
 import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/component/constant.dart';
 import 'package:groundjp/component/region_data.dart';
+import 'package:groundjp/domain/board/board.dart';
 import 'package:groundjp/domain/invalid_data.dart';
 import 'package:groundjp/domain/match/match_search_view.dart';
-import 'package:groundjp/notifier/region_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/match_list.dart';
@@ -19,15 +18,16 @@ import 'package:groundjp/widgets/component/select_match_sheet.dart';
 import 'package:groundjp/widgets/form/detail_default_form.dart';
 import 'package:groundjp/widgets/pages/poppages/region_select_page.dart';
 
-class CommunityCreateWidget extends ConsumerStatefulWidget {
+class CommunityEditWidget extends ConsumerStatefulWidget {
+  final Board board;
   final Function() refresh;
-  const CommunityCreateWidget({super.key, required this.refresh});
+  const CommunityEditWidget({super.key, required this.refresh, required this.board});
 
   @override
-  createState() => _CommunityCreateWidgetState();
+  createState() => _CommunityEditWidgetState();
 }
 
-class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
+class _CommunityEditWidgetState extends ConsumerState<CommunityEditWidget> {
 
   late final TextEditingController _titleController;
   late final TextEditingController _contentController;
@@ -37,7 +37,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
   String? _error_title;
   String? _error_content;
 
-  bool isDisabled = true;
+  bool isDisabled = false;
   bool isSync = false;
 
   _submit() async {
@@ -46,7 +46,8 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
     if (isSync) return;
     setState(() => isSync = true);
 
-    ResponseResult result = await BoardService.instance.postBoard(
+    ResponseResult result = await BoardService.instance.patchBoard(
+      boardId: widget.board.boardId,
       title: _titleController.text,
       content: _contentController.text,
       matchId: _selectedMatch?.matchId,
@@ -57,7 +58,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
     if (code == ResultCode.OK) {
       widget.refresh();
       Alert.of(context).message(
-        message: '등록이 완료되었습니다',
+        message: '수정이 완료되었습니다',
         onPressed: () {
           Navigator.pop(context);
         },
@@ -71,6 +72,20 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
       );
     } else if (code == ResultCode.INVALID_DATA) {
       _bindingError(InvalidData.fromJson(result.data));
+    } else if (code == ResultCode.NOT_AUTHENTICATION) {
+      Alert.of(context).message(
+        message: '권한이 없습니다.',
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      );
+    } else if (code == ResultCode.BOARD_NOT_EXISTS) {
+      Alert.of(context).message(
+        message: '존재하지 않는 게시글입니다.',
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      );
     } else {
       print('Result Code : $code');
     }
@@ -176,9 +191,10 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
   @override
   void initState() {
     _loginCheck();
-    _titleController = TextEditingController();
-    _contentController = TextEditingController();
-    _selectedRegion = ref.read(regionProvider.notifier).get();
+    _titleController = TextEditingController(text: widget.board.title);
+    _contentController = TextEditingController(text: widget.board.content);
+    _selectedRegion = widget.board.region;
+    _selectedMatch = widget.board.match;
     super.initState();
   }
 
@@ -407,7 +423,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Center(
-                child: Text('등록하기',
+                child: Text('수정완료',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -423,7 +439,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                 color: Theme.of(context).colorScheme.onSecondary.withOpacity(isDisabled ? 0.6 : 1),
               ),
               child: Center(
-                child: Text('등록하기',
+                child: Text('수정완료',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
