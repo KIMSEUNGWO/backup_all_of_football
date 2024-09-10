@@ -44,9 +44,9 @@ class _SelectMatchSheetWidgetState extends ConsumerState<SelectMatchSheetWidget>
         setState(() {
           _condition = condition;
         });
-        List<MatchView> response = await MatchService.instance.search(_condition);
+        List<MatchView>? response = await MatchService.instance.buffer(context, (p0) => p0.search(_condition),);
         setState(() {
-          _items = response;
+          _items = response ?? [];
           _loading = false;
         });
       }

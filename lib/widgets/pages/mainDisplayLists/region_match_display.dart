@@ -31,9 +31,9 @@ class _RegionMatchDisplayState extends ConsumerState<RegionMatchDisplay> {
   void _fetch(Region region) async {
     if (_loading) return;
     print('_RegionMatchDisplayState._fetch');
-    List<MatchView> data = await MatchService.instance.search(SearchCondition(date: DateTime.now(), sexType: null, region: region));
+    List<MatchView>? data = await MatchService.instance.buffer(context, (p0) => p0.search(SearchCondition(date: DateTime.now(), sexType: null, region: region)),);
     setState(() {
-      result = data;
+      result = data ?? [];
       _loading = false;
       _region = region;
     });

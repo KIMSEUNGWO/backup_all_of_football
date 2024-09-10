@@ -2,15 +2,16 @@
 import 'package:groundjp/api/api_service.dart';
 import 'package:groundjp/api/domain/api_result.dart';
 import 'package:groundjp/api/domain/result_code.dart';
+import 'package:groundjp/api/service/pipe_buffer.dart';
 import 'package:groundjp/component/region_data.dart';
 import 'package:groundjp/domain/match/match_search_view.dart';
 import 'package:groundjp/domain/search_condition.dart';
 import 'package:intl/intl.dart';
 
-class MatchService {
+class MatchService extends PipeBuffer<MatchService> {
 
-  static const MatchService instance = MatchService();
-  const MatchService();
+  static final MatchService instance = MatchService();
+  MatchService();
 
   Future<List<MatchView>> search(SearchCondition condition) async {
 
@@ -49,6 +50,11 @@ class MatchService {
     } else {
       return [];
     }
+  }
+
+  @override
+  MatchService getService() {
+    return this;
   }
 
 

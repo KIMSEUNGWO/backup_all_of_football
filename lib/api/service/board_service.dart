@@ -4,14 +4,15 @@ import 'dart:convert';
 import 'package:groundjp/api/api_service.dart';
 import 'package:groundjp/api/domain/api_result.dart';
 import 'package:groundjp/api/domain/result_code.dart';
+import 'package:groundjp/api/service/pipe_buffer.dart';
 import 'package:groundjp/component/pageable.dart';
 import 'package:groundjp/component/region_data.dart';
 import 'package:groundjp/domain/board/board_simp.dart';
 
-class BoardService {
+class BoardService extends PipeBuffer<BoardService> {
 
-  static const BoardService instance = BoardService();
-  const BoardService();
+  static final BoardService instance = BoardService();
+  BoardService();
 
   Future<List<BoardSimp>> getBoardList({required Region region, required Pageable pageable }) async {
     String uri = '/search/board?&page=${pageable.page}&size=${pageable.size}';
@@ -79,5 +80,10 @@ class BoardService {
         header: ApiService.contentTypeJson,
         body: jsonEncode({'boardId' : boardId})
     );
+  }
+
+  @override
+  BoardService getService() {
+    return this;
   }
 }

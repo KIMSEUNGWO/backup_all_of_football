@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groundjp/api/service/board_service.dart';
+import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/component/pageable.dart';
 import 'package:groundjp/component/region_data.dart';
 import 'package:groundjp/domain/board/board_simp.dart';
@@ -43,7 +44,12 @@ class _CommunityWidgetState extends ConsumerState<CommunityWidget> with Automati
   }
 
   Future<List<BoardSimp>> _fetch(Pageable pageable) async {
-    return await BoardService.instance.getBoardList(region: _region, pageable: pageable);
+    final result = await BoardService.instance.buffer(context, (p0) => p0.getBoardList(region: _region, pageable: pageable),);
+    if (result == null) {
+      return [];
+    } else {
+      return result;
+    }
   }
 
   _refresh() {

@@ -4,11 +4,12 @@ import 'dart:convert';
 
 import 'package:groundjp/api/api_service.dart';
 import 'package:groundjp/api/domain/api_result.dart';
+import 'package:groundjp/api/service/pipe_buffer.dart';
 
-class OrderService {
+class OrderService extends PipeBuffer<OrderService> {
 
-  static const OrderService instance = OrderService();
-  const OrderService();
+  static final OrderService instance = OrderService();
+  OrderService();
 
   Future<ResponseResult> getOrderSimp({required int matchId}) async {
     return await ApiService.instance.get(uri: '/order/match/$matchId', authorization: true);
@@ -32,5 +33,10 @@ class OrderService {
       header: ApiService.contentTypeJson,
       body: jsonEncode({"matchId" : matchId}),
     );
+  }
+
+  @override
+  OrderService getService() {
+    return this;
   }
 }

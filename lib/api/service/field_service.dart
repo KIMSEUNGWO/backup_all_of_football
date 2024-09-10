@@ -2,14 +2,15 @@
 import 'package:groundjp/api/api_service.dart';
 import 'package:groundjp/api/domain/api_result.dart';
 import 'package:groundjp/api/domain/result_code.dart';
+import 'package:groundjp/api/service/pipe_buffer.dart';
 import 'package:groundjp/component/pageable.dart';
 import 'package:groundjp/domain/field/field_simp.dart';
 import 'package:groundjp/domain/match/match_simp.dart';
 
-class FieldService {
+class FieldService extends PipeBuffer<FieldService> {
 
-  static const FieldService instance = FieldService();
-  const FieldService();
+  static final FieldService instance = FieldService();
+  FieldService();
 
   Future<ResponseResult> getField({required int fieldId}) async {
     return await ApiService.instance.get(
@@ -41,6 +42,11 @@ class FieldService {
     } else {
       return [];
     }
+  }
+
+  @override
+  FieldService getService() {
+    return this;
   }
 
 }

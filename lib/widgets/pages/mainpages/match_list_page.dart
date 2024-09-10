@@ -47,10 +47,16 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
 
   _search(SearchCondition condition) async {
     _condition = condition;
-    List<MatchView> response = await MatchService.instance.search(_condition);
+    await _fetch();
     setState(() {
-      _items = response;
       _loading = false;
+    });
+  }
+
+  _fetch() async {
+    List<MatchView>? response = await MatchService.instance.buffer(context, (p0) => p0.search(_condition),);
+    setState(() {
+      _items = response ?? [];
     });
   }
 
@@ -60,10 +66,7 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
         sexType: _condition.sexType,
         region: region
     );
-    List<MatchView> response = await MatchService.instance.search(_condition);
-    setState(() {
-      _items = response;
-    });
+    await _fetch();
   }
 
   @override

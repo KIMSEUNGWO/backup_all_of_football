@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:groundjp/api/api_service.dart';
 import 'package:groundjp/api/domain/api_result.dart';
 import 'package:groundjp/api/domain/result_code.dart';
+import 'package:groundjp/api/service/pipe_buffer.dart';
 import 'package:groundjp/component/secure_strage.dart';
 import 'package:groundjp/domain/cash/receipt.dart';
 import 'package:groundjp/domain/coupon/coupon.dart';
@@ -15,10 +16,10 @@ import 'package:groundjp/domain/user/social_result.dart';
 import 'package:groundjp/domain/user/user_profile.dart';
 import 'package:intl/intl.dart';
 
-class UserService {
+class UserService extends PipeBuffer<UserService> {
 
-  static const UserService instance = UserService();
-  const UserService();
+  static final UserService instance = UserService();
+  UserService();
 
   Future<ResultCode> login(SocialResult result) async {
     final response = await ApiService.instance.post(
@@ -174,6 +175,11 @@ class UserService {
     } else {
       return true;
     }
+  }
+
+  @override
+  UserService getService() {
+    return this;
   }
 
 }
