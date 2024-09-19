@@ -1,5 +1,6 @@
 
 import 'package:groundjp/api/service/user_service.dart';
+import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/component/svg_icon.dart';
 import 'package:groundjp/domain/refund/refund.dart';
 import 'package:groundjp/domain/user/social_result.dart';
@@ -12,13 +13,14 @@ import 'package:groundjp/widgets/pages/mainDisplayLists/favorite_field_display.d
 import 'package:groundjp/widgets/pages/mainDisplayLists/match_soon_display.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/recently_visit_match_display.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/region_match_display.dart';
-import 'package:groundjp/widgets/component/chart_donut_painter_widget.dart';
 import 'package:groundjp/widgets/pages/poppages/search_page.dart';
 import 'package:groundjp/widgets/pages/poppages/login_page.dart';
 import 'package:groundjp/widgets/pages/poppages/notification_page.dart';
 import 'package:groundjp/widgets/pages/poppages/register_page.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeWidget extends ConsumerStatefulWidget {
   const HomeWidget({super.key});
@@ -71,7 +73,7 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
               },));
             },
             child: Padding(
-              padding: const EdgeInsets.only(right: 20),
+              padding: EdgeInsets.only(right: 20.w),
               child: SvgIcon.asset(sIcon: SIcon.bell),
             )
           )
@@ -101,6 +103,17 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
           SliverToBoxAdapter(
             child: Column(
               children: [
+                GestureDetector(
+                  onTap: () {
+                    Alert.of(context).message(message: 'asdfasdf');
+                  },
+                  child: const Text('Alert 테스트',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -174,25 +187,6 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    //   return ChartsExample(
-                    //     diameter: 100,
-                    //     data: [
-                    //       ChartData(title: '남자', value: 17, color: Colors.blue),
-                    //       ChartData(title: '여자', value: 1, color: Colors.red),
-                    //     ],
-                    //   );
-                    // },));
-                  },
-                  child: Text('차트 예제',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                    ),
-                  ),
-                ),
               ],
             ),
           )
@@ -209,17 +203,17 @@ class _Banners extends StatelessWidget {
   _Banners();
 
   final List<Image> _banners = [
-    Image.asset('assets/banners/1.png', fit: BoxFit.cover,),
+    Image.asset('assets/banners/1.png', fit: BoxFit.fitWidth,),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 16, bottom: 24),
+      padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 16.h, bottom: 24.h),
       child: ImageSlider(
         images: _banners,
         option: ImageSliderOption(
-          height: 100,
+          height: 100.h,
           borderRadius: BorderRadius.circular(16),
           autoplay: false
         ),

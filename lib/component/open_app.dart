@@ -15,6 +15,7 @@ class OpenApp {
   openMaps({required double lat, required double lng}) async {
 
     String openApp = 'comgooglemaps://';
+    // String openApp = 'comgooglemaps://';
     print(await canLaunchUrl(Uri.parse(openApp)));
     // await launchUrl(Uri.parse(openApp));
     Uri googleMap = _google(lat, lng);
@@ -47,7 +48,11 @@ class OpenApp {
   }
 
   _google(double lat, double lng) {
-    return Uri.parse('comgooglemaps://?q=$lat,$lng');
+    if (Platform.isIOS) {
+      return Uri.parse('comgooglemaps://?q=$lat,$lng');
+    } else {
+      return Uri.parse('google.navigation:q=$lat,$lng');
+    }
   }
 
   _apple(double lat, double lng) {

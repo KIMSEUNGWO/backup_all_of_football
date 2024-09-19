@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class ChartDonutPainterWidget extends StatefulWidget {
   final String title;
   final double diameter;
@@ -46,8 +48,8 @@ class _ChartDonutPainterWidgetState extends State<ChartDonutPainterWidget> with 
     return Stack(
       children: [
         SizedBox(
-          width: widget.diameter,
-          height: widget.diameter,
+          width: widget.diameter.w,
+          height: widget.diameter.h,
           child: AnimatedBuilder(
             animation: _animation,
             builder: (context, child) {
@@ -55,7 +57,7 @@ class _ChartDonutPainterWidgetState extends State<ChartDonutPainterWidget> with 
                 painter: DonutChartPainter(
                   progress: _animation.value,
                   dataList: widget.data,
-                  diameter: widget.diameter,
+                  diameter: widget.diameter.w,
                 ),
               );
             },
@@ -63,12 +65,12 @@ class _ChartDonutPainterWidgetState extends State<ChartDonutPainterWidget> with 
         ),
 
         Positioned(
-          width: widget.diameter, height: widget.diameter,
+          width: widget.diameter.w, height: widget.diameter.h,
           child: Center(
             child: Text(widget.title,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.secondary,
-                fontSize: 14,
+                fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                 fontWeight: FontWeight.w500,
               ),
             ),

@@ -10,8 +10,9 @@ import 'package:groundjp/widgets/pages/mainpages/community_page.dart';
 import 'package:groundjp/widgets/pages/mainpages/home_page.dart';
 import 'package:groundjp/widgets/pages/mainpages/match_list_page.dart';
 import 'package:groundjp/widgets/pages/mainpages/mypage_page.dart';
-import 'package:groundjp/widgets/pages/poppages/search_page.dart';
 import 'package:groundjp/widgets/pages/poppages/login_page.dart';
+
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class App extends ConsumerStatefulWidget {
@@ -118,12 +119,12 @@ class BottomIcon extends StatelessWidget {
     return GestureDetector(
       onTap: callback,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
         decoration: const BoxDecoration(),
         child: SvgIcon.asset(
           sIcon: sIcon,
           style: isPressed
-            ? SvgIconStyle(color: Theme.of(context).colorScheme.onPrimary)
+            ? SvgIconStyle(color: Theme.of(context).colorScheme.onPrimary,)
             : null
         ),
       ),

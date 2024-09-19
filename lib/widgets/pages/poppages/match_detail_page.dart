@@ -14,15 +14,12 @@ import 'package:groundjp/notifier/coupon_notifier.dart';
 import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/bottom_bar_widget.dart';
-import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/image_detail_view.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
-import 'package:groundjp/widgets/form/detail_default_form.dart';
 import 'package:groundjp/widgets/form/detail_field_form.dart';
 import 'package:groundjp/widgets/form/detail_match_form.dart';
 import 'package:groundjp/widgets/form/detail_role_form.dart';
 import 'package:groundjp/widgets/form/field_image_preview.dart';
-import 'package:groundjp/widgets/component/chart_donut_painter_widget.dart';
 import 'package:groundjp/widgets/form/match_statisics_form.dart';
 import 'package:groundjp/widgets/pages/poppages/field_detail_page.dart';
 import 'package:groundjp/widgets/pages/poppages/login_page.dart';
@@ -32,6 +29,7 @@ import 'package:groundjp/domain/match/match.dart';
 import 'package:intl/intl.dart';
 
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MatchDetailWidget extends ConsumerStatefulWidget {
 
@@ -136,110 +134,110 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
           body: Skeletonizer(
             enabled: _loading,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: SingleChildScrollView(
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ImageSlider(
-                        images: _loading ? [] : match!.field.images.map((image) {
-                          return GestureDetector(
-                            onTap: () {
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ImageSlider(
+                      images: _loading ? [] : match!.field.images.map((image) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ImageDetailView(image: image)
+                                  ,fullscreenDialog: true
+                              ));
+                          },
+                          child: image,
+                        );
+                      }).toList(),
+                    ),
+                    const SpaceHeight(19,),
+                    Text(_loading ? '' :  DateFormat('M월 d일 EEEE HH:mm', 'ko_KR').format(match!.matchDate),
+                      style: TextStyle(
+                        color: const Color(0xFF686868),
+                        fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SpaceHeight(5,),
+                    Text(_loading ? '' : match!.field.title,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: Theme.of(context).textTheme.displayMedium!.fontSize
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (!_loading) {
+                          OpenApp.instance.openMaps(lat: match!.field.address.lat, lng: match!.field.address.lng);
+                        }
+                      },
+                      child: Text(_loading ? '' : match!.field.address.address,
+                        style: TextStyle(
+                          color: const Color(0xFF686868),
+                          fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                    const SpaceHeight(35,),
+                    MatchStatisticsFormWidget(statistics: match?.statistics),
+                    MatchDetailFormWidget(match: match),
+                    const SpaceHeight(30),
+                    FieldDetailFormWidget(field: match?.field),
+                    const SpaceHeight(30),
+                    const Skeleton.ignore(
+                      child: DetailRoleFormWidget(),
+                    ),
+                    const SpaceHeight(30),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text('이 구장에서 다음 경기를 찾으시나요?',
+                            style: TextStyle(
+                                fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).colorScheme.primary
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 5,),
+                        GestureDetector(
+                          onTap: () {
+                            if (!_loading) {
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => ImageDetailView(image: image)
-                                      ,fullscreenDialog: true
-                                  ));
-                            },
-                            child: image,
-                          );
-                        }).toList(),
-                      ),
-                      const SizedBox(height: 19,),
-                      Text(_loading ? '' :  DateFormat('M월 d일 EEEE HH:mm', 'ko_KR').format(match!.matchDate),
-                        style: TextStyle(
-                            color: const Color(0xFF686868),
-                            fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                            fontWeight: FontWeight.w600
-                        ),
-                      ),
-                      const SizedBox(height: 5,),
-                      Text(_loading ? '' : match!.field.title,
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.w600,
-                            fontSize: Theme.of(context).textTheme.displayMedium!.fontSize
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          if (!_loading) {
-                            OpenApp.instance.openMaps(lat: match!.field.address.lat, lng: match!.field.address.lng);
-                          }
-                        },
-                        child: Text(_loading ? '' : match!.field.address.address,
-                          style: TextStyle(
-                              color: const Color(0xFF686868),
-                              fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                              fontWeight: FontWeight.w600,
-                              decoration: TextDecoration.underline
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 35,),
-                      MatchStatisticsFormWidget(statistics: match?.statistics),
-                      MatchDetailFormWidget(match: match),
-                      const SizedBox(height: 30,),
-                      FieldDetailFormWidget(field: match?.field),
-                      const SizedBox(height: 30,),
-                      const Skeleton.ignore(
-                        child: DetailRoleFormWidget(),
-                      ),
-                      const SizedBox(height: 30,),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text('이 구장에서 다음 경기를 찾으시나요?',
-                              style: TextStyle(
-                                  fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                                  fontWeight: FontWeight.w700,
-                                  color: Theme.of(context).colorScheme.primary
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 5,),
-                          GestureDetector(
-                            onTap: () {
-                              if (!_loading) {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                      return FieldDetailWidget(fieldId: match!.field.fieldId, field: match!.field,);
-                                    },)
-                                );
-                              }
-                            },
-                            child: Row(
-                              children: [
-                                Text('더보기',
-                                  style: TextStyle(
-                                      fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-                                      fontWeight: FontWeight.w500,
-                                      color: Theme.of(context).colorScheme.secondary
-                                  ),
+                                  MaterialPageRoute(builder: (context) {
+                                    return FieldDetailWidget(fieldId: match!.field.fieldId, field: match!.field,);
+                                  },)
+                              );
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Text('더보기',
+                                style: TextStyle(
+                                    fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+                                    fontWeight: FontWeight.w500,
+                                    color: Theme.of(context).colorScheme.secondary
                                 ),
-                                const SizedBox(width: 2,),
-                                Icon(Icons.arrow_forward_ios_rounded,
-                                  color: Theme.of(context).colorScheme.secondary,
-                                  size: 12,
-                                )
-                              ],
-                            ),
+                              ),
+                              const SizedBox(width: 2,),
+                              Icon(Icons.arrow_forward_ios_rounded,
+                                color: Theme.of(context).colorScheme.secondary,
+                                size: 12,
+                              )
+                            ],
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 40,),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 40,),
 
 
-                    ]
+                  ]
                 ),
               ),
             ),

@@ -2,6 +2,8 @@
 import 'package:groundjp/component/svg_icon.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class UserProfileWidget extends StatelessWidget {
 
   final double diameter;
@@ -12,7 +14,7 @@ class UserProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: diameter, height: diameter,
+      width: diameter.sp, height: diameter.sp,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: const Color(0xFFD9D9D9),
@@ -24,8 +26,8 @@ class UserProfileWidget extends StatelessWidget {
             style: SvgIconStyle(
               width: diameter * 0.6,
               height: diameter * 0.6,
-              color: Colors.white
-            )
+              color: Colors.white,
+            ),
           ),
         ),
     );

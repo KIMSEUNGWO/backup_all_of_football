@@ -7,9 +7,12 @@ import 'package:groundjp/domain/enums/receipt_enum.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:flutter/material.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class CashReceiptWidget extends ConsumerStatefulWidget {
   const CashReceiptWidget({super.key});
@@ -56,14 +59,14 @@ class _CashReceiptWidgetState extends ConsumerState<CashReceiptWidget> {
         title: const Text('캐시 내역'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 36,),
+              const SpaceHeight(36,),
 
               CustomContainer(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -74,7 +77,7 @@ class _CashReceiptWidgetState extends ConsumerState<CashReceiptWidget> {
                         fontWeight: FontWeight.w500
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SpaceHeight(20,),
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(AccountFormatter.format(ref.read(loginProvider)?.cash),
@@ -89,7 +92,7 @@ class _CashReceiptWidgetState extends ConsumerState<CashReceiptWidget> {
                   ],
                 ),
               ),
-              const SizedBox(height: 32,),
+              const SpaceHeight(32,),
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
@@ -100,7 +103,7 @@ class _CashReceiptWidgetState extends ConsumerState<CashReceiptWidget> {
                     action.showBottomActionSheet(context);
                   },
                   child: CustomContainer(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -113,17 +116,19 @@ class _CashReceiptWidgetState extends ConsumerState<CashReceiptWidget> {
                           ),
                         ),
                         const SizedBox(width: 5,),
-                        const Icon(Icons.keyboard_arrow_down_rounded,)
+                        Icon(Icons.keyboard_arrow_down_rounded,
+                          size: 25.sp,
+                        )
                       ],
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 16,),
+              const SpaceHeight(16,),
 
               (_showItems.isEmpty)
               ? Padding(
-                padding: const EdgeInsets.only(top: 50),
+                padding: EdgeInsets.only(top: 50.h),
                 child: Text('내역이 없습니다',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.tertiary,
@@ -138,8 +143,7 @@ class _CashReceiptWidgetState extends ConsumerState<CashReceiptWidget> {
                 itemBuilder: (context, index) {
                   Receipt receipt = _showItems[index];
                   return CustomContainer(
-                    height: 85,
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
                     margin: const EdgeInsets.only(bottom: 11),
                     child: Column(
                       children: [

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsNoticeWidget extends StatefulWidget {
   const SettingsNoticeWidget({super.key});
@@ -19,7 +20,7 @@ class _SettingsNoticeWidgetState extends State<SettingsNoticeWidget> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             children: [
 

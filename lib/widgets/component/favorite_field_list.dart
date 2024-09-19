@@ -6,6 +6,8 @@ import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/pages/poppages/field_detail_page.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class FavoriteFieldListWidget extends StatelessWidget {
 
   final FieldSimp _fieldSimp;
@@ -22,8 +24,8 @@ class FavoriteFieldListWidget extends StatelessWidget {
         },));
       },
       child: CustomContainer(
-        padding: const EdgeInsets.only(left: 15, right: 25, top: 10, bottom: 10,),
-        margin: const EdgeInsets.only(right: 10),
+        padding: EdgeInsets.only(left: 15.w, right: 25.w, top: 10.h, bottom: 10.h,),
+        margin: EdgeInsets.only(right: 10.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -39,7 +41,7 @@ class FavoriteFieldListWidget extends StatelessWidget {
                 const SpaceWidth(10,),
                 FavoriteIconButtonWidget(
                   fieldSimp: _fieldSimp,
-                  size: 15,
+                  size: 15.sp,
                   disabled: true,
                   readOnly: readOnly,
                 ),

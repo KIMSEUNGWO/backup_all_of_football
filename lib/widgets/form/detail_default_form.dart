@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 
 class DetailDefaultFormWidget extends StatelessWidget {
 
@@ -17,7 +19,7 @@ class DetailDefaultFormWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: titlePadding ?? const EdgeInsets.only(left: 5),
+          padding: titlePadding ?? EdgeInsets.only(left: 5.w),
           child: Text(title,
             style: textStyle ?? TextStyle(
               fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
@@ -27,7 +29,7 @@ class DetailDefaultFormWidget extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 10,),
+        const SpaceHeight(10,),
 
         child
       ],

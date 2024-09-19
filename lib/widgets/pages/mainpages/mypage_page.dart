@@ -19,6 +19,7 @@ import 'package:groundjp/widgets/pages/poppages/settings/settings_page.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyPageWidget extends ConsumerStatefulWidget{
 
@@ -56,7 +57,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
               },));
             },
             child: Padding(
-              padding: const EdgeInsets.only(right: 20),
+              padding: EdgeInsets.only(right: 20.w),
               child: SvgIcon.asset(sIcon: SIcon.settings, style: SvgIconStyle(
                 width: 25, height: 25
               )),
@@ -65,7 +66,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -84,7 +85,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                   // 유저 정보
 
                   CustomContainer(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
                     child: Column(
                       children: [
                         Row(
@@ -138,7 +139,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                         ),
                         const SpaceHeight(20,),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          padding: EdgeInsets.symmetric(horizontal: 40.w),
                           child: LayoutBuilder(
                             builder: (context, constraints) {
                               double containerWidth = constraints.maxWidth / 3;
@@ -158,7 +159,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                                         const SpaceHeight(4,),
                                         const Text('즐겨찾기',
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w400
+                                            fontWeight: FontWeight.w400,
                                           ),
                                         )
                                       ],
@@ -215,7 +216,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                   const SpaceHeight(15,),
                   // 캐시
                   CustomContainer(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20.h),
                     child: Column(
                       children: [
                         Row(
@@ -276,13 +277,10 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
               ),
               const SpaceHeight(15,),
 
-              Container(
+              CustomContainer(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: const Color(0xFF6663E8)
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
+                backgroundColor: const Color(0xFF6663E8),
                 child: Text('함께하고 싶은 친구에게 공유해보세요',
                   style: TextStyle(
                     color: Colors.white,
@@ -294,7 +292,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
               const SpaceHeight(15,),
 
               CustomContainer(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
                 child: Column(
                   children: [
                     _Menu(
@@ -322,7 +320,7 @@ class _MyPageWidgetState extends ConsumerState<MyPageWidget> {
                     ),
                     const SpaceHeight(10,),
                     _Menu(
-                      icon: const Icon(Icons.logout_outlined, size: 20,),
+                      icon: Icon(Icons.logout_outlined, size: 20.sp,),
                       title: '로그아웃',
                       onPressed: (){
                         Alert.of(context).confirm(

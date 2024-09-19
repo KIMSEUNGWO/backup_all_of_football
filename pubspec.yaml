@@ -30,6 +30,7 @@ dependencies:
   webview_flutter: ^4.9.0 # WebView
   flutter_local_notifications: ^17.2.2 # 알림
   flutter_native_splash: ^2.4.1 # 스플래쉬 시작화면
+  flutter_screenutil: ^5.9.3 # 반응형 폰트 사이즈
 
 dev_dependencies:
   flutter_test:

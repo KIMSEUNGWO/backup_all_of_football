@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomContainer extends StatelessWidget {
 
@@ -19,12 +20,12 @@ class CustomContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: padding ?? const EdgeInsets.all(15),
-      width: width,
-      height: height,
+      width: width?.w,
+      height: height?.h,
       margin: margin,
       constraints: constraints,
       decoration: BoxDecoration(
-        borderRadius: radius ?? BorderRadius.circular(16),
+        borderRadius: radius ?? BorderRadius.circular(16.sp),
         color: backgroundColor ?? Colors.white,
         border: border,
         boxShadow: [

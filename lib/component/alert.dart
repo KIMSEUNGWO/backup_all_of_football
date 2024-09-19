@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class Alert {
 
   final BuildContext context;
@@ -14,16 +16,16 @@ class Alert {
       builder: (BuildContext context) {
         return Dialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.sp),
             ),
             elevation: 0,
             child: SizedBox(
-              width: 100,
+              width: 100.w,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
                     child: Text(message,
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -35,11 +37,11 @@ class Alert {
                   ),
 
                   SizedBox(
-                    height: 45,
+                    height: 45.h,
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20.sp),
+                        bottomRight: Radius.circular(20.sp),
                       ),
                       child: Row(
                         children: [
@@ -112,76 +114,64 @@ class Alert {
   }
   void message({required String message, VoidCallback? onPressed}) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.sp),
+          ),
+          elevation: 0,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
+                child: Text(message,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-              elevation: 0,
-              child: Container(
-                width: 100,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                      child: Text(message,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                          fontWeight: FontWeight.w500,
+              SizedBox(
+                height: 45.h,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20.sp),
+                    bottomRight: Radius.circular(20.sp),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop(false);
+                      if (onPressed != null) {
+                        onPressed();
+                      }
+                    },
+                    splashColor: Colors.transparent, // 기본 InkWell 효과 삭제
+                    highlightColor: Colors.grey.withOpacity(0.2), // 누르고있을때 색상
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(top: alertBorderSide,),
+                      ),
+                      child: Center(
+                        child: Text('확인',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontWeight: FontWeight.w500,
+                            fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      height: 45,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Expanded(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context).pop(false);
-                                  if (onPressed != null) {
-                                    onPressed();
-                                  }
-                                },
-                                splashColor: Colors.transparent, // 기본 InkWell 효과 삭제
-                                highlightColor: Colors.grey.withOpacity(0.2), // 누르고있을때 색상
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border(top: alertBorderSide,),
-                                  ),
-                                  child: Center(
-                                    child: Text('확인',
-                                      style: TextStyle(
-                                          color: Theme.of(context).colorScheme.onPrimary,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-
-                  ],
+                  ),
                 ),
               )
-          );
-        },
-        barrierDismissible: false
+            ],
+          )
+        );
+      },
+      barrierDismissible: false,
     );
   }
   static BorderSide alertBorderSide = const BorderSide(

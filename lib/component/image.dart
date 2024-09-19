@@ -54,6 +54,9 @@ class CropAspectRatioPresetCustom implements CropAspectRatioPresetData {
 
 class ImagePick {
 
+  static const ImagePick instance = ImagePick();
+  const ImagePick();
+
   Future<PermissionStatus> _getPermission() async {
     final status = await Permission.photos.status;
     if (status.isDenied) {
@@ -88,6 +91,7 @@ class ImagePick {
     if (image != null) {
       return await ImageCroppers.instance.getCropper(image);
     }
+
     return null;
   }
 

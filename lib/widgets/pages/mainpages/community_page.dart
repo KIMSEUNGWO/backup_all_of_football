@@ -1,10 +1,6 @@
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groundjp/api/service/board_service.dart';
-import 'package:groundjp/component/alert.dart';
 import 'package:groundjp/component/pageable.dart';
 import 'package:groundjp/component/region_data.dart';
 import 'package:groundjp/domain/board/board_simp.dart';
@@ -17,6 +13,9 @@ import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/pages/poppages/community_create_page.dart';
 import 'package:groundjp/widgets/pages/poppages/login_page.dart';
 import 'package:groundjp/widgets/pages/poppages/region_select_page.dart';
+
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommunityWidget extends ConsumerStatefulWidget {
   const CommunityWidget({super.key});
@@ -95,7 +94,7 @@ class _CommunityWidgetState extends ConsumerState<CommunityWidget> with Automati
         ),
       ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Stack(
               children: [
                 CustomScrollView(
@@ -104,7 +103,7 @@ class _CommunityWidgetState extends ConsumerState<CommunityWidget> with Automati
                       onRefresh: _refresh,
                     ),
                     SliverPadding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      padding: EdgeInsets.symmetric(vertical: 20.h),
                       sliver: PageableListView.sliver(
                         // key: ValueKey(_refreshKey),  // Use the refreshKey to force a rebuild
                         key: _globalKey,
@@ -129,7 +128,7 @@ class _CommunityWidgetState extends ConsumerState<CommunityWidget> with Automati
                       }, fullscreenDialog: true));
                     },
                     child: Container(
-                      width: 50, height: 50,
+                      width: 50.sp, height: 50.sp,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           color: Theme.of(context).colorScheme.onSecondary
@@ -137,7 +136,7 @@ class _CommunityWidgetState extends ConsumerState<CommunityWidget> with Automati
                       child: Center(
                           child: Icon(Icons.add_rounded,
                             color: Colors.white,
-                            size: 35,
+                            size: 35.sp,
                           )
                       ),
                     ),

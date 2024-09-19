@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class SettingsMenuFormWidget extends StatelessWidget {
 
   final String title;
@@ -12,12 +14,12 @@ class SettingsMenuFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+      padding: EdgeInsets.symmetric(vertical: 15.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 15),
+            padding: EdgeInsets.only(left: 15.w),
             child: Text(title,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
@@ -58,7 +60,7 @@ class _SettingsMenuWidgetState extends State<SettingsMenuWidget> {
         splashColor: Colors.transparent, // 기본 InkWell 효과 삭제
         highlightColor: Colors.grey.withOpacity(0.2), // 누르고있을때 색상
         child: Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 25, right: 15),
+          padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 25.w, right: 15.w),
           child: Row(
             children: [
               Expanded(

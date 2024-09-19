@@ -1,17 +1,18 @@
 
 import 'package:groundjp/api/service/match_service.dart';
 import 'package:groundjp/component/alert.dart';
-import 'package:groundjp/component/region_data.dart';
-import 'package:groundjp/domain/enums/match_enums.dart';
 import 'package:groundjp/domain/match/match_search_view.dart';
 import 'package:groundjp/exception/server/server_exception.dart';
 import 'package:groundjp/exception/server/socket_exception.dart';
 import 'package:groundjp/exception/server/timeout_exception.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/match_list.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/form/detail_default_form.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MatchSoonDisplay extends ConsumerStatefulWidget {
   const MatchSoonDisplay({super.key});
@@ -63,13 +64,13 @@ class _MatchSoonDisplayState extends ConsumerState<MatchSoonDisplay> {
     if (state == null || _result.isEmpty) return const SizedBox();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 36),
+      padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 36.h),
       child: DetailDefaultFormWidget(
         title: '게임이 곧 시작해요',
         child: ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          separatorBuilder: (context, index) => const SizedBox(height: 12,),
+          separatorBuilder: (context, index) => const SpaceHeight(12,),
           itemCount: _result.length,
           itemBuilder: (context, index) => MatchListWidget(
             match: _result[index],

@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ImageSlider extends StatefulWidget {
 
@@ -27,7 +28,7 @@ class _ImageSliderState extends State<ImageSlider> {
     return Container(
       width: widget.option?.width ?? double.infinity,
       clipBehavior: Clip.hardEdge,
-      height: widget.option?.height ?? 280,
+      height: widget.option?.height?.h ?? 280.h,
       decoration: BoxDecoration(
           borderRadius: widget.option?.borderRadius ?? BorderRadius.circular(20),
           color: Colors.white
@@ -50,13 +51,13 @@ class _ImageSliderState extends State<ImageSlider> {
           ),
 
           Positioned(
-            bottom: 10, right: 15,
+            bottom: 10.h, right: 15.w,
             child: Container(
-              width: 45,
+              width: 45.w,
               height: 20,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color(0xFF252525).withOpacity(0.7)
+                borderRadius: BorderRadius.circular(20),
+                color: const Color(0xFF252525).withOpacity(0.7),
               ),
               child: Skeleton.ignore(
                 child: Row(

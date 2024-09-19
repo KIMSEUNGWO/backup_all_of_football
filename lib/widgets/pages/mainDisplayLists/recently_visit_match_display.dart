@@ -10,6 +10,7 @@ import 'package:groundjp/widgets/pages/poppages/recently_visit_match_more_page.d
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RecentlyVisitMatchDisplay extends ConsumerWidget {
   const RecentlyVisitMatchDisplay({super.key});
@@ -20,12 +21,12 @@ class RecentlyVisitMatchDisplay extends ConsumerWidget {
     List<MatchView> items = ref.watch(recentlyMatchNotifier);
     if (items.isEmpty) return const SizedBox();
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 36),
+      padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 36.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 5),
+            padding: EdgeInsets.only(left: 5.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -52,7 +53,7 @@ class RecentlyVisitMatchDisplay extends ConsumerWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const SizedBox(width: 2,),
+                        const SpaceWidth(2,),
                         Icon(Icons.arrow_forward_ios_rounded,
                           size: Theme.of(context).textTheme.bodyMedium!.fontSize,
                           color: Theme.of(context).colorScheme.secondary,

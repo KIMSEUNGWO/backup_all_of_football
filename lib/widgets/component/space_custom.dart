@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SpaceWidth extends StatelessWidget {
 
@@ -10,7 +11,7 @@ class SpaceWidth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(width: width,);
+    return SizedBox(width: width.w,);
   }
 }
 
@@ -22,6 +23,6 @@ class SpaceHeight extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: height,);
+    return SizedBox(height: height.h,);
   }
 }

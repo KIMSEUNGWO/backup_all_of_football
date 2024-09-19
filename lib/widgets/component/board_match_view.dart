@@ -7,6 +7,8 @@ import 'package:groundjp/widgets/component/match_status_box.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/pages/poppages/match_detail_page.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class BoardMatchViewWidget extends StatelessWidget {
 
   final MatchView match;
@@ -40,7 +42,7 @@ class BoardMatchViewWidget extends StatelessWidget {
                 ),
                 Icon(Icons.arrow_forward_ios_outlined,
                   color: Theme.of(context).colorScheme.secondary,
-                  size: 14,
+                  size: 14.sp,
                 )
               ],
             ),

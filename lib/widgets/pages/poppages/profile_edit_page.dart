@@ -85,7 +85,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
   }
 
   selectImage() async {
-    final cropper = await ImagePick().getAndCrop();
+    final cropper = await ImagePick.instance.getAndCrop();
     if (cropper != null) {
       setState(() {
         editImage = Image.file(File(cropper.path), fit: BoxFit.contain,);

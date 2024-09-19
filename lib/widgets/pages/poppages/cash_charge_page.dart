@@ -16,7 +16,9 @@ import 'package:groundjp/widgets/form/detail_default_form.dart';
 import 'package:groundjp/widgets/webview/kakao_pay_web_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CashChargeWidget extends ConsumerStatefulWidget {
   const CashChargeWidget({super.key});
@@ -109,21 +111,21 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
             title: const Text('충전'),
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   const SpaceHeight(36),
                   CustomContainer(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('잔액',
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                              fontWeight: FontWeight.w500
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         const SpaceHeight(20),
@@ -132,9 +134,9 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
                           child: Text(AccountFormatter.format(ref.read(loginProvider.notifier).getCash()),
                             textAlign: TextAlign.right,
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                                fontWeight: FontWeight.w600
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         )
@@ -165,9 +167,9 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
                             child: Center(
                               child: Text(AccountFormatter.format(amount),
                                 style: TextStyle(
-                                    color: _selectAmountIndex == index ? Colors.white : Theme.of(context).colorScheme.primary,
-                                    fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                                    fontWeight: _selectAmountIndex == index ? FontWeight.w600 : FontWeight.w500
+                                  color: _selectAmountIndex == index ? Colors.white : Theme.of(context).colorScheme.primary,
+                                  fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                                  fontWeight: _selectAmountIndex == index ? FontWeight.w600 : FontWeight.w500,
                                 ),
                               ),
                             ),
@@ -198,14 +200,10 @@ class _CashChargeWidgetState extends ConsumerState<CashChargeWidget> {
                           child: CustomContainer(
                             backgroundColor: payment.backgroundColor,
                             border: _selectPaymentIndex == index
-                              ? Border.all(color: Theme.of(context).colorScheme.onPrimary, width: 4,)
+                              ? Border.all(color: Theme.of(context).colorScheme.onPrimary, width: 4.sp,)
                               : null,
                             child: Center(
-                              child: SvgIcon.asset(sIcon: payment.getLogo(),
-                                style: SvgIconStyle(
-                                  width: 60
-                                )
-                              ),
+                              child: SvgIcon.asset(sIcon: payment.getLogo(),),
                             ),
                           ),
                         );

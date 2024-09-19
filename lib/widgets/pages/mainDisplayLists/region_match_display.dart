@@ -11,6 +11,7 @@ import 'package:groundjp/widgets/pages/poppages/region_select_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RegionMatchDisplay extends ConsumerStatefulWidget {
   const RegionMatchDisplay({super.key});
@@ -55,12 +56,12 @@ class _RegionMatchDisplayState extends ConsumerState<RegionMatchDisplay> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 5),
+            padding: EdgeInsets.only(left: 5.w),
             child: Row(
               children: [
                 Text('오늘 ',
@@ -108,7 +109,7 @@ class _RegionMatchDisplayState extends ConsumerState<RegionMatchDisplay> {
           : ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            separatorBuilder: (context, index) => const SizedBox(height: 12,),
+            separatorBuilder: (context, index) => const SpaceHeight(12,),
             itemCount: result.length,
             itemBuilder: (context, index) => MatchListWidget(
               match: result[index],

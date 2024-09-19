@@ -18,8 +18,8 @@ class ApiService {
   static const ApiService instance = ApiService();
   const ApiService();
 
-  static const String server = "http://$domain";
-  static const String domain = 'localhost:8080';
+  static const String server = "https://$domain";
+  static const String domain = 'itunes-bargain-methods-mi.trycloudflare.com';
   static const Duration _delay = Duration(seconds: 20);
   static const Map<String, String> contentTypeJson = {
     "Content-Type" : "application/json; charset=utf-8",

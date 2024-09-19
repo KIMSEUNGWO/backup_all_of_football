@@ -9,6 +9,8 @@ import 'package:groundjp/widgets/form/settings_menu_form.dart';
 import 'package:groundjp/widgets/pages/poppages/settings/settings_help_page.dart';
 import 'package:groundjp/widgets/pages/poppages/settings/settings_notice_page.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class SettingsWidget extends ConsumerStatefulWidget {
   const SettingsWidget({super.key});
 
@@ -68,7 +70,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         menuTitle: '공지사항',
                         action: Icon(Icons.arrow_forward_ios_rounded,
                           color: Theme.of(context).colorScheme.primary,
-                          size: 12,
+                          size: 12.sp,
                         ),
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -80,7 +82,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         menuTitle: '고객센터/도움말',
                         action: Icon(Icons.arrow_forward_ios_rounded,
                           color: Theme.of(context).colorScheme.primary,
-                          size: 12,
+                          size: 12.sp,
                         ),
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -92,7 +94,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         menuTitle: '버전정보',
                         action: Icon(Icons.arrow_forward_ios_rounded,
                           color: Theme.of(context).colorScheme.primary,
-                          size: 12,
+                          size: 12.sp,
                         ),
                         onPressed: () {
                           print('???????/');

@@ -1,12 +1,15 @@
 
 import 'package:groundjp/api/domain/result_code.dart';
 import 'package:groundjp/component/svg_icon.dart';
+import 'package:groundjp/domain/enums/payment.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/domain/user/social_result.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/pages/poppages/register_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginWidget extends ConsumerWidget {
   const LoginWidget({super.key});
@@ -35,7 +38,7 @@ class LoginWidget extends ConsumerWidget {
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, top: 170, bottom: MediaQuery.of(context).padding.bottom),
+        padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 170.h, bottom: MediaQuery.of(context).padding.bottom + 20.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -51,17 +54,17 @@ class LoginWidget extends ConsumerWidget {
                 _SocialBtn(
                   title: '라인으로 계속하기',
                   fontColor: Colors.white,
-                  color: const Color(0xFF08BF5B),
+                  color: Payment.LINE.backgroundColor,
                   sIcon: SIcon.lineLogo,
                   onPressed: () {
                     _onTryLogin(context, ref, SocialProvider.LINE);
                   },
                 ),
-                const SizedBox(height: 12,),
+                const SpaceHeight(12,),
                 _SocialBtn(
                   title: '카카오로 계속하기',
                   fontColor: const Color(0xFF181602),
-                  color: const Color(0xFFF3DA01),
+                  color: Payment.KAKAO.backgroundColor,
                   sIcon: SIcon.kakaoLogo,
                   onPressed: () {
                     _onTryLogin(context, ref, SocialProvider.KAKAO);
@@ -69,12 +72,12 @@ class LoginWidget extends ConsumerWidget {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 40, bottom: 25),
+                  padding: EdgeInsets.only(top: 40.h, bottom: 25.h),
                   child: Row(
                     children: [
                       Expanded(
                         child: Container(
-                          height: 1,
+                          height: 1.h,
                           width: double.infinity,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
@@ -83,12 +86,12 @@ class LoginWidget extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
                         child: const Text('다른 계정으로 계속하기'),
                       ),
                       Expanded(
                         child: Container(
-                          height: 1,
+                          height: 1.h,
                           width: double.infinity,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
@@ -100,7 +103,7 @@ class LoginWidget extends ConsumerWidget {
                   ),
                 ),
                 _SmallSocialBtn(
-                  icon: const Icon(Icons.apple, color: Colors.white, size: 25,),
+                  icon: Icon(Icons.apple, color: Colors.white, size: 25.sp,),
                   color: const Color(0xFF434343),
                   onPressed: () {
                     _onTryLogin(context, ref, SocialProvider.APPLE);
@@ -132,8 +135,8 @@ class _SocialBtn extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        height: 50,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        height: 50.sp,
+        padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: color,
@@ -149,7 +152,7 @@ class _SocialBtn extends StatelessWidget {
                   style: TextStyle(
                     color: fontColor,
                     fontWeight: FontWeight.w700,
-                    fontSize: Theme.of(context).textTheme.displaySmall!.fontSize
+                    fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
                   ),
                 ),
               ),
@@ -175,7 +178,7 @@ class _SmallSocialBtn extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 50, height: 50,
+        width: 50.sp, height: 50.sp,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           color: color,

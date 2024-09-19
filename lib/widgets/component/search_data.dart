@@ -8,6 +8,7 @@ import 'package:groundjp/notifier/region_notifier.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -48,15 +49,15 @@ class _SearchDataState extends ConsumerState<SearchData> {
     setState(() => _selectedSexType = sexType);
     _search();
   }
-  double? _containerHeight = 114;
+  double? _containerHeight = 104;
   bool _hasOpen = false;
   _containerExpand() {
     setState(() {
-      if (_containerHeight == 114) {
-        _containerHeight = 214;
+      if (_containerHeight == 104) {
+        _containerHeight = 204;
         _hasOpen = true;
       } else {
-        _containerHeight = 114;
+        _containerHeight = 104;
         _hasOpen = false;
       }
     });
@@ -85,7 +86,7 @@ class _SearchDataState extends ConsumerState<SearchData> {
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
       width: double.infinity,
-      height: _containerHeight,
+      height: _containerHeight?.h,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: widget.borderRadius ?? const BorderRadius.only(
@@ -104,9 +105,9 @@ class _SearchDataState extends ConsumerState<SearchData> {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 24),
+            padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 14.h),
             child: Wrap(
-              runSpacing: 30,
+              runSpacing: 30.h,
               children: [
                 _SelectDate(selectedDateIndex: _selectedDateIndex, changeDate: _changeDate, dateList: dateList),
                 _SelectSex(changeSex: _changeSex, selectedSexType: _selectedSexType,),
@@ -148,7 +149,7 @@ class _SelectDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 66,
+      height: 66.h,
       child: LayoutBuilder(
           builder: (context, constraints) {
             double totalWidth = constraints.maxWidth; // 전체 너비
@@ -222,7 +223,7 @@ class _SelectSex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 66,
+      height: 66.h,
       child: LayoutBuilder(
           builder: (context, constraints) {
             double totalWidth = constraints.maxWidth; // 전체 너비

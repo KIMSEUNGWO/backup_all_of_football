@@ -20,6 +20,8 @@ import 'package:groundjp/widgets/form/detail_default_form.dart';
 import 'package:groundjp/widgets/pages/poppages/community_edit_page.dart';
 import 'package:intl/intl.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class BoardDetailWidget extends ConsumerStatefulWidget {
   final int boardId;
   final Function(int boardId)? notExistsEvent;
@@ -108,8 +110,8 @@ class _BoardDetailWidgetState extends ConsumerState<BoardDetailWidget> {
               GestureDetector(
                 onTap: _moreTab,
                 child: Container(
-                  padding: const EdgeInsets.only(left: 15, right: 10, top: 15, bottom: 15),
-                  margin: const EdgeInsets.only(right: 10),
+                  padding: EdgeInsets.only(left: 15.w, right: 10.w, top: 15.h, bottom: 15.h),
+                  margin: EdgeInsets.only(right: 10.w),
                   decoration: const BoxDecoration(),
                   child: SvgIcon.asset(sIcon: SIcon.more,
                     style: SvgIconStyle(
@@ -124,7 +126,7 @@ class _BoardDetailWidgetState extends ConsumerState<BoardDetailWidget> {
           body: (_isLoading) ? const SizedBox()
             : SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -164,7 +166,7 @@ class _BoardDetailWidgetState extends ConsumerState<BoardDetailWidget> {
                         ),
                       ),
 
-                    SpaceHeight(MediaQuery.paddingOf(context).bottom + 60),
+                    SpaceHeight(MediaQuery.paddingOf(context).bottom + 60.h),
                   ],
                 ),
               ),
@@ -200,7 +202,9 @@ class _BoardDetailWidgetState extends ConsumerState<BoardDetailWidget> {
         ),
         ActionSheetItem(
           text: const Text('삭제하기',
-            style: TextStyle(color: Colors.red),
+            style: TextStyle(
+              color: Colors.red,
+            ),
           ),
           onPressed: () {
             Alert.of(context).confirm(

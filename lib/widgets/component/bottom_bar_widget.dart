@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBottomBar extends StatelessWidget {
 
@@ -14,12 +15,12 @@ class CustomBottomBar extends StatelessWidget {
     final paddingBottom = MediaQuery.of(context).padding.bottom;
 
     return Container(
-      height: height + paddingBottom,
+      height: height.sp + paddingBottom,
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).padding.bottom,
-        left: padding?.left ?? 0,
-        right: padding?.right ?? 0,
-        top: padding?.top ?? 0,
+        left: padding?.left.sp ?? 0,
+        right: padding?.right.sp ?? 0,
+        top: padding?.top.sp ?? 0,
       ),
       decoration: BoxDecoration(
           color: Colors.white,

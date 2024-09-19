@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ToggleButton extends StatefulWidget {
 
@@ -37,14 +37,14 @@ class _ToggleButtonState extends State<ToggleButton> {
   Widget build(BuildContext context) {
 
     // Padding top, bottom 각각 3씩
-    double ballSize = widget.decoration.height - 6;
+    double ballSize = widget.decoration.height.h - 6.h;
 
     return GestureDetector(
       onTap: _onChanged,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        width: widget.decoration.width,
-        height: widget.decoration.height,
+        width: widget.decoration.width.w,
+        height: widget.decoration.height.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           color: isToggled ? widget.decoration.color : const Color(0xFFD9D9D9),
@@ -54,9 +54,9 @@ class _ToggleButtonState extends State<ToggleButton> {
             AnimatedPositioned(
               duration: const Duration(milliseconds: 200),
               curve: Curves.ease,
-              top: 3,
-              left: isToggled ? ballSize : 0.0,
-              right: isToggled ? 0.0 : ballSize,
+              top: 3.h,
+              left: isToggled ? widget.decoration.height.h : 0.0,
+              right: isToggled ? 0.0 : widget.decoration.height.h,
               child: Container(
                 width: ballSize,
                 height: ballSize,

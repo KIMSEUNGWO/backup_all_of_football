@@ -16,8 +16,11 @@ import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/component/match_list.dart';
 import 'package:groundjp/widgets/component/select_match_sheet.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/form/detail_default_form.dart';
 import 'package:groundjp/widgets/pages/poppages/region_select_page.dart';
+
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommunityCreateWidget extends ConsumerStatefulWidget {
   final Function() refresh;
@@ -188,6 +191,9 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
     final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     final safeArea = MediaQuery.of(context).padding.bottom;
 
+    print('keyboardHeight : $keyboardHeight');
+    print('safeArea : $safeArea');
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -196,7 +202,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
         title: Text('게시글 등록'),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 20),
+            padding: EdgeInsets.only(right: 20.w),
             child: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: const Icon(Icons.close_rounded),
@@ -208,7 +214,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -241,7 +247,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                     cursorColor: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ),
-                const SizedBox(height: 24,),
+                const SpaceHeight(24,),
 
                 DetailDefaultFormWidget(
                   title: '내용',
@@ -273,7 +279,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                     cursorColor: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ),
-                const SizedBox(height: 16,),
+                const SpaceHeight(16,),
                 DetailDefaultFormWidget(
                   title: '지역',
                   textStyle: TextStyle(
@@ -290,7 +296,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                       },));
                     },
                     child: Container(
-                      padding: const EdgeInsets.only(left: 10, right: 20, top: 10, bottom: 10),
+                      padding: EdgeInsets.only(left: 10.w, right: 20.w, top: 10.h, bottom: 10.h),
                       decoration: BoxDecoration(
                         color: const Color(0xFFF2F4F4),
                         borderRadius: BorderRadius.circular(10),
@@ -300,6 +306,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                         children: [
                           Icon(Icons.location_on,
                             color: Theme.of(context).colorScheme.tertiary,
+                            size: 20.sp,
                           ),
                           const SizedBox(width: 5,),
                           Text((_selectedRegion ?? Region.ALL).getLocaleName(const Locale('ko', 'KR')),
@@ -313,7 +320,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24,),
+                const SpaceHeight(24,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -321,7 +328,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 5),
+                          padding: EdgeInsets.only(left: 5.w),
                           child: Text('경기를 추가하시나요?',
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.onSecondary,
@@ -400,11 +407,11 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
         },
         child: keyboardHeight < 50
           ? Container(
-              height: 50,
-              margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: keyboardHeight + safeArea),
+              height: 50.sp,
+              margin: EdgeInsets.only(left: 20.w, right: 20.w, top: 10.h, bottom: keyboardHeight + safeArea + 10),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.onSecondary.withOpacity(isDisabled || isSync ? 0.6 : 1),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.sp),
               ),
               child: Center(
                 child: Text('등록하기',

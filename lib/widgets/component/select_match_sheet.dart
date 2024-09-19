@@ -8,7 +8,10 @@ import 'package:groundjp/domain/search_condition.dart';
 import 'package:groundjp/notifier/region_notifier.dart';
 import 'package:groundjp/widgets/component/match_list.dart';
 import 'package:groundjp/widgets/component/search_data.dart';
+import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/pages/poppages/region_select_page.dart';
+
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SelectMatchSheetWidget extends ConsumerStatefulWidget {
 
@@ -84,7 +87,7 @@ class _SelectMatchSheetWidgetState extends ConsumerState<SelectMatchSheetWidget>
               },));
             },
             child: Container(
-              padding: const EdgeInsets.only(top: 20),
+              padding: EdgeInsets.only(top: 20.h),
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -110,10 +113,10 @@ class _SelectMatchSheetWidgetState extends ConsumerState<SelectMatchSheetWidget>
             region: _condition.region,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: _items.isEmpty
               ? Padding(
-                  padding: const EdgeInsets.only(top: 40),
+                  padding: EdgeInsets.only(top: 40.h),
                   child: Text('매치가 없어요',
                     style: TextStyle(
                         fontSize: Theme.of(context).textTheme.displayMedium!.fontSize
@@ -123,12 +126,12 @@ class _SelectMatchSheetWidgetState extends ConsumerState<SelectMatchSheetWidget>
               : ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  separatorBuilder: (context, index) => const SizedBox(height: 16,),
+                  separatorBuilder: (context, index) => const SpaceHeight(16,),
                   itemCount: _items.length,
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return Padding(
-                        padding: const EdgeInsets.only(top: 32),
+                        padding: EdgeInsets.only(top: 32.h),
                         child: MatchListWidget(
                           match: _items[index],
                           onPressed: _onPressed,
@@ -136,7 +139,7 @@ class _SelectMatchSheetWidgetState extends ConsumerState<SelectMatchSheetWidget>
                       );
                     } else if (index == _items.length - 1) {
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 32),
+                        padding: EdgeInsets.only(bottom: 32.h),
                         child: MatchListWidget(
                           match: _items[index],
                           onPressed: _onPressed

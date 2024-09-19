@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomScrollRefresh extends StatelessWidget {
 
@@ -10,8 +11,8 @@ class CustomScrollRefresh extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoSliverRefreshControl(
-      refreshTriggerPullDistance: 150.0,
-      refreshIndicatorExtent: 100.0,
+      refreshTriggerPullDistance: 150.0.h,
+      refreshIndicatorExtent: 100.0.h,
       onRefresh: () async {
         // 위로 새로고침
         await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
