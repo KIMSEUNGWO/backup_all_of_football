@@ -20,6 +20,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class ProfileEditPage extends ConsumerStatefulWidget {
 
@@ -226,7 +228,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                     child: Stack(
                         children: [
                           UserProfileWidget(
-                            diameter: 100,
+                            diameter: 100.sp,
                             image: editImage,
                           ),
                           Positioned(
@@ -247,12 +249,15 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30,),
-                Text('닉네임',
-                  style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-                    fontWeight: FontWeight.w700,
-                    color: Theme.of(context).colorScheme.primary
+                const SpaceHeight(30,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text('닉네임',
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.secondary
+                    ),
                   ),
                 ),
                 const SpaceHeight(4),
@@ -260,39 +265,42 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: TextField(
-                        controller: _textNicknameController,
-                        focusNode: _focusNode,
-                        style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
-                        ),
-                        maxLength: _nicknameMaxLength,
-                        decoration: InputDecoration(
-                          counterText: '',
-                          fillColor: Colors.white,
-                          filled: true,
-                          errorText: _nickname,
-                          errorStyle: _nicknameStyle,
-                          errorBorder: _nicknameBorder,
-                          enabledBorder: _inputBorder,
-                          focusedErrorBorder: _inputBorder,
-                          focusedBorder: _inputBorder,
-                          hintText: profile.nickname,
-                          hintStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
-                            fontWeight: FontWeight.w400,
+                      child: SizedBox(
+                        height: 55.sp,
+                        child: TextField(
+                          controller: _textNicknameController,
+                          focusNode: _focusNode,
+                          style: TextStyle(
                             fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
                           ),
-                        ),
+                          maxLength: _nicknameMaxLength,
+                          decoration: InputDecoration(
+                            counterText: '',
+                            fillColor: Colors.white,
+                            filled: true,
+                            errorText: _nickname,
+                            errorStyle: _nicknameStyle,
+                            errorBorder: _nicknameBorder,
+                            enabledBorder: _inputBorder,
+                            focusedErrorBorder: _inputBorder,
+                            focusedBorder: _inputBorder,
+                            hintText: profile.nickname,
+                            hintStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontWeight: FontWeight.w400,
+                              fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
+                            ),
+                          ),
 
+                        ),
                       ),
                     ),
                     const SizedBox(width: 8,),
                     GestureDetector(
                       onTap: _distinctCheck,
                       child: Container(
-                        width: 100,
-                        height: 55,
+                        width: 100.sp,
+                        height: 55.sp,
                         decoration: _inputDecoration(),
                         child: Center(
                           child: Text('중복확인',
@@ -308,9 +316,9 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
 
                   ],
                 ),
-                const SizedBox(height: 30,),
+                const SpaceHeight(30,),
                 SizedBox(
-                  height: 55,
+                  height: 55.sp,
                   child: Row(
                     children: [
                       Expanded(
@@ -349,7 +357,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                                     child: Text('남자',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: profile.sex == SexType.MALE ? FontWeight.w600 : FontWeight.w400,
                                           color: profile.sex == SexType.MALE
                                               ? Colors.white
@@ -373,7 +381,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                                     child: Text('여자',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: profile.sex == SexType.FEMALE ? FontWeight.w600 : FontWeight.w400,
                                           color: profile.sex == SexType.FEMALE
                                               ? Colors.white

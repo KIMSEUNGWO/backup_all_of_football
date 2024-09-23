@@ -213,7 +213,7 @@ class _Banners extends StatelessWidget {
       child: ImageSlider(
         images: _banners,
         option: ImageSliderOption(
-          height: 100.h,
+          height: 100,
           borderRadius: BorderRadius.circular(16),
           autoplay: false
         ),

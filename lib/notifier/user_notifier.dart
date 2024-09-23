@@ -34,7 +34,7 @@ class UserNotifier extends StateNotifier<UserProfile?> {
     if (result == ResultCode.REGISTER) {
       return ResponseResult(result, socialResult);
     }
-    readUser(ref);
+    await readUser(ref);
     return ResponseResult(result, null);
   }
 

@@ -19,7 +19,7 @@ class ApiService {
   const ApiService();
 
   static const String server = "https://$domain";
-  static const String domain = 'itunes-bargain-methods-mi.trycloudflare.com';
+  static const String domain = 'cio-ensure-fairfield-agrees.trycloudflare.com';
   static const Duration _delay = Duration(seconds: 20);
   static const Map<String, String> contentTypeJson = {
     "Content-Type" : "application/json; charset=utf-8",

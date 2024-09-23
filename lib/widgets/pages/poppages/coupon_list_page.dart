@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:intl/intl.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class CouponListWidget extends ConsumerStatefulWidget {
 
   final bool readOnly;
@@ -78,7 +80,7 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
         actions: widget.readOnly ? null
           : [
             Padding(
-              padding: const EdgeInsets.only(right: 20),
+              padding: EdgeInsets.only(right: 20.w),
               child: GestureDetector(
                 onTap: () {
                   if (widget.onPressed != null) {
@@ -98,7 +100,7 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -148,7 +150,7 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
               ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                separatorBuilder: (context, index) => const SizedBox(height: 16,),
+                separatorBuilder: (context, index) => const SpaceHeight(16,),
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   Coupon coupon = _items[index];
@@ -159,15 +161,15 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
                       }
                     },
                     child: CouponCard(
-                      height: 110,
+                      height: 110.sp,
                       width: double.infinity,
                       borderRadius: 10,
                       backgroundColor: Colors.white,
                       curveAxis: Axis.vertical,
                       shadow: BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
-                          offset: const Offset(0, 2),
-                          blurRadius: 4
+                        color: Colors.black.withOpacity(0.04),
+                        offset: const Offset(0, 2),
+                        blurRadius: 4,
                       ),
                       firstChild: Container(
                         padding: const EdgeInsets.symmetric(vertical: 15),

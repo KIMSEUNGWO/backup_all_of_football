@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:groundjp/api/service/match_service.dart';
 import 'package:groundjp/component/region_data.dart';
 import 'package:groundjp/domain/match/match_search_view.dart';
@@ -48,6 +49,9 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
   }
 
   _search(SearchCondition condition) async {
+    setState(() {
+      _loading = true;
+    });
     _condition = condition;
     await _fetch();
     setState(() {
@@ -108,7 +112,8 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
             search: _search,
             selectedDateIndex: _currentDateIndex,
           ),
-
+          (_loading)
+          ? const Expanded(child: Center(child: CupertinoActivityIndicator(),)) :
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
