@@ -49,14 +49,16 @@ class _MatchListPageWidgetState extends ConsumerState<MatchListPageWidget> with 
   }
 
   _search(SearchCondition condition) async {
-    setState(() {
-      _loading = true;
-    });
-    _condition = condition;
-    await _fetch();
-    setState(() {
-      _loading = false;
-    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      setState(() {
+        _loading = true;
+      });
+      _condition = condition;
+      await _fetch();
+      setState(() {
+        _loading = false;
+      });
+    },);
   }
 
   _fetch() async {

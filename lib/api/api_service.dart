@@ -17,9 +17,9 @@ class ApiService {
 
   static const ApiService instance = ApiService();
   const ApiService();
-
   static const String server = "https://$domain";
-  static const String domain = 'cio-ensure-fairfield-agrees.trycloudflare.com';
+  // static const String domain = 'localhost:8080';
+  static const String domain = 'experiments-july-kelkoo-elsewhere.trycloudflare.com';
   static const Duration _delay = Duration(seconds: 20);
   static const Map<String, String> contentTypeJson = {
     "Content-Type" : "application/json; charset=utf-8",
@@ -89,7 +89,7 @@ class ApiService {
     return ResponseResult.fromJson(json);
   }
 
-  static Future<T> _execute<T> (Future<T> method) async {
+  Future<T> _execute<T> (Future<T> method) async {
     try {
       return await method.timeout(_delay);
     } on TimeoutException catch (_) {

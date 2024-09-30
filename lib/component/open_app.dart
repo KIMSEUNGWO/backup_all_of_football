@@ -21,6 +21,7 @@ class OpenApp {
     Uri googleMap = _google(lat, lng);
     if (await canLaunchUrl(googleMap)) {
       await launchUrl(googleMap);
+      return;
     }
 
     Uri appleMap = _apple(lat, lng);
@@ -48,6 +49,7 @@ class OpenApp {
   }
 
   _google(double lat, double lng) {
+    return Uri.parse('https://maps.app.goo.gl/YmMQvP82ZRiKgxcF7');
     if (Platform.isIOS) {
       return Uri.parse('comgooglemaps://?q=$lat,$lng');
     } else {
