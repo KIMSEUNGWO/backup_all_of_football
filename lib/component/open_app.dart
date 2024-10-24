@@ -12,21 +12,13 @@ class OpenApp {
   static const OpenApp instance = OpenApp();
   const OpenApp();
 
-  openMaps({required double lat, required double lng}) async {
+  openMaps({required String link}) async {
 
     String openApp = 'comgooglemaps://';
-    // String openApp = 'comgooglemaps://';
-    print(await canLaunchUrl(Uri.parse(openApp)));
     // await launchUrl(Uri.parse(openApp));
-    Uri googleMap = _google(lat, lng);
+    Uri googleMap = Uri.parse(link);
     if (await canLaunchUrl(googleMap)) {
       await launchUrl(googleMap);
-      return;
-    }
-
-    Uri appleMap = _apple(lat, lng);
-    if (await canLaunchUrl(appleMap)) {
-      launchUrl(appleMap);
       return;
     }
 

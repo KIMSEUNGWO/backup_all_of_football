@@ -11,6 +11,7 @@ class Match {
   final int person;
   final int matchCount;
   final int matchHour;
+  final int price;
   final MatchStatus matchStatus;
   final Field field;
   final bool alreadyJoin;
@@ -21,6 +22,7 @@ class Match {
     matchDate = DateTime.parse(json['matchDate']),
     sexType = SexType.valueOf(json['sexType']),
     person = json['person'],
+    price = json['price'],
     matchCount = json['matchCount'],
     matchHour = json['matchHour'],
     matchStatus = MatchStatus.valueOf(json['matchStatus']),
@@ -30,5 +32,5 @@ class Match {
       : Statistics.fromJson(json['statistics']);
 
   Match(this.matchId, this.matchDate, this.sexType, this.person,
-      this.matchCount, this.matchHour, this.matchStatus, this.field, this.alreadyJoin, this.statistics);
+      this.matchCount, this.matchHour, this.matchStatus, this.field, this.alreadyJoin, this.statistics, this.price);
 }

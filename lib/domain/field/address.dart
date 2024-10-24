@@ -5,14 +5,12 @@ class Address {
    
   final String address;
   final Region region;
-  final double lat;
-  final double lng;
+  final String link;
 
   Address.fromJson(Map<String, dynamic> json):
     address = json['address'],
     region = Region.findByName(json['region']),
-    lat = json['lat'],
-    lng = json['lng'];
+    link = json['link'];
 
-  Address(this.address, this.region, this.lat, this.lng);
+  Address(this.address, this.region, this.link);
 }

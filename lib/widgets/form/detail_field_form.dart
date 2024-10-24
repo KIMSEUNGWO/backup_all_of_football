@@ -28,14 +28,35 @@ class FieldDetailFormWidget extends StatelessWidget {
                           color: Theme.of(context).colorScheme.secondary
                       )),
                       const SizedBox(width: 10,),
-                      Text(field == null ? '' : '${field!.fieldData.sizeX}m x ${field!.fieldData.sizeY}m',
-                        style: TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      )
+                      Row(
+                        children: [
+                          Text(field == null ? '' : '${field!.fieldData.size}',
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              children: const [
+                                TextSpan(text: 'm'),
+                                TextSpan(
+                                  text: '²',
+                                  style: TextStyle(fontSize: 12, fontFeatures: [FontFeature.superscripts()]),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

@@ -6,18 +6,13 @@ class FieldData {
   final Parking parking;
   final Shower shower;
   final Toilet toilet;
-  final int sizeX;
-  final int sizeY;
-  final int hourPrice;
+  final int size;
 
   FieldData.fromJson(Map<String, dynamic> json):
     parking = Parking.valueOf(json['parking']),
     shower = Shower.valueOf(json['shower']),
     toilet = Toilet.valueOf(json['toilet']),
-    sizeX = json['sizeX'],
-    sizeY = json['sizeY'],
-    hourPrice = json['hourPrice'];
+    size = json['size'];
 
-  FieldData(this.parking, this.shower, this.toilet, this.sizeX, this.sizeY,
-      this.hourPrice);
+  FieldData(this.parking, this.shower, this.toilet, this.size);
 }

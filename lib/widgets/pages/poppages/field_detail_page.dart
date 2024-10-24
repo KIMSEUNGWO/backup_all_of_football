@@ -119,7 +119,7 @@ class _FieldDetailWidgetState extends State<FieldDetailWidget> {
                 child: GestureDetector(
                   onTap: () {
                     if (!_loading) {
-                      OpenApp.instance.openMaps(lat: field!.address.lat, lng: field!.address.lng);
+                      OpenApp.instance.openMaps(link: field!.address.link,);
                     }
                   },
                   child: Text(_loading ? '' : field!.address.address,

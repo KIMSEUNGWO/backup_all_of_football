@@ -171,7 +171,7 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
                     GestureDetector(
                       onTap: () {
                         if (!_loading) {
-                          OpenApp.instance.openMaps(lat: match!.field.address.lat, lng: match!.field.address.lng);
+                          OpenApp.instance.openMaps(link: match!.field.address.link,);
                         }
                       },
                       child: Text(_loading ? '' : match!.field.address.address,
@@ -263,7 +263,9 @@ class _MatchDetailWidgetState extends ConsumerState<MatchDetailWidget> {
                       const SizedBox(height: 5,),
                       Row(
                         children: [
-                          Text(_loading ? '' : AccountFormatter.format(match!.matchHour * match!.field.fieldData.hourPrice),
+                          // TODO Field hourPrice -> Match hourPrice 로 변경해야함
+                          Text(_loading ? '' : AccountFormatter.format(match!.price),
+                          // Text(_loading ? '' : AccountFormatter.format(0),
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,

@@ -560,7 +560,7 @@ class _OrderWidgetState extends ConsumerState<OrderWidget> {
                             const SizedBox(height: 2,),
                             GestureDetector(
                               onTap: () {
-                                OpenApp.instance.openMaps(lat: orderSimp.address.lat, lng: orderSimp.address.lng);
+                                OpenApp.instance.openMaps(link: orderSimp.address.link,);
                               },
                               child: Text(orderSimp.address.address,
                                 style: const TextStyle(
