@@ -235,8 +235,8 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                             bottom: 0, right: 0,
                             child: Container(
                               padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
                                 color: Colors.black,
                               ),
                               child: const Icon(Icons.camera_alt,
@@ -266,7 +266,6 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                   children: [
                     Expanded(
                       child: SizedBox(
-                        height: 55.sp,
                         child: TextField(
                           controller: _textNicknameController,
                           focusNode: _focusNode,

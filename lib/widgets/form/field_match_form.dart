@@ -107,11 +107,10 @@ class _FieldMatchFormWidgetState extends State<FieldMatchFormWidget> {
       margin: const EdgeInsets.symmetric(horizontal: 5),
       width: 5, height: 5,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color:
-          (sexType == SexType.MALE) ? const Color(0xFF3534A5)
-              : (sexType == SexType.FEMALE) ? const Color(0xFFFF5D5D)
-              : const Color(0xFFFFC645)
+        shape: BoxShape.circle,
+        color: (sexType == SexType.MALE) ? const Color(0xFF3534A5)
+            : (sexType == SexType.FEMALE) ? const Color(0xFFFF5D5D)
+            : const Color(0xFFFFC645),
       ),
     );
   }

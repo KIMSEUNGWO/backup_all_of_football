@@ -14,7 +14,7 @@ class StringValidator {
   String? validateNickname(String? nickname, int nicknameMaxLength) {
     // 1. 닉네임 값이 null인 경우
     if (nickname == null || nickname.isEmpty) {
-      return null;
+      return '닉네임을 입력해주세요.';
     }
 
     // 3. 띄어쓰기가 존재하는 경우

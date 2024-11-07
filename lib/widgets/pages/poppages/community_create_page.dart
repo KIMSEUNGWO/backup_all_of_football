@@ -191,9 +191,6 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
     final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     final safeArea = MediaQuery.of(context).padding.bottom;
 
-    print('keyboardHeight : $keyboardHeight');
-    print('safeArea : $safeArea');
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

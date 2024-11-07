@@ -126,7 +126,7 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
                         child: Container(
                           width: 20, height: 20,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
+                              shape: BoxShape.circle,
                               border: Border.all(
                                 color: Theme.of(context).colorScheme.secondary,
                                 width: 0.3,
@@ -136,7 +136,7 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
                             child: Container(
                               width: 15, height: 15,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
+                                shape: BoxShape.circle,
                                 color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             ),
@@ -241,17 +241,17 @@ class _CouponListWidgetState extends ConsumerState<CouponListWidget> {
                                 child: Container(
                                     width: 20, height: 20,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(100),
-                                        border: Border.all(
-                                            color: Theme.of(context).colorScheme.secondary,
-                                            width: 0.3
-                                        )
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: Theme.of(context).colorScheme.secondary,
+                                          width: 0.3
+                                      ),
                                     ),
                                     child: _selectCoupon != coupon ? null : Center(
                                       child: Container(
                                         width: 15, height: 15,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(100),
+                                          shape: BoxShape.circle,
                                           color: Theme.of(context).colorScheme.onPrimary,
                                         ),
                                       ),

@@ -8,6 +8,7 @@ import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_scroll_refresh.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
+import 'package:groundjp/widgets/draw/document.dart';
 import 'package:groundjp/widgets/form/field_image_preview.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/favorite_field_display.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/match_soon_display.dart';
@@ -186,6 +187,23 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
                         color: Colors.black
                     ),
                   ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return DocumentDrawingApp(imageLink: '');
+                    },));
+                  },
+                  child: Text('전자문서 테스트',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black
+                    ),
+                  ),
+                ),
+                Image.asset(
+                  'assets/banners/document_template.jpeg', // 여기에 기본 문서 템플릿 경로 지정
+                  fit: BoxFit.contain,
                 ),
               ],
             ),

@@ -55,8 +55,8 @@ class _ToggleButtonState extends State<ToggleButton> {
               duration: const Duration(milliseconds: 200),
               curve: Curves.ease,
               top: 3.h,
-              left: isToggled ? widget.decoration.height.h : 0.0,
-              right: isToggled ? 0.0 : widget.decoration.height.h,
+              left: isToggled ? widget.decoration.height.h - 6.0 : 0.0,
+              right: isToggled ? 0.0 : widget.decoration.height.h - 6.0,
               child: Container(
                 width: ballSize,
                 height: ballSize,
