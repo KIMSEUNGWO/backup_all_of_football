@@ -15,7 +15,7 @@ import 'package:groundjp/widgets/pages/mainDisplayLists/match_soon_display.dart'
 import 'package:groundjp/widgets/pages/mainDisplayLists/recently_visit_match_display.dart';
 import 'package:groundjp/widgets/pages/mainDisplayLists/region_match_display.dart';
 import 'package:groundjp/widgets/pages/poppages/search_page.dart';
-import 'package:groundjp/widgets/pages/poppages/login_page.dart';
+import 'package:groundjp/widgets/pages/poppages/user/login_page.dart';
 import 'package:groundjp/widgets/pages/poppages/notification_page.dart';
 import 'package:groundjp/widgets/pages/poppages/register_page.dart';
 import 'package:flutter/material.dart';
@@ -100,114 +100,6 @@ class _HomePageState extends ConsumerState<HomeWidget> with AutomaticKeepAliveCl
               ],
             ),
           ),
-
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Alert.of(context).message(message: 'asdfasdf');
-                  },
-                  child: const Text('Alert 테스트',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return const LoginWidget();
-                    }, fullscreenDialog: true));
-                  },
-                  child: const Text('로그인 페이지 이동',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return RegisterWidget(social: SocialResult(socialId: 'asdfasdf', provider: SocialProvider.LINE, accessToken: 'accesstokenasdlfkajelfi13'));
-                    },));
-                  },
-                  child: Text('회원가입 페이지 이동',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    UserService.instance.test();
-                  },
-                  child: Text('테스트 데이터 로드',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    ref.read(notificationNotifier.notifier).show(id: 1, title: '타이틀', body: '내용');
-                  },
-                  child: Text('알림 테스트',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    ref.read(notificationNotifier.notifier).scheduleMatchDate(
-                      matchId: 1,
-                      matchDate: DateTime.now().add(const Duration(seconds: 40)),
-                    );
-                  },
-                  child: Text('스케줄 알림 테스트',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    ref.read(notificationNotifier.notifier).matchCancel(matchId: 1, refund: Refund(10000, 2000));
-                  },
-                  child: Text('스케줄 취소 테스트',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return DocumentDrawingApp(imageLink: '');
-                    },));
-                  },
-                  child: Text('전자문서 테스트',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                    ),
-                  ),
-                ),
-                Image.asset(
-                  'assets/banners/document_template.jpeg', // 여기에 기본 문서 템플릿 경로 지정
-                  fit: BoxFit.contain,
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );

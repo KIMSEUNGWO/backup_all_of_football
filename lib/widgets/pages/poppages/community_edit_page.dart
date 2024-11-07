@@ -34,15 +34,15 @@ class _CommunityEditWidgetState extends ConsumerState<CommunityEditWidget> {
   MatchView? _selectedMatch;
   Region? _selectedRegion;
 
-  String? _error_title;
-  String? _error_content;
+  String? _errorTitle;
+  String? _errorContent;
 
-  bool isDisabled = false;
+  bool _isDisabled = false;
   bool isSync = false;
 
   _submit() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    if (isDisabled || !_valid()) return;
+    if (_isDisabled || !_valid()) return;
     if (isSync) return;
     setState(() => isSync = true);
 
@@ -86,6 +86,15 @@ class _CommunityEditWidgetState extends ConsumerState<CommunityEditWidget> {
           Navigator.pop(context);
         },
       );
+    } else if (code == ResultCode.BAN_WORD_INCLUDE) {
+      Alert.of(context).message(
+          message: '${result.data} 는 사용할 수 없는 단어입니다.',
+          onPressed: () {
+            setState(() {
+              _isDisabled = false;
+            });
+          }
+      );
     } else {
       print('Result Code : $code');
     }
@@ -122,8 +131,8 @@ class _CommunityEditWidgetState extends ConsumerState<CommunityEditWidget> {
 
     return valid;
   }
-  _setErrorTitle(String? message) => setState(() => _error_title = message);
-  _setErrorContent(String? message) => setState(() => _error_content = message);
+  _setErrorTitle(String? message) => setState(() => _errorTitle = message);
+  _setErrorContent(String? message) => setState(() => _errorContent = message);
 
   _titleOnChanged(String title) {
     _setErrorTitle(null);
@@ -136,7 +145,7 @@ class _CommunityEditWidgetState extends ConsumerState<CommunityEditWidget> {
 
   void _onChanged(String str) {
     setState(() {
-      isDisabled = _titleController.text.isEmpty || _contentController.text.isEmpty;
+      _isDisabled = _titleController.text.isEmpty || _contentController.text.isEmpty;
     });
   }
 
@@ -246,7 +255,7 @@ class _CommunityEditWidgetState extends ConsumerState<CommunityEditWidget> {
                       counterText: '',
                       fillColor: const Color(0xFFF2F4F4),
                       filled: true,
-                      errorText: _error_title,
+                      errorText: _errorTitle,
                       errorBorder: _inputErrorBorder,
                       enabledBorder: _inputBorder,
                       focusedErrorBorder: _inputBorder,
@@ -278,7 +287,7 @@ class _CommunityEditWidgetState extends ConsumerState<CommunityEditWidget> {
                     decoration: InputDecoration(
                       fillColor: const Color(0xFFF2F4F4),
                       filled: true,
-                      errorText: _error_content,
+                      errorText: _errorContent,
                       errorBorder: _inputErrorBorder,
                       enabledBorder: _inputBorder,
                       focusedErrorBorder: _inputBorder,
@@ -419,7 +428,7 @@ class _CommunityEditWidgetState extends ConsumerState<CommunityEditWidget> {
               height: 50,
               margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: keyboardHeight + safeArea),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onSecondary.withOpacity(isDisabled || isSync ? 0.6 : 1),
+                color: Theme.of(context).colorScheme.onSecondary.withOpacity(_isDisabled || isSync ? 0.6 : 1),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Center(
@@ -436,7 +445,7 @@ class _CommunityEditWidgetState extends ConsumerState<CommunityEditWidget> {
               height: 50,
               margin: EdgeInsets.only(bottom: keyboardHeight + safeArea),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onSecondary.withOpacity(isDisabled ? 0.6 : 1),
+                color: Theme.of(context).colorScheme.onSecondary.withOpacity(_isDisabled ? 0.6 : 1),
               ),
               child: Center(
                 child: Text('수정완료',

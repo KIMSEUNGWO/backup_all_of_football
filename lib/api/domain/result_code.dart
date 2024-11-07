@@ -24,6 +24,8 @@ enum ResultCode {
   NOT_ENOUGH_CASH, // 캐시가 부족한 경우
   ALREADY_CLOSED, // 이미 경기가 마감된 경우
 
+  BAN_WORD_INCLUDE, // 금지된 단어가 포함된 경우
+
   ;
 
   static ResultCode valueOf(String errorCode) {

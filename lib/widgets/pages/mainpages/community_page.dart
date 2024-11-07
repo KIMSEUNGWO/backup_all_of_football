@@ -6,15 +6,14 @@ import 'package:groundjp/component/region_data.dart';
 import 'package:groundjp/domain/board/board_simp.dart';
 import 'package:groundjp/notifier/region_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
-import 'package:groundjp/widgets/component/board_widget.dart';
+import 'package:groundjp/widgets/component/board/board_widget.dart';
 import 'package:groundjp/widgets/component/custom_scroll_refresh.dart';
 import 'package:groundjp/widgets/component/pageable_listview.dart';
 import 'package:groundjp/widgets/component/space_custom.dart';
 import 'package:groundjp/widgets/pages/poppages/community_create_page.dart';
-import 'package:groundjp/widgets/pages/poppages/login_page.dart';
+import 'package:groundjp/widgets/pages/poppages/user/login_page.dart';
 import 'package:groundjp/widgets/pages/poppages/region_select_page.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommunityWidget extends ConsumerStatefulWidget {

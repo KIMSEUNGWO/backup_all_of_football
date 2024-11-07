@@ -10,7 +10,7 @@ import 'package:groundjp/widgets/pages/mainpages/community_page.dart';
 import 'package:groundjp/widgets/pages/mainpages/home_page.dart';
 import 'package:groundjp/widgets/pages/mainpages/match_list_page.dart';
 import 'package:groundjp/widgets/pages/mainpages/mypage_page.dart';
-import 'package:groundjp/widgets/pages/poppages/login_page.dart';
+import 'package:groundjp/widgets/pages/poppages/user/login_page.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

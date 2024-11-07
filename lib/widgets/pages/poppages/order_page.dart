@@ -16,7 +16,7 @@ import 'package:groundjp/notifier/notification_notifier.dart';
 import 'package:groundjp/notifier/user_notifier.dart';
 import 'package:groundjp/widgets/component/custom_container.dart';
 import 'package:groundjp/widgets/form/detail_default_form.dart';
-import 'package:groundjp/widgets/pages/poppages/cash_charge_page.dart';
+import 'package:groundjp/widgets/pages/poppages/user/cash_charge_page.dart';
 import 'package:groundjp/widgets/pages/poppages/coupon_list_page.dart';
 import 'package:groundjp/widgets/pages/poppages/order_complete_page.dart';
 import 'package:flutter/material.dart';

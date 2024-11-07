@@ -22,7 +22,7 @@ import 'package:groundjp/widgets/form/detail_role_form.dart';
 import 'package:groundjp/widgets/form/field_image_preview.dart';
 import 'package:groundjp/widgets/form/match_statisics_form.dart';
 import 'package:groundjp/widgets/pages/poppages/field_detail_page.dart';
-import 'package:groundjp/widgets/pages/poppages/login_page.dart';
+import 'package:groundjp/widgets/pages/poppages/user/login_page.dart';
 import 'package:groundjp/widgets/pages/poppages/order_page.dart';
 import 'package:flutter/material.dart';
 import 'package:groundjp/domain/match/match.dart';

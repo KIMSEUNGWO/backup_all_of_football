@@ -37,15 +37,15 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
   MatchView? _selectedMatch;
   Region? _selectedRegion;
 
-  String? _error_title;
-  String? _error_content;
+  String? _errorTitle;
+  String? _errorContent;
 
-  bool isDisabled = true;
+  bool _isDisabled = true;
   bool isSync = false;
 
   _submit() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    if (isDisabled || !_valid()) return;
+    if (_isDisabled || !_valid()) return;
     if (isSync) return;
     setState(() => isSync = true);
 
@@ -74,6 +74,15 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
       );
     } else if (code == ResultCode.INVALID_DATA) {
       _bindingError(InvalidData.fromJson(result.data));
+    } else if (code == ResultCode.BAN_WORD_INCLUDE) {
+      Alert.of(context).message(
+        message: '${result.data} 는 사용할 수 없는 단어입니다.',
+        onPressed: () {
+          setState(() {
+            _isDisabled = false;
+          });
+        }
+      );
     } else {
       print('Result Code : $code');
     }
@@ -110,8 +119,8 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
 
     return valid;
   }
-  _setErrorTitle(String? message) => setState(() => _error_title = message);
-  _setErrorContent(String? message) => setState(() => _error_content = message);
+  _setErrorTitle(String? message) => setState(() => _errorTitle = message);
+  _setErrorContent(String? message) => setState(() => _errorContent = message);
 
   _titleOnChanged(String title) {
     _setErrorTitle(null);
@@ -124,7 +133,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
 
   void _onChanged(String str) {
     setState(() {
-      isDisabled = _titleController.text.isEmpty || _contentController.text.isEmpty;
+      _isDisabled = _titleController.text.isEmpty || _contentController.text.isEmpty;
     });
   }
 
@@ -233,7 +242,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                       counterText: '',
                       fillColor: const Color(0xFFF2F4F4),
                       filled: true,
-                      errorText: _error_title,
+                      errorText: _errorTitle,
                       errorBorder: _inputErrorBorder,
                       enabledBorder: _inputBorder,
                       focusedErrorBorder: _inputBorder,
@@ -265,7 +274,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
                     decoration: InputDecoration(
                       fillColor: const Color(0xFFF2F4F4),
                       filled: true,
-                      errorText: _error_content,
+                      errorText: _errorContent,
                       errorBorder: _inputErrorBorder,
                       enabledBorder: _inputBorder,
                       focusedErrorBorder: _inputBorder,
@@ -407,7 +416,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
               height: 50.sp,
               margin: EdgeInsets.only(left: 20.w, right: 20.w, top: 10.h, bottom: keyboardHeight + safeArea + 10),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onSecondary.withOpacity(isDisabled || isSync ? 0.6 : 1),
+                color: Theme.of(context).colorScheme.onSecondary.withOpacity(_isDisabled || isSync ? 0.6 : 1),
                 borderRadius: BorderRadius.circular(16.sp),
               ),
               child: Center(
@@ -424,7 +433,7 @@ class _CommunityCreateWidgetState extends ConsumerState<CommunityCreateWidget> {
               height: 50,
               margin: EdgeInsets.only(bottom: keyboardHeight + safeArea),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onSecondary.withOpacity(isDisabled ? 0.6 : 1),
+                color: Theme.of(context).colorScheme.onSecondary.withOpacity(_isDisabled ? 0.6 : 1),
               ),
               child: Center(
                 child: Text('등록하기',
