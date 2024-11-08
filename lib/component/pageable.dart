@@ -14,6 +14,10 @@ class Pageable {
     return this;
   }
 
+  String getParam() {
+    return 'page=$page&size=$size';
+  }
+
 }
 
 typedef PageFutureCallback<T> = Future<List<T>> Function(Pageable pageable);

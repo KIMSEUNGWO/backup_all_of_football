@@ -11,7 +11,7 @@ class TokenService {
   Future<bool> _checkAccessToken() async {
     final accessToken = await SecureStorage.instance.readAccessToken();
     if (accessToken == null) return false;
-    final response = await ApiService.instance.get(uri: '/accessToken', authorization: true);
+    final response = await ApiService.instance.get(uri: '/api/accessToken', authorization: true);
     return response.resultCode == ResultCode.OK;
   }
 
@@ -20,7 +20,7 @@ class TokenService {
     if (refreshToken == null) return false;
 
     final response = await ApiService.instance.post(
-      uri: '/social/token',
+      uri: '/api/social/token',
       authorization: true,
       header: ApiService.contentTypeJson,
     );

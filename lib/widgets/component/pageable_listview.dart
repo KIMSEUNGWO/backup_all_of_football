@@ -70,17 +70,21 @@ class PageableListViewState<T> extends State<PageableListView<T>> {
   @override
   Widget build(BuildContext context) {
     if (_loading) return widget.isSliver ? const LoadingIndicator.sliver() : const LoadingIndicator();
+    return widget.isSliver ? buildListView().buildChildLayout(context) : buildListView();
+  }
+
+  ListView buildListView() {
     return ListView.separated(
-      separatorBuilder: widget.separatorBuilder,
-      itemCount: _items.length + (_pageable.hasMore ? 1 : 0),
-      itemBuilder: (context, index) {
-        if (_items.isNotEmpty && index == _items.length && !_loading && _pageable.hasMore) {
-          _fetch();
-          return const LoadingIndicator();
-        }
-        return widget.builder(_items[index]);
-      },
-    ).buildChildLayout(context);
+    separatorBuilder: widget.separatorBuilder,
+    itemCount: _items.length + (_pageable.hasMore ? 1 : 0),
+    itemBuilder: (context, index) {
+      if (_items.isNotEmpty && index == _items.length && !_loading && _pageable.hasMore) {
+        _fetch();
+        return const LoadingIndicator();
+      }
+      return widget.builder(_items[index]);
+    },
+  );
   }
 }
 

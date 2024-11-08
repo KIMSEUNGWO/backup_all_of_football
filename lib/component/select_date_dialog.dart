@@ -68,7 +68,8 @@ class _SelectDateDialogBuilder {
                     initialDateTime: _date,
                     maximumDate: max,
                     minimumDate: DateTime(1950, 1, 1),
-                    // dateOrder: DatePickerDateOrder.ymd,
+                    maximumYear: max.year,
+                    dateOrder: DatePickerDateOrder.ymd,
                     onDateTimeChanged: (DateTime date) {
                       _date = date;
                     },

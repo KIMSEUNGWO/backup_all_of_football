@@ -23,7 +23,7 @@ class MatchService extends PipeBuffer<MatchService> {
       queryParam += '&sex=${condition.sexType!.name}';
     }
     final response = await ApiService.instance.get(
-      uri: '/search/match$queryParam',
+      uri: '/api/search/match$queryParam',
       authorization: false,
     );
     if (response.resultCode == ResultCode.OK) {
@@ -35,14 +35,14 @@ class MatchService extends PipeBuffer<MatchService> {
 
   Future<ResponseResult> getMatch({required int matchId}) async {
     return await ApiService.instance.get(
-      uri: '/match/$matchId',
+      uri: '/api/match/$matchId',
       authorization: true
     );
   }
 
   Future<List<MatchView>> getMatchesSoon() async {
     final response = await ApiService.instance.get(
-        uri: '/user/matches',
+        uri: '/api/user/matches',
         authorization: true
     );
     if (response.resultCode == ResultCode.OK) {

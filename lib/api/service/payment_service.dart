@@ -11,7 +11,7 @@ class PaymentService extends PipeBuffer<PaymentService> {
 
   Future<ResponseResult> readyPayment({required int amount, required Payment payment}) async {
     return await ApiService.instance.get(
-        uri: '/user/cash/charge/${payment.url}?amount=$amount',
+        uri: '/api/user/cash/charge/${payment.url}?amount=$amount',
         authorization: true
     );
   }

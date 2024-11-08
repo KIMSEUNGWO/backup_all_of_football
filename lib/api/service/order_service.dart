@@ -12,14 +12,14 @@ class OrderService extends PipeBuffer<OrderService> {
   OrderService();
 
   Future<ResponseResult> getOrderSimp({required int matchId}) async {
-    return await ApiService.instance.get(uri: '/order/match/$matchId', authorization: true);
+    return await ApiService.instance.get(uri: '/api/order/match/$matchId', authorization: true);
   }
 
   Future<ResponseResult> postOrder({required int matchId, required int? couponId}) async {
     Map<String, String> body = {'matchId' : '$matchId'};
     if (couponId != null) body.addAll({'couponId' : '$couponId'});
     return await ApiService.instance.post(
-      uri: '/order',
+      uri: '/api/order',
       authorization: true,
       header: ApiService.contentTypeJson,
       body: jsonEncode(body)

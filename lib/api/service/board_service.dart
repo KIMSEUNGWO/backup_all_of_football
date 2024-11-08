@@ -15,7 +15,7 @@ class BoardService extends PipeBuffer<BoardService> {
   BoardService();
 
   Future<List<BoardSimp>> getBoardList({required Region region, required Pageable pageable }) async {
-    String uri = '/search/board?&page=${pageable.page}&size=${pageable.size}';
+    String uri = '/api/search/board?&page=${pageable.page}&size=${pageable.size}';
     if (region != Region.ALL) uri += '&region=${region.name}';
     final response = await ApiService.instance.get(
       uri: uri,
@@ -29,7 +29,7 @@ class BoardService extends PipeBuffer<BoardService> {
 
   Future<ResponseResult> getBoardDetail({required int boardId}) async {
     return await ApiService.instance.get(
-      uri: '/board/$boardId',
+      uri: '/api/board/$boardId',
       authorization: false,
     );
   }
@@ -46,7 +46,7 @@ class BoardService extends PipeBuffer<BoardService> {
       body.addAll({'region' : region.name});
     }
     return await ApiService.instance.post(
-      uri: '/board/method',
+      uri: '/api/board/method',
       authorization: true,
       header: ApiService.contentTypeJson,
       body: jsonEncode(body)
@@ -66,7 +66,7 @@ class BoardService extends PipeBuffer<BoardService> {
       body.addAll({'region' : region.name});
     }
     return await ApiService.instance.patch(
-        uri: '/board/method',
+        uri: '/api/board/method',
         authorization: true,
         header: ApiService.contentTypeJson,
         body: jsonEncode(body)
@@ -75,7 +75,7 @@ class BoardService extends PipeBuffer<BoardService> {
 
   Future<ResponseResult> deleteBoard({required int boardId}) async {
     return await ApiService.instance.delete(
-        uri: '/board/method',
+        uri: '/api/board/method',
         authorization: true,
         header: ApiService.contentTypeJson,
         body: jsonEncode({'boardId' : boardId})

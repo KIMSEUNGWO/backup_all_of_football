@@ -14,14 +14,14 @@ class FieldService extends PipeBuffer<FieldService> {
 
   Future<ResponseResult> getField({required int fieldId}) async {
     return await ApiService.instance.get(
-        uri: '/field/$fieldId',
+        uri: '/api/field/$fieldId',
         authorization: true
     );
   }
 
   Future<List<MatchSimp>> getSchedule(int fieldId, Pageable pageable) async {
     final response = await ApiService.instance.get(
-        uri: '/field/$fieldId/schedule?page=${pageable.page}&size=${pageable.size}',
+        uri: '/api/field/$fieldId/schedule?page=${pageable.page}&size=${pageable.size}',
         authorization: false
     );
 
@@ -34,7 +34,7 @@ class FieldService extends PipeBuffer<FieldService> {
 
   Future<List<FieldSimp>> searchFields(String word) async {
     final response = await ApiService.instance.get(
-        uri: '/search/field?word=$word',
+        uri: '/api/search/field?word=$word',
         authorization: false
     );
     if (response.resultCode == ResultCode.OK) {

@@ -23,7 +23,7 @@ class UserService extends PipeBuffer<UserService> {
 
   Future<ResultCode> login(SocialResult result) async {
     final response = await ApiService.instance.post(
-      uri: '/social/login',
+      uri: '/api/social/login',
       authorization: false,
       header: ApiService.contentTypeJson,
       body: jsonEncode({
@@ -44,7 +44,7 @@ class UserService extends PipeBuffer<UserService> {
   Future<UserProfile?> getProfile() async {
 
     final response = await ApiService.instance.get(
-      uri: '/user/profile',
+      uri: '/api/user/profile',
       authorization: true,
     );
 
@@ -57,7 +57,7 @@ class UserService extends PipeBuffer<UserService> {
   Future<ResultCode> register({required SexType sex, required DateTime birth, required SocialResult social}) async {
 
     final response = await ApiService.instance.post(
-        uri: '/register',
+        uri: '/api/social/register',
         authorization: false,
         header: ApiService.contentTypeJson,
         body: jsonEncode({
@@ -79,14 +79,14 @@ class UserService extends PipeBuffer<UserService> {
 
   Future<ResponseResult> getCash() async {
     return await ApiService.instance.get(
-      uri: '/user/cash',
+      uri: '/api/user/cash',
       authorization: true,
     );
   }
 
   Future<List<Receipt>> getReceipt() async {
     final response = await ApiService.instance.get(
-      uri: '/user/receipt',
+      uri: '/api/user/receipt',
       authorization: true,
     );
     if (response.resultCode == ResultCode.OK) {
@@ -100,7 +100,7 @@ class UserService extends PipeBuffer<UserService> {
     final String formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(date);
 
     final response = await ApiService.instance.get(
-      uri: '/user/history?date=$formattedDate',
+      uri: '/api/user/history?date=$formattedDate',
       authorization: true,
     );
     if (response.resultCode == ResultCode.OK) {
@@ -122,7 +122,7 @@ class UserService extends PipeBuffer<UserService> {
 
   Future<List<FieldSimp>> getFavorites() async {
     final response = await ApiService.instance.get(
-      uri: '/user/favorite',
+      uri: '/api/user/favorite',
       authorization: true,
     );
     if (response.resultCode == ResultCode.OK) {
@@ -141,7 +141,7 @@ class UserService extends PipeBuffer<UserService> {
 
   editFavorite(int fieldId, bool toggle) async {
     final response = await ApiService.instance.post(
-        uri: '/user/favorite',
+        uri: '/api/user/favorite',
         authorization: true,
         header: ApiService.contentTypeJson,
         body: jsonEncode({
@@ -154,7 +154,7 @@ class UserService extends PipeBuffer<UserService> {
 
   Future<List<Coupon>> getCoupons() async {
     final response = await ApiService.instance.get(
-      uri: '/user/coupon',
+      uri: '/api/user/coupon',
       authorization: true,
     );
     if (response.resultCode == ResultCode.OK) {
@@ -167,7 +167,7 @@ class UserService extends PipeBuffer<UserService> {
   Future<bool> distinctNickname(String nickname) async {
     String encodedNickname = Uri.encodeComponent(nickname);
     final response = await ApiService.instance.get(
-      uri: '/user/distinct/nickname?nickname=$encodedNickname',
+      uri: '/api/user/distinct/nickname?nickname=$encodedNickname',
       authorization: true,
     );
     if (response.resultCode == ResultCode.OK) {
